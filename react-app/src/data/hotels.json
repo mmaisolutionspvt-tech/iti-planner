@@ -1,0 +1,113 @@
+[
+  {
+    "hotel_id": "h_del_501",
+    "name": "The Taj Palace New Delhi",
+    "city": "Delhi",
+    "lat": 28.6139,
+    "lng": 77.2090,
+    "rating": 4.7,
+    "total_reviews": 1420,
+    "star_category": 5,
+    "price_per_night_inr": 12500,
+    "images": [
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945"
+    ],
+    "amenities": ["Wifi", "AC", "Pool", "Parking", "Restaurant", "FSSAI Certified", "Gym"],
+    "room_types": ["Standard", "Deluxe", "Suite"],
+    "cancellation": "Free until 24hrs before check-in",
+    "check_in": "14:00",
+    "check_out": "12:00",
+    "address": "Sardar Patel Marg, Diplomatic Enclave, New Delhi, Delhi 110021",
+    "fssai_certified": true,
+    "nearby_attractions_km": {
+      "India Gate": 2.5
+    },
+    "safety_badge": "Verified Partner",
+    "budget_tier": "comfort",
+    "booking_link": "https://firstflight.app/book/h_del_501"
+  },
+  {
+    "hotel_id": "h_bom_502",
+    "name": "The Oberoi Mumbai",
+    "city": "Mumbai",
+    "lat": 18.9270,
+    "lng": 72.8207,
+    "rating": 4.9,
+    "total_reviews": 2100,
+    "star_category": 5,
+    "price_per_night_inr": 15000,
+    "images": [
+      "https://images.unsplash.com/photo-1551882547-ff40eb0d1b73"
+    ],
+    "amenities": ["Wifi", "AC", "Pool", "Parking", "Restaurant", "Spa", "Gym"],
+    "room_types": ["Ocean View", "Deluxe", "Suite"],
+    "cancellation": "Free until 48hrs before check-in",
+    "check_in": "15:00",
+    "check_out": "12:00",
+    "address": "Nariman Point, Mumbai, Maharashtra 400021",
+    "fssai_certified": true,
+    "nearby_attractions_km": {
+      "Gateway of India": 1.5,
+      "Marine Drive": 0.5
+    },
+    "safety_badge": "Verified Partner",
+    "budget_tier": "comfort",
+    "booking_link": "https://firstflight.app/book/h_bom_502"
+  },
+  {
+    "hotel_id": "h_goa_503",
+    "name": "Seabreeze Resort Goa",
+    "city": "Goa",
+    "lat": 15.5397,
+    "lng": 73.7661,
+    "rating": 4.1,
+    "total_reviews": 850,
+    "star_category": 3,
+    "price_per_night_inr": 3500,
+    "images": [
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b"
+    ],
+    "amenities": ["Wifi", "AC", "Pool", "Bar", "Restaurant"],
+    "room_types": ["Standard", "Pool Facing"],
+    "cancellation": "Non-refundable",
+    "check_in": "13:00",
+    "check_out": "11:00",
+    "address": "Baga Beach Road, Calangute, Goa 403516",
+    "fssai_certified": false,
+    "nearby_attractions_km": {
+      "Baga Beach": 0.5,
+      "Tito's Lane": 1.2
+    },
+    "safety_badge": "Standard",
+    "budget_tier": "budget",
+    "booking_link": "https://firstflight.app/book/h_goa_503"
+  },
+  {
+    "hotel_id": "h_blr_504",
+    "name": "Tech Hub Business Hotel",
+    "city": "Bengaluru",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "rating": 4.4,
+    "total_reviews": 620,
+    "star_category": 4,
+    "price_per_night_inr": 6500,
+    "images": [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c"
+    ],
+    "amenities": ["Wifi", "AC", "Gym", "Restaurant", "Conference Room", "FSSAI Certified"],
+    "room_types": ["Executive", "Standard"],
+    "cancellation": "Free until 24hrs before check-in",
+    "check_in": "12:00",
+    "check_out": "11:00",
+    "address": "MG Road, Bengaluru, Karnataka 560001",
+    "fssai_certified": true,
+    "nearby_attractions_km": {
+      "Cubbon Park": 1.0,
+      "UB City": 0.8
+    },
+    "safety_badge": "Verified Partner",
+    "budget_tier": "balanced",
+    "booking_link": "https://firstflight.app/book/h_blr_504"
+  }
+]

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Signup</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <img src="/static/images/logo.png" class="logo">
+
+    <h1>Create Account</h1>
+
+    <form id="signupForm">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Full Name"
+            required
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            required
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+        >
+
+        <input
+            type="password"
+            id="confirm_password"
+            placeholder="Confirm Password"
+            required
+        >
+
+        <button type="submit">
+            Create Account
+        </button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <p>
+
+        Already have an account?
+
+        <a href="/login-page">
+            Login
+        </a>
+
+    </p>
+
+</div>
+
+<script src="/static/js/signup.js"></script>
+
+</body>
+</html>

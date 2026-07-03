@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Verify OTP</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <img
+        src="/static/images/logo.png"
+        class="logo">
+
+    <h1>Verify OTP</h1>
+
+    <p>
+        Enter the OTP sent to your email.
+    </p>
+
+    <form id="verifyForm">
+
+        <input
+            type="text"
+            id="otp"
+            placeholder="Enter OTP"
+            required>
+
+        <button type="submit">
+
+            Verify OTP
+
+        </button>
+
+    </form>
+
+    <p id="message"></p>
+
+</div>
+
+<script src="/static/js/verify.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1185 @@
+[
+  {
+    "location_id": "srinagar",
+    "name": "Srinagar",
+    "country": "India",
+    "state": "Jammu and Kashmir",
+    "type": "Valley",
+    "lat": 34.0837,
+    "lng": 74.7973,
+    "cover_image": "/files/srinagar.jpg",
+    "avg_rating": 4.8,
+    "total_reviews": 412,
+    "heat_score": 0.95,
+    "best_time": "Mar-Jun, Sep-Oct",
+    "avg_budget_per_day": 4500,
+    "tags": [
+      "lake",
+      "shikara",
+      "gardens",
+      "houseboat"
+    ],
+    "safe_alternatives": [
+      "Manali",
+      "Dharamshala"
+    ],
+    "weather_city": "Srinagar",
+    "review_data": {
+      "good": "A breathtaking destination known for Dal Lake, shikara rides, Mughal gardens, and peaceful houseboats. Perfect for nature lovers and honeymooners.",
+      "bad": "Political tensions can affect travel plans. Some areas may have restricted access during peak seasons. Book accommodations well in advance."
+    }
+  },
+  {
+    "location_id": "manali",
+    "name": "Manali",
+    "country": "India",
+    "state": "Himachal Pradesh",
+    "type": "Hill Station",
+    "lat": 32.2432,
+    "lng": 77.1892,
+    "cover_image": "/files/manali.jpg",
+    "avg_rating": 4.7,
+    "total_reviews": 342,
+    "heat_score": 0.92,
+    "best_time": "Apr-Jun, Sep-Oct",
+    "avg_budget_per_day": 3500,
+    "tags": [
+      "snow",
+      "adventure",
+      "valley"
+    ],
+    "safe_alternatives": [
+      "Kullu",
+      "Kasol"
+    ],
+    "weather_city": "Manali",
+    "review_data": {
+      "good": "One of India's most popular hill stations, offering snow-covered mountains, adventure sports, scenic valleys, and a lively atmosphere throughout the year.",
+      "bad": "Gets very crowded in peak summer. Road to Rohtang can be congested. Some guesthouses can be overpriced during holidays."
+    }
+  },
+  {
+    "location_id": "nainital",
+    "name": "Nainital",
+    "country": "India",
+    "state": "Uttarakhand",
+    "type": "Hill Station",
+    "lat": 29.3919,
+    "lng": 79.4542,
+    "cover_image": "/files/nanital.jpg",
+    "avg_rating": 4.4,
+    "total_reviews": 268,
+    "heat_score": 0.78,
+    "best_time": "Mar-Jun, Sep-Nov",
+    "avg_budget_per_day": 2800,
+    "tags": [
+      "lake",
+      "boating",
+      "hills"
+    ],
+    "safe_alternatives": [
+      "Mussoorie",
+      "Bhimtal"
+    ],
+    "weather_city": "Nainital",
+    "review_data": {
+      "good": "A charming lakeside town famous for Naini Lake, boating, panoramic viewpoints, and a pleasant climate ideal for family vacations.",
+      "bad": "Heavy traffic jams during weekends and holidays. Parking is a nightmare and some areas feel overtouristed."
+    }
+  },
+  {
+    "location_id": "jaipur",
+    "name": "Jaipur",
+    "country": "India",
+    "state": "Rajasthan",
+    "type": "Heritage City",
+    "lat": 26.9124,
+    "lng": 75.7873,
+    "cover_image": "/files/jaipur.jpg",
+    "avg_rating": 4.6,
+    "total_reviews": 521,
+    "heat_score": 0.88,
+    "best_time": "Oct-Mar",
+    "avg_budget_per_day": 3000,
+    "tags": [
+      "forts",
+      "palaces",
+      "heritage",
+      "shopping"
+    ],
+    "safe_alternatives": [
+      "Udaipur",
+      "Jodhpur"
+    ],
+    "weather_city": "Jaipur",
+    "review_data": {
+      "good": "The Pink City showcases magnificent forts, royal palaces, colorful bazaars, and rich Rajasthani heritage, making it a must-visit cultural destination.",
+      "bad": "Scorching summers (May-June) can make sightseeing uncomfortable. Persistent touts and rickshaw pullers can be annoying."
+    }
+  },
+  {
+    "location_id": "goa",
+    "name": "Goa",
+    "country": "India",
+    "state": "Goa",
+    "type": "Beach",
+    "lat": 15.4909,
+    "lng": 73.8278,
+    "cover_image": "/files/goa.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 689,
+    "heat_score": 0.97,
+    "best_time": "Nov-Feb",
+    "avg_budget_per_day": 4000,
+    "tags": [
+      "beach",
+      "nightlife",
+      "watersports",
+      "party"
+    ],
+    "safe_alternatives": [
+      "Pondicherry",
+      "Gokarna"
+    ],
+    "weather_city": "Panaji",
+    "review_data": {
+      "good": "India's favorite beach destination, renowned for its golden beaches, vibrant nightlife, water sports, Portuguese architecture, and laid-back vibe.",
+      "bad": "Monsoon season (June-September) can be very rainy. Some beaches are overcrowded in December-January. Prices spike dramatically during peak season."
+    }
+  },
+  {
+    "location_id": "mumbai",
+    "name": "Mumbai",
+    "country": "India",
+    "state": "Maharashtra",
+    "type": "Metro City",
+    "lat": 19.076,
+    "lng": 72.8777,
+    "cover_image": "/files/mumbai.jpg",
+    "avg_rating": 4.2,
+    "total_reviews": 455,
+    "heat_score": 0.75,
+    "best_time": "Nov-Feb",
+    "avg_budget_per_day": 4200,
+    "tags": [
+      "city",
+      "bollywood",
+      "coastline",
+      "nightlife"
+    ],
+    "safe_alternatives": [
+      "Pune",
+      "Lonavala"
+    ],
+    "weather_city": "Mumbai",
+    "review_data": {
+      "good": "A dynamic metropolis where modern skyscrapers meet historic landmarks, offering Bollywood glamour, street food, marine views, and endless entertainment.",
+      "bad": "Extreme traffic congestion, crowded local trains, and high cost of living. The humidity during monsoons can be oppressive."
+    }
+  },
+  {
+    "location_id": "munnar",
+    "name": "Munnar",
+    "country": "India",
+    "state": "Kerala",
+    "type": "Hill Station",
+    "lat": 10.0889,
+    "lng": 77.0595,
+    "cover_image": "/files/munnar.jpg",
+    "avg_rating": 4.6,
+    "total_reviews": 301,
+    "heat_score": 0.84,
+    "best_time": "Sep-Mar",
+    "avg_budget_per_day": 3200,
+    "tags": [
+      "tea gardens",
+      "hills",
+      "backwaters nearby"
+    ],
+    "safe_alternatives": [
+      "Ooty",
+      "Wayanad"
+    ],
+    "weather_city": "Munnar",
+    "review_data": {
+      "good": "A peaceful hill station surrounded by lush tea plantations, misty mountains, and breathtaking landscapes, perfect for a relaxing getaway.",
+      "bad": "Roads can be slippery and foggy. Limited nightlife. Some resorts may feel isolated from facilities."
+    }
+  },
+  {
+    "location_id": "rishikesh",
+    "name": "Rishikesh",
+    "country": "India",
+    "state": "Uttarakhand",
+    "type": "Spiritual/Adventure",
+    "lat": 30.0869,
+    "lng": 78.2676,
+    "cover_image": "/files/rishikesh.jpg",
+    "avg_rating": 4.7,
+    "total_reviews": 387,
+    "heat_score": 0.89,
+    "best_time": "Sep-Jun",
+    "avg_budget_per_day": 2200,
+    "tags": [
+      "rafting",
+      "yoga",
+      "ganga",
+      "camping"
+    ],
+    "safe_alternatives": [
+      "Haridwar",
+      "Dehradun"
+    ],
+    "weather_city": "Rishikesh",
+    "review_data": {
+      "good": "The Yoga Capital of the World combines spirituality with adventure, offering river rafting, camping, yoga retreats, and stunning Ganga views.",
+      "bad": "Can get very touristy. Water levels affect rafting availability. Some ashrams may feel overcrowded during festivals."
+    }
+  },
+  {
+    "location_id": "shimla",
+    "name": "Shimla",
+    "country": "India",
+    "state": "Himachal Pradesh",
+    "type": "Hill Station",
+    "lat": 31.1048,
+    "lng": 77.1734,
+    "cover_image": "/files/shimla.jpg",
+    "avg_rating": 4.4,
+    "total_reviews": 412,
+    "heat_score": 0.81,
+    "best_time": "Mar-Jun, Dec-Jan",
+    "avg_budget_per_day": 3200,
+    "tags": [
+      "colonial",
+      "snow",
+      "mall road"
+    ],
+    "safe_alternatives": [
+      "Manali",
+      "Kasauli"
+    ],
+    "weather_city": "Shimla",
+    "review_data": {
+      "good": "A beautiful colonial-era hill station featuring Mall Road, pine forests, pleasant weather, and snowfall during winter, making it a favorite holiday destination.",
+      "bad": "Extremely crowded in peak season. Limited parking. Some heritage properties may feel dated."
+    }
+  },
+  {
+    "location_id": "mussoorie",
+    "name": "Mussoorie",
+    "country": "India",
+    "state": "Uttarakhand",
+    "type": "Hill Station",
+    "lat": 30.4598,
+    "lng": 78.0664,
+    "cover_image": "/files/mussoorie.jpg",
+    "avg_rating": 4.3,
+    "total_reviews": 256,
+    "heat_score": 0.74,
+    "best_time": "Mar-Jun, Sep-Nov",
+    "avg_budget_per_day": 2900,
+    "tags": [
+      "queen of hills",
+      "waterfalls",
+      "viewpoints"
+    ],
+    "safe_alternatives": [
+      "Nainital",
+      "Dehradun"
+    ],
+    "weather_city": "Mussoorie",
+    "review_data": {
+      "good": "Popularly called the Queen of Hills, Mussoorie offers stunning viewpoints, waterfalls, peaceful walks, and refreshing mountain weather.",
+      "bad": "Can get foggy and rainy. Traffic is chaotic near Mall Road during holidays."
+    }
+  },
+  {
+    "location_id": "udaipur",
+    "name": "Udaipur",
+    "country": "India",
+    "state": "Rajasthan",
+    "type": "Lake City",
+    "lat": 24.5854,
+    "lng": 73.7125,
+    "cover_image": "/files/udaipur.jpg",
+    "avg_rating": 4.8,
+    "total_reviews": 478,
+    "heat_score": 0.9,
+    "best_time": "Sep-Mar",
+    "avg_budget_per_day": 3800,
+    "tags": [
+      "lakes",
+      "palaces",
+      "romantic"
+    ],
+    "safe_alternatives": [
+      "Jaipur",
+      "Mount Abu"
+    ],
+    "weather_city": "Udaipur",
+    "review_data": {
+      "good": "Known as the City of Lakes, Udaipur enchants visitors with grand palaces, serene lakes, romantic sunsets, and rich royal heritage.",
+      "bad": "Very hot in summer. Some lake areas can get polluted. Tourist prices are often inflated."
+    }
+  },
+  {
+    "location_id": "jaisalmer",
+    "name": "Jaisalmer",
+    "country": "India",
+    "state": "Rajasthan",
+    "type": "Desert",
+    "lat": 26.9157,
+    "lng": 70.9083,
+    "cover_image": "/files/jaisalmer.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 234,
+    "heat_score": 0.71,
+    "best_time": "Oct-Feb",
+    "avg_budget_per_day": 3100,
+    "tags": [
+      "desert",
+      "camel safari",
+      "fort",
+      "dunes"
+    ],
+    "safe_alternatives": [
+      "Bikaner",
+      "Jodhpur"
+    ],
+    "weather_city": "Jaisalmer",
+    "review_data": {
+      "good": "The Golden City captivates travelers with its magnificent sandstone fort, desert safaris, camel rides, and unforgettable nights under the stars.",
+      "bad": "Extreme heat in summer (April-June). Desert safaris can feel commercialised. Limited water supply and dusty roads."
+    }
+  },
+  {
+    "location_id": "agra",
+    "name": "Agra",
+    "country": "India",
+    "state": "Uttar Pradesh",
+    "type": "Heritage City",
+    "lat": 27.1767,
+    "lng": 78.0081,
+    "cover_image": "/files/agra.jpg",
+    "avg_rating": 4.6,
+    "total_reviews": 612,
+    "heat_score": 0.86,
+    "best_time": "Oct-Mar",
+    "avg_budget_per_day": 2400,
+    "tags": [
+      "taj mahal",
+      "mughal",
+      "heritage"
+    ],
+    "safe_alternatives": [
+      "Mathura",
+      "Jaipur"
+    ],
+    "weather_city": "Agra",
+    "review_data": {
+      "good": "Home to the iconic Taj Mahal, Agra is a historic city that reflects the grandeur of Mughal architecture and timeless craftsmanship.",
+      "bad": "Air pollution can obscure clear Taj Mahal views on some days. Severe overcrowding. City infrastructure outside the monument is poor."
+    }
+  },
+  {
+    "location_id": "varanasi",
+    "name": "Varanasi",
+    "country": "India",
+    "state": "Uttar Pradesh",
+    "type": "Pilgrimage",
+    "lat": 25.3176,
+    "lng": 82.9739,
+    "cover_image": "/files/varanasi.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 398,
+    "heat_score": 0.8,
+    "best_time": "Oct-Mar",
+    "avg_budget_per_day": 1800,
+    "tags": [
+      "ghats",
+      "ganga aarti",
+      "spiritual",
+      "ancient"
+    ],
+    "safe_alternatives": [
+      "Ayodhya",
+      "Prayagraj"
+    ],
+    "weather_city": "Varanasi",
+    "review_data": {
+      "good": "One of the world's oldest living cities, Varanasi offers a deeply spiritual experience with sacred ghats, Ganga Aarti, ancient temples, and vibrant traditions.",
+      "bad": "Extremely chaotic and crowded. The ghats can smell unpleasant in some areas. Be careful of overcharging by boat operators and guides."
+    }
+  },
+  {
+    "location_id": "amritsar",
+    "name": "Amritsar",
+    "country": "India",
+    "state": "Punjab",
+    "type": "Pilgrimage",
+    "lat": 31.634,
+    "lng": 74.8723,
+    "cover_image": "/files/amritsar.jpg",
+    "avg_rating": 4.7,
+    "total_reviews": 356,
+    "heat_score": 0.83,
+    "best_time": "Oct-Mar",
+    "avg_budget_per_day": 2200,
+    "tags": [
+      "golden temple",
+      "wagah border",
+      "food"
+    ],
+    "safe_alternatives": [
+      "Chandigarh",
+      "Dharamshala"
+    ],
+    "weather_city": "Amritsar",
+    "review_data": {
+      "good": "Famous for the Golden Temple, Amritsar is a city of faith, delicious Punjabi cuisine, and patriotic experiences like the Wagah Border ceremony.",
+      "bad": "Limited tourist infrastructure outside the Golden Temple area. Traffic near the temple can be very congested."
+    }
+  },
+  {
+    "location_id": "dharamshala",
+    "name": "Dharamshala",
+    "country": "India",
+    "state": "Himachal Pradesh",
+    "type": "Hill Station",
+    "lat": 32.219,
+    "lng": 76.3234,
+    "cover_image": "/files/dharamshala.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 198,
+    "heat_score": 0.76,
+    "best_time": "Mar-Jun, Sep-Nov",
+    "avg_budget_per_day": 2700,
+    "tags": [
+      "monastery",
+      "mcleodganj",
+      "trekking"
+    ],
+    "safe_alternatives": [
+      "Manali",
+      "Shimla"
+    ],
+    "weather_city": "Dharamshala",
+    "review_data": {
+      "good": "Nestled in the Himalayas, Dharamshala is known for Tibetan culture, monasteries, scenic trekking trails, and peaceful mountain surroundings.",
+      "bad": "Roads can be very narrow and foggy. Internet connectivity can be unreliable in some areas. Limited medical facilities."
+    }
+  },
+  {
+    "location_id": "leh",
+    "name": "Leh",
+    "country": "India",
+    "state": "Ladakh",
+    "type": "High Altitude Desert",
+    "lat": 34.1526,
+    "lng": 77.5771,
+    "cover_image": "/files/Leh.jpg",
+    "avg_rating": 4.9,
+    "total_reviews": 287,
+    "heat_score": 0.93,
+    "best_time": "Jun-Sep",
+    "avg_budget_per_day": 4800,
+    "tags": [
+      "pangong lake",
+      "monasteries",
+      "bike trip",
+      "high altitude"
+    ],
+    "safe_alternatives": [
+      "Manali",
+      "Srinagar"
+    ],
+    "weather_city": "Leh",
+    "review_data": {
+      "good": "A dream destination for adventure enthusiasts, Leh offers breathtaking high-altitude landscapes, monasteries, crystal-clear lakes, and unforgettable road trips.",
+      "bad": "Altitude sickness is a real risk. Must acclimatize for 2-3 days. Oxygen levels are very low. Most hotels have limited hot water and heating."
+    }
+  },
+  {
+    "location_id": "ooty",
+    "name": "Ooty",
+    "country": "India",
+    "state": "Tamil Nadu",
+    "type": "Hill Station",
+    "lat": 11.4064,
+    "lng": 76.6932,
+    "cover_image": "/files/ooty.jpg",
+    "avg_rating": 4.3,
+    "total_reviews": 245,
+    "heat_score": 0.69,
+    "best_time": "Oct-Jun",
+    "avg_budget_per_day": 2600,
+    "tags": [
+      "tea estates",
+      "toy train",
+      "lake"
+    ],
+    "safe_alternatives": [
+      "Munnar",
+      "Coorg"
+    ],
+    "weather_city": "Ooty",
+    "review_data": {
+      "good": "A picturesque hill station celebrated for its tea estates, toy train, botanical gardens, and cool climate, making it an ideal family retreat.",
+      "bad": "Traffic jams are common near the market area. Some tourist spots feel commercialised and overcrowded during peak season."
+    }
+  },
+  {
+    "location_id": "darjeeling",
+    "name": "Darjeeling",
+    "country": "India",
+    "state": "West Bengal",
+    "type": "Hill Station",
+    "lat": 27.041,
+    "lng": 88.2663,
+    "cover_image": "/files/darjeeling.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 212,
+    "heat_score": 0.73,
+    "best_time": "Mar-May, Oct-Nov",
+    "avg_budget_per_day": 2800,
+    "tags": [
+      "tea gardens",
+      "toy train",
+      "kanchenjunga view"
+    ],
+    "safe_alternatives": [
+      "Gangtok",
+      "Kalimpong"
+    ],
+    "weather_city": "Darjeeling",
+    "review_data": {
+      "good": "Famous for its world-renowned tea gardens, Himalayan views, and heritage toy train, Darjeeling offers a perfect blend of nature and culture.",
+      "bad": "Weather can change rapidly; clouds often obscure Kanchenjunga. Road conditions to Darjeeling can be challenging during monsoon."
+    }
+  },
+  {
+    "location_id": "pondicherry",
+    "name": "Pondicherry",
+    "country": "India",
+    "state": "Puducherry",
+    "type": "Beach",
+    "lat": 11.9416,
+    "lng": 79.8083,
+    "cover_image": "/files/pondicherry.jpg",
+    "avg_rating": 4.4,
+    "total_reviews": 189,
+    "heat_score": 0.67,
+    "best_time": "Oct-Mar",
+    "avg_budget_per_day": 2900,
+    "tags": [
+      "french quarter",
+      "beach",
+      "cafes"
+    ],
+    "safe_alternatives": [
+      "Goa",
+      "Mahabalipuram"
+    ],
+    "weather_city": "Pondicherry",
+    "review_data": {
+      "good": "A charming coastal town featuring French colonial architecture, peaceful beaches, colorful streets, quaint cafés, and a relaxed seaside atmosphere.",
+      "bad": "Beaches are not the cleanest. It can get very humid and hot. Accommodation prices in the French Quarter can be steep."
+    }
+  },
+  {
+    "location_id": "rome",
+    "name": "Rome",
+    "country": "Italy",
+    "state": "Lazio",
+    "lat": 41.9028,
+    "lng": 12.4964,
+    "cover_image": "/files/Rome.jpg",
+    "avg_rating": 4.6,
+    "total_reviews": 850,
+    "heat_score": 0.95,
+    "review_data": {
+      "good": "Unmatched ancient history. Major landmarks like the Colosseum and Vatican Museums consistently average 4.5 to 4.7 stars. The street food and restaurant culture are top-tier.",
+      "bad": "It is a massive, noisy, and chaotic metropolis. Reviewers frequently complain about heavy traffic, pickpockets near transit hubs, and long lines at ticketing counters."
+    },
+    "weather_city": "Rome"
+  },
+  {
+    "location_id": "florence",
+    "name": "Florence",
+    "country": "Italy",
+    "state": "Tuscany",
+    "lat": 43.7696,
+    "lng": 11.2558,
+    "cover_image": "/files/Florence.jpg",
+    "avg_rating": 4.8,
+    "total_reviews": 620,
+    "heat_score": 0.9,
+    "review_data": {
+      "good": "Highly walkable and visually stunning. Key highlights like the Cathedral of Santa Maria del Fiore hold a 4.6-star rating, while specific guided experiences frequently fetch a perfect 5.0 stars from thousands of reviews.",
+      "bad": "Massive museum crowds and high wait times for popular dining spots like All'Antico Vinaio. It can feel overly packed with study-abroad students and tour groups in the summer."
+    },
+    "weather_city": "Florence"
+  },
+  {
+    "location_id": "venice",
+    "name": "Venice",
+    "country": "Italy",
+    "state": "Veneto",
+    "lat": 45.4408,
+    "lng": 12.3155,
+    "cover_image": "/files/Venice.jpg",
+    "avg_rating": 4.4,
+    "total_reviews": 730,
+    "heat_score": 0.88,
+    "review_data": {
+      "good": "Entirely unique atmosphere with a high concentration of excellent reviews for the scenic lagoon lifestyle and iconic islands like Burano.",
+      "bad": "Receives highly polarized reviews. 'Terrible' or 'Average' marks stem from severe overcrowding, steep pricing (e.g., €5 for a basic coffee), the tourist tax, and the smell of the canals during hot, dry spells."
+    },
+    "weather_city": "Venice"
+  },
+  {
+    "location_id": "amalfi",
+    "name": "Amalfi Coast",
+    "country": "Italy",
+    "state": "Campania",
+    "lat": 40.6333,
+    "lng": 14.6029,
+    "cover_image": "/files/Amalfi_Coast.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 510,
+    "heat_score": 0.92,
+    "review_data": {
+      "good": "Breathtaking, highly photogenic scenery. World-class outdoor attractions like the Sentiero Degli Dei (Path of the Gods) hike carry an incredible 4.8-star score across thousands of reviews.",
+      "bad": "Logistical challenges. Reviewers call out heavily crowded, expensive ferries and stressful driving conditions on narrow cliff roads. Budget travelers frequently label the area as overpriced."
+    },
+    "weather_city": "Salerno"
+  },
+  {
+    "location_id": "dolomites",
+    "name": "The Dolomites",
+    "country": "Italy",
+    "state": "Trentino",
+    "lat": 46.4333,
+    "lng": 11.85,
+    "cover_image": "/files/Dolomites.jpg",
+    "avg_rating": 4.9,
+    "total_reviews": 320,
+    "heat_score": 0.85,
+    "review_data": {
+      "good": "Near-perfect marks across the board. Nature lovers rate the majestic trails, alpine lakes, and clean mountain air exceptionally high. It has fewer crowds compared to Italy's coastal hot spots.",
+      "bad": "Extremely weather-dependent. Heavy rain or unexpected mountain fog can completely ruin visibility and cancel hiking or skiing plans."
+    },
+    "weather_city": "Bolzano"
+  },
+  {
+    "location_id": "radhanagar",
+    "name": "Radhanagar Beach",
+    "country": "India",
+    "state": "Andaman & Nicobar",
+    "lat": 11.9833,
+    "lng": 92.95,
+    "cover_image": "/files/Radhanagar_beach.jpg",
+    "avg_rating": 4.8,
+    "total_reviews": 2800,
+    "heat_score": 0.96,
+    "review_data": {
+      "good": "Widely considered the crown jewel of the islands. Visitors rave about the flawless, pristine sand, exceptionally clean water, and spacious shoreline. It is highly praised for safe swimming and peaceful sunset views.",
+      "bad": "Limited shaded areas and can get crowded during peak season."
+    },
+    "weather_city": "Port Blair"
+  },
+  {
+    "location_id": "elephant_beach",
+    "name": "Elephant Beach",
+    "country": "India",
+    "state": "Andaman & Nicobar",
+    "lat": 12,
+    "lng": 92.95,
+    "cover_image": "/files/Elephant_beach.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 1700,
+    "heat_score": 0.89,
+    "review_data": {
+      "good": "A favorite for adventure seekers. Reviewers love the active marine life and coral clarity, making it excellent for snorkeling.",
+      "bad": "Some note it can get crowded during peak hours when tourist boats arrive."
+    },
+    "weather_city": "Port Blair"
+  },
+  {
+    "location_id": "cellular_jail",
+    "name": "Cellular Jail",
+    "country": "India",
+    "state": "Andaman & Nicobar",
+    "lat": 11.6738,
+    "lng": 92.7475,
+    "cover_image": "/files/Cellular_jail.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 3100,
+    "heat_score": 0.88,
+    "review_data": {
+      "good": "A deeply moving and educational historic site. Travelers highly recommend hiring a local guide to fully appreciate the history. The evening light and sound show is widely praised.",
+      "bad": "Booking tickets in advance is advised as it gets sold out quickly."
+    },
+    "weather_city": "Port Blair"
+  },
+  {
+    "location_id": "ross_island",
+    "name": "Ross Island",
+    "country": "India",
+    "state": "Andaman & Nicobar",
+    "lat": 11.6766,
+    "lng": 92.763,
+    "cover_image": "/files/Ross_Island.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 1200,
+    "heat_score": 0.82,
+    "review_data": {
+      "good": "Highly rated for its unique atmosphere. Visitors enjoy walking through the structure ruins being overtaken by nature and interacting with the friendly, roaming deer.",
+      "bad": "Limited facilities on the island."
+    },
+    "weather_city": "Port Blair"
+  },
+  {
+    "location_id": "chidiya_tapu",
+    "name": "Chidiya Tapu",
+    "country": "India",
+    "state": "Andaman & Nicobar",
+    "lat": 11.55,
+    "lng": 92.7,
+    "cover_image": "/files/Chidiya_Tapu.jpg",
+    "avg_rating": 4,
+    "total_reviews": 850,
+    "heat_score": 0.75,
+    "review_data": {
+      "good": "Celebrated for its quiet, serene environment and excellent photography opportunities at sunset.",
+      "bad": "A few reviewers mention that the road conditions leading to the spot can be bumpy, but the final view is worth the drive."
+    },
+    "weather_city": "Port Blair"
+  },
+  {
+    "location_id": "zermatt",
+    "name": "Zermatt & Matterhorn",
+    "country": "Switzerland",
+    "state": "Valais",
+    "lat": 46.0207,
+    "lng": 7.7491,
+    "cover_image": "/files/Matterhorn.jpg",
+    "avg_rating": 4.9,
+    "total_reviews": 1100,
+    "heat_score": 0.98,
+    "review_data": {
+      "good": "Unmatched alpine drama. The car-free village of Zermatt keeps the air incredibly crisp and the atmosphere peaceful. The views of the towering Matterhorn from the town or via the Gornergrat Railway are a bucket-list spectacle that rarely disappoints.",
+      "bad": "It is exceptionally expensive, even by Swiss standards. Because it requires a train to get in, it takes a bit more effort to reach."
+    },
+    "weather_city": "Zermatt"
+  },
+  {
+    "location_id": "lauterbrunnen",
+    "name": "Lauterbrunnen",
+    "country": "Switzerland",
+    "state": "Bern",
+    "lat": 46.5935,
+    "lng": 7.9091,
+    "cover_image": "/files/Lauterbrunnen.jpg",
+    "avg_rating": 4.8,
+    "total_reviews": 980,
+    "heat_score": 0.96,
+    "review_data": {
+      "good": "Visually stunning and looks exactly like a real-life fairytale. Standing in a sheer-cliff valley with massive waterfalls like Staubbach plunging right next to the village is unforgettable. It serves as a fantastic base to head up to car-free towns like Wengen and Mürren.",
+      "bad": "'Instagram fame' has made the main village street incredibly crowded during peak summer hours. It can sometimes feel more like a crowded photo-shoot location than a sleepy mountain village."
+    },
+    "weather_city": "Interlaken"
+  },
+  {
+    "location_id": "lucerne",
+    "name": "Lucerne",
+    "country": "Switzerland",
+    "state": "Lucerne",
+    "lat": 47.0502,
+    "lng": 8.3093,
+    "cover_image": "/files/Lucerne.jpg",
+    "avg_rating": 4.7,
+    "total_reviews": 1200,
+    "heat_score": 0.92,
+    "review_data": {
+      "good": "The ultimate 'all-in-one' Swiss city. It perfectly blends a medieval Old Town with a gorgeous lakefront, historic covered bridges, and immediate access to massive mountains like Mount Pilatus and Rigi. It is highly walkable and easy to navigate.",
+      "bad": "It is a major stop for large tour buses, meaning areas like the Chapel Bridge and the Lion Monument get heavily congested by mid-day."
+    },
+    "weather_city": "Lucerne"
+  },
+  {
+    "location_id": "jungfraujoch",
+    "name": "Jungfraujoch",
+    "country": "Switzerland",
+    "state": "Bern",
+    "lat": 46.5475,
+    "lng": 7.9853,
+    "cover_image": "/files/Jungfraujoch.jpg",
+    "avg_rating": 4.4,
+    "total_reviews": 1500,
+    "heat_score": 0.9,
+    "review_data": {
+      "good": "An engineering marvel. Reaching 3,454 metres high via a train built inside a mountain is jaw-dropping. The Sphinx Observatory offers unreal views of the Aletsch Glacier, and standing in year-round snow is magical.",
+      "bad": "A massive hit to your wallet. A round-trip ticket can cost upwards of CHF 200+ per person, which many travelers find overpriced if the weather is cloudy and blocks the view. It can also feel overly commercialised at the top."
+    },
+    "weather_city": "Interlaken"
+  },
+  {
+    "location_id": "interlaken",
+    "name": "Interlaken",
+    "country": "Switzerland",
+    "state": "Bern",
+    "lat": 46.6863,
+    "lng": 7.8632,
+    "cover_image": "/files/Interlaken.jpg",
+    "avg_rating": 4.1,
+    "total_reviews": 1800,
+    "heat_score": 0.88,
+    "review_data": {
+      "good": "Unbeatable transit convenience. Interlaken sits perfectly between two stunning lakes (Thun and Brienz) and functions as the transportation heartbeat of the region. If you want to skydive, paraglide, kayak, or catch a train to any nearby valley, this is the easiest place to sleep.",
+      "bad": "It lacks the authentic 'fairytale alpine charm' of the other destinations. The town itself is relatively flat, modern, and heavily commercialized with watch shops, hotels, and tourist-trap restaurants."
+    },
+    "weather_city": "Interlaken"
+  },
+  {
+    "location_id": "szgm",
+    "name": "Sheikh Zayed Grand Mosque",
+    "country": "United Arab Emirates",
+    "state": "Abu Dhabi",
+    "lat": 24.4128,
+    "lng": 54.475,
+    "cover_image": "/files/Sheikh_Zayed_Grand_mosque.jpg",
+    "avg_rating": 5,
+    "total_reviews": 3200,
+    "heat_score": 0.98,
+    "review_data": {
+      "good": "This is a flawless architectural marvel. From the flawless white Macedonian marble to the world's largest hand-knotted carpet, it feels less like a tourist trap and more like a sublime cultural sanctuary. Even better, entry is completely free.",
+      "bad": "Strict dress code rules. Women must cover their heads and wear loose, ankle-length clothing. Men must cover their shoulders and knees. If you do not dress appropriately, you will be directed to change before entry."
+    },
+    "weather_city": "Abu Dhabi"
+  },
+  {
+    "location_id": "burj_khalifa",
+    "name": "Burj Khalifa",
+    "country": "United Arab Emirates",
+    "state": "Dubai",
+    "lat": 25.1972,
+    "lng": 55.2744,
+    "cover_image": "/files/Burj_Khalifa.jpg",
+    "avg_rating": 5,
+    "total_reviews": 5500,
+    "heat_score": 0.99,
+    "review_data": {
+      "good": "Standing on top of the world's tallest building is a bucket-list experience that lives up to the hype. The super-speed elevator journey to the 124th and 125th floors feels like going into orbit.",
+      "bad": "Peak ticket prices can be expensive, and standard queues to get back down the elevators can take upwards of 45 minutes during busy sunset hours."
+    },
+    "weather_city": "Dubai"
+  },
+  {
+    "location_id": "dubai_mall",
+    "name": "The Dubai Mall",
+    "country": "United Arab Emirates",
+    "state": "Dubai",
+    "lat": 25.1973,
+    "lng": 55.2796,
+    "cover_image": "/files/Dubai_mall.jpg",
+    "avg_rating": 4,
+    "total_reviews": 4200,
+    "heat_score": 0.9,
+    "review_data": {
+      "good": "Calling it a 'mall' is an understatement. It is a massive indoor entertainment ecosystem. You can watch the outdoor Dubai Fountain show, look at sharks through the massive glass panel of the Dubai Aquarium, and ice-skate—all without purchasing a single retail item.",
+      "bad": "It is physically exhausting. Navigating the sheer square footage means walking several kilometers just to find an exit or a taxi stand."
+    },
+    "weather_city": "Dubai"
+  },
+  {
+    "location_id": "ferrari_world",
+    "name": "Ferrari World",
+    "country": "United Arab Emirates",
+    "state": "Abu Dhabi",
+    "lat": 24.4837,
+    "lng": 54.607,
+    "cover_image": "/files/Ferrari_world.jpg",
+    "avg_rating": 4,
+    "total_reviews": 1800,
+    "heat_score": 0.85,
+    "review_data": {
+      "good": "For thrill-seekers and car enthusiasts, this is paradise. Riding the Formula Rossa—which launches you from 0 to 240 km/h in 4.9 seconds—is worth the admission fee alone.",
+      "bad": "If you are not a fan of extreme roller coasters or simulation rides, the entertainment value drops significantly for the price."
+    },
+    "weather_city": "Abu Dhabi"
+  },
+  {
+    "location_id": "palm_jumeirah",
+    "name": "Palm Jumeirah",
+    "country": "United Arab Emirates",
+    "state": "Dubai",
+    "lat": 25.1124,
+    "lng": 55.139,
+    "cover_image": "/files/Palm_Jumeirah.jpg",
+    "avg_rating": 3,
+    "total_reviews": 2100,
+    "heat_score": 0.8,
+    "review_data": {
+      "good": "As an engineering marvel, it is spectacular. It boasts incredible luxury hotels, trendy beach clubs, and manicured boardwalks.",
+      "bad": "The palm-tree shape that makes it famous is completely invisible when you are standing on it. At ground level, it feels like a standard upscale coastal highway. Traffic entering and exiting the single spine road during peak hours can also result in gridlock."
+    },
+    "weather_city": "Dubai"
+  },
+  {
+    "location_id": "bali",
+    "name": "Bali",
+    "country": "Indonesia",
+    "state": "Bali",
+    "lat": -8.3405,
+    "lng": 115.092,
+    "cover_image": "/files/Bali.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 3800,
+    "heat_score": 0.97,
+    "review_data": {
+      "good": "Incredible variety of culture, food, and landscapes. You can surf in Canggu, visit temples in Ubud, and hike volcanoes all in one week. Excellent tourism infrastructure.",
+      "bad": "Severe traffic congestion in southern areas. Highly commercialised and overcrowded during peak seasons (July–August)."
+    },
+    "weather_city": "Denpasar"
+  },
+  {
+    "location_id": "borobudur",
+    "name": "Borobudur",
+    "country": "Indonesia",
+    "state": "Central Java",
+    "lat": -7.6079,
+    "lng": 110.2038,
+    "cover_image": "/files/Borobudur.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 2200,
+    "heat_score": 0.9,
+    "review_data": {
+      "good": "Unmatched cultural and historical depth. The temple architecture is breathtaking, and the nearby city of Yogyakarta offers authentic Javanese arts, street food, and hospitality.",
+      "bad": "Strict regulations now limit climbing to the top structure of the temple to preserve the stones. It requires booking a specific guided slot well in advance."
+    },
+    "weather_city": "Yogyakarta"
+  },
+  {
+    "location_id": "komodo",
+    "name": "Komodo National Park",
+    "country": "Indonesia",
+    "state": "East Nusa Tenggara",
+    "lat": -8.5394,
+    "lng": 119.4509,
+    "cover_image": "/files/Komodo_national_park.jpg",
+    "avg_rating": 4.8,
+    "total_reviews": 1400,
+    "heat_score": 0.93,
+    "review_data": {
+      "good": "Seeing prehistoric Komodo dragons up close is unforgettable. The dramatic, dry-grass hills meeting turquoise waters and pink sand beaches create an otherworldly landscape.",
+      "bad": "Becoming increasingly expensive due to rising park conservation fees. It is strictly accessible only by boat tours from Labuan Bajo."
+    },
+    "weather_city": "Labuan Bajo"
+  },
+  {
+    "location_id": "raja_ampat",
+    "name": "Raja Ampat",
+    "country": "Indonesia",
+    "state": "West Papua",
+    "lat": -0.2323,
+    "lng": 130.5152,
+    "cover_image": "/files/Raja_Ampat.jpg",
+    "avg_rating": 4.9,
+    "total_reviews": 850,
+    "heat_score": 0.95,
+    "review_data": {
+      "good": "Absolute paradise for divers and nature purists. The marine life is unmatched globally, and the iconic mushroom-shaped karst islands offer pristine, untouched beauty.",
+      "bad": "Very difficult and expensive to reach, requiring multiple flights and long ferry rides. Accommodation is mostly limited to eco-lodges or liveaboard boats."
+    },
+    "weather_city": "Sorong"
+  },
+  {
+    "location_id": "bromo",
+    "name": "Mount Bromo",
+    "country": "Indonesia",
+    "state": "East Java",
+    "lat": -7.9425,
+    "lng": 112.953,
+    "cover_image": "/files/Mount_Bromo.jpg",
+    "avg_rating": 4.2,
+    "total_reviews": 1900,
+    "heat_score": 0.88,
+    "review_data": {
+      "good": "The sunrise viewpoint overlooking the smoking caldera and the surrounding 'Sea of Sand' is one of the most cinematic views on Earth.",
+      "bad": "The viewpoint gets incredibly crowded at 4:00 AM, smelling heavily of jeep exhaust fumes. The sulfur smell near the crater rim can also be overpowering."
+    },
+    "weather_city": "Probolinggo"
+  },
+  {
+    "location_id": "paris",
+    "name": "Paris",
+    "country": "France",
+    "state": "Île-de-France",
+    "lat": 48.8566,
+    "lng": 2.3522,
+    "cover_image": "/files/Paris.jpg",
+    "avg_rating": 5,
+    "total_reviews": 8500,
+    "heat_score": 0.98,
+    "review_data": {
+      "good": "World-class museums, iconic monuments, and legendary café culture.",
+      "bad": "High costs, large tourist crowds, and occasional city grime."
+    },
+    "weather_city": "Paris"
+  },
+  {
+    "location_id": "lyon",
+    "name": "Lyon",
+    "country": "France",
+    "state": "Auvergne-Rhône-Alpes",
+    "lat": 45.764,
+    "lng": 4.8357,
+    "cover_image": "/files/Lyon.jpg",
+    "avg_rating": 5,
+    "total_reviews": 2100,
+    "heat_score": 0.91,
+    "review_data": {
+      "good": "Exceptional gastronomy, stunning Renaissance architecture, and fewer tourists than Paris.",
+      "bad": "Nightlife can be quieter during the weekdays."
+    },
+    "weather_city": "Lyon"
+  },
+  {
+    "location_id": "nice",
+    "name": "Nice",
+    "country": "France",
+    "state": "Provence-Alpes-Côte d'Azur",
+    "lat": 43.7102,
+    "lng": 7.262,
+    "cover_image": "/files/Nice.jpg",
+    "avg_rating": 4,
+    "total_reviews": 3200,
+    "heat_score": 0.89,
+    "review_data": {
+      "good": "Beautiful beaches, vibrant markets, and proximity to the French Riviera.",
+      "bad": "Beaches are pebbly (not sandy) and summer prices spike heavily."
+    },
+    "weather_city": "Nice"
+  },
+  {
+    "location_id": "bordeaux",
+    "name": "Bordeaux",
+    "country": "France",
+    "state": "Nouvelle-Aquitaine",
+    "lat": 44.8378,
+    "lng": -0.5792,
+    "cover_image": "/files/Bordeaux.jpg",
+    "avg_rating": 4,
+    "total_reviews": 1800,
+    "heat_score": 0.86,
+    "review_data": {
+      "good": "Elite wine tasting, highly walkable downtown, and beautiful 18th-century design.",
+      "bad": "Public transport to actual vineyards can be tricky without a car."
+    },
+    "weather_city": "Bordeaux"
+  },
+  {
+    "location_id": "marseille",
+    "name": "Marseille",
+    "country": "France",
+    "state": "Provence-Alpes-Côte d'Azur",
+    "lat": 43.2965,
+    "lng": 5.3698,
+    "cover_image": "/files/Marseille.jpg",
+    "avg_rating": 3,
+    "total_reviews": 1500,
+    "heat_score": 0.8,
+    "review_data": {
+      "good": "Incredible sea views, rich maritime history, and access to Calanques National Park.",
+      "bad": "Some neighborhoods feel rough and city traffic is notoriously chaotic."
+    },
+    "weather_city": "Marseille"
+  },
+  {
+    "location_id": "istanbul",
+    "name": "Istanbul",
+    "country": "Turkey",
+    "state": "Marmara",
+    "lat": 41.0082,
+    "lng": 28.9784,
+    "cover_image": "/files/istanbul.jpg",
+    "avg_rating": 5,
+    "total_reviews": 6500,
+    "heat_score": 0.99,
+    "review_data": {
+      "good": "Unmatched history, incredible food, and breathtaking Bosphorus views.",
+      "bad": "Massive crowds and heavy traffic congestion."
+    },
+    "weather_city": "Istanbul"
+  },
+  {
+    "location_id": "antalya",
+    "name": "Antalya",
+    "country": "Turkey",
+    "state": "Mediterranean",
+    "lat": 36.8969,
+    "lng": 30.7133,
+    "cover_image": "/files/antalya.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 4200,
+    "heat_score": 0.94,
+    "review_data": {
+      "good": "Beautiful beaches, luxury resorts, and stunning ancient ruins nearby.",
+      "bad": "Can get packed and expensive during peak summer."
+    },
+    "weather_city": "Antalya"
+  },
+  {
+    "location_id": "izmir",
+    "name": "Izmir",
+    "country": "Turkey",
+    "state": "Aegean",
+    "lat": 38.4192,
+    "lng": 27.1287,
+    "cover_image": "/files/Izmir.jpg",
+    "avg_rating": 4.5,
+    "total_reviews": 2800,
+    "heat_score": 0.89,
+    "review_data": {
+      "good": "Beautiful Aegean coastline, relaxed pace, and close to Ephesus.",
+      "bad": "Fewer major historic landmarks within the city center itself."
+    },
+    "weather_city": "Izmir"
+  },
+  {
+    "location_id": "bursa",
+    "name": "Bursa",
+    "country": "Turkey",
+    "state": "Marmara",
+    "lat": 40.1828,
+    "lng": 29.0667,
+    "cover_image": "/files/Bursa.jpg",
+    "avg_rating": 4,
+    "total_reviews": 1600,
+    "heat_score": 0.82,
+    "review_data": {
+      "good": "Amazing Ottoman architecture, famous silk markets, and great skiing.",
+      "bad": "Quieter nightlife compared to coastal cities."
+    },
+    "weather_city": "Bursa"
+  },
+  {
+    "location_id": "ankara",
+    "name": "Ankara",
+    "country": "Turkey",
+    "state": "Central Anatolia",
+    "lat": 39.9334,
+    "lng": 32.8597,
+    "cover_image": "/files/ankara.jpg",
+    "avg_rating": 3.5,
+    "total_reviews": 1900,
+    "heat_score": 0.78,
+    "review_data": {
+      "good": "Fantastic museums, organized streets, and lower tourist prices.",
+      "bad": "Lacks the coastal charm or deep ancient aesthetic of other cities."
+    },
+    "weather_city": "Ankara"
+  }
+]
