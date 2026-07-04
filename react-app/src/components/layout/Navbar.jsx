@@ -3,13 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faXmark, faUser } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
-import useAppStore from '../../stores/useAppStore';
-import LoginModal from '../global/LoginModal';
+import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/clerk-react';
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const { user, isLoginModalOpen, openLoginModal, closeLoginModal } = useAppStore();
 
   const links = [
     { to: '/', label: 'Home' },
@@ -51,25 +49,20 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Auth Button */}
-          {user ? (
-            <div className="flex items-center gap-2 bg-[#D4B15A]/20 border border-[#D4B15A]/30 rounded-full pl-2 pr-4 py-1.5 cursor-pointer hover:bg-[#D4B15A]/30 transition-colors">
-              <div className="w-6 h-6 rounded-full bg-[#D4B15A] flex items-center justify-center text-white text-xs font-bold uppercase">
-                {user.name ? user.name.charAt(0) : user.email.charAt(0)}
-              </div>
-              <span className="text-[#D4B15A] text-sm font-semibold truncate max-w-[100px]">
-                {user.name || user.email.split('@')[0]}
-              </span>
-            </div>
-          ) : (
-            <button
-              onClick={openLoginModal}
-              className="flex items-center gap-2 bg-[#D4B15A] hover:bg-[#b89542] text-white px-5 py-2 rounded-full font-medium transition-colors text-sm"
-            >
-              <FontAwesomeIcon icon={faUser} />
-              Login / Sign Up
-            </button>
-          )}
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button
+                className="flex items-center gap-2 bg-[#D4B15A] hover:bg-[#b89542] text-white px-5 py-2 rounded-full font-medium transition-colors text-sm cursor-pointer"
+              >
+                <FontAwesomeIcon icon={faUser} />
+                Login / Sign Up
+              </button>
+            </SignInButton>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
 
           {/* Mobile toggle */}
           <button
@@ -110,7 +103,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </nav>
-    <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </>
   );
 }

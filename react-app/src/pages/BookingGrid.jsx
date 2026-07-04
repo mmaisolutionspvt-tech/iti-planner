@@ -5,7 +5,8 @@ import { faFilter, faStar, faCheckCircle } from '@fortawesome/free-solid-svg-ico
 import ReviewModal from '../components/global/ReviewModal';
 import PDFSummaryGenerator from '../components/planner/PDFSummaryGenerator';
 import SeatChartModal from '../components/global/SeatChartModal';
-import useAppStore from '../stores/useAppStore';
+import { useUser, useClerk } from '@clerk/clerk-react';
+import axios from 'axios';
 
 export default function BookingGrid() {
   const [searchParams] = useSearchParams();
@@ -23,6 +24,9 @@ export default function BookingGrid() {
   // Modal & Booking
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [confirmedPdfUrl, setConfirmedPdfUrl] = useState('');
+  const [bookingLoading, setBookingLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -80,7 +84,8 @@ export default function BookingGrid() {
     return true;
   });
 
-  const { user, openLoginModal } = useAppStore();
+  const { user, isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
   const [isSeatChartOpen, setIsSeatChartOpen] = useState(false);
   const [selectedTransportItem, setSelectedTransportItem] = useState(null);
 
@@ -100,11 +105,67 @@ export default function BookingGrid() {
     proceedToReview(selectedTransportItem, seats);
   };
 
-  const proceedToReview = (item, seats) => {
-    if (!user) {
-      openLoginModal();
+  const handlePayment = async () => {
+    if (!isSignedIn) {
+      openSignIn({ mode: 'modal' });
       return;
     }
+
+    if (!selectedBooking) return;
+
+    setBookingLoading(true);
+    try {
+      const priceVal = selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0);
+      const totalAmount = priceVal * (selectedBooking.seats?.length || 1);
+
+      const bookingData = {
+        userId: user.id,
+        email: user.primaryEmailAddress?.emailAddress,
+        phone: user.phoneNumbers?.[0]?.phoneNumber || 'N/A',
+        name: user.fullName || user.username || user.primaryEmailAddress?.emailAddress.split('@')[0],
+        itemType: type,
+        itemData: {
+          ...selectedBooking.itemData,
+          name: selectedBooking.vendorName,
+          price_inr: totalAmount,
+          from: selectedBooking.from,
+          to: selectedBooking.to,
+          fromDate: selectedBooking.fromDate,
+          toDate: selectedBooking.toDate,
+          seats: selectedBooking.seats
+        }
+      };
+
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+      console.log(`Sending booking request to backend: ${backendUrl}/api/book`);
+      const res = await axios.post(`${backendUrl}/api/book`, bookingData);
+
+      if (res.data && res.data.success) {
+        setBookingConfirmed(true);
+        setConfirmedPdfUrl(res.data.pdfUrl);
+        // Show review modal after 2 seconds
+        setTimeout(() => {
+          setIsReviewOpen(true);
+        }, 2000);
+      } else {
+        alert("Booking failed. Please try again.");
+      }
+    } catch (err) {
+      console.error("Booking error:", err);
+      alert("Error confirming booking: " + err.message);
+    } finally {
+      setBookingLoading(false);
+    }
+  };
+
+  const proceedToReview = (item, seats) => {
+    if (!isSignedIn) {
+      openSignIn({ mode: 'modal' });
+      return;
+    }
+
+    setBookingConfirmed(false);
+    setConfirmedPdfUrl('');
     
     setSelectedBooking({
       id: `FF-${Math.floor(Math.random() * 10000)}`,
@@ -115,9 +176,9 @@ export default function BookingGrid() {
       to: searchParams.get('to') || 'Destination',
       fromDate: searchParams.get('fromDate') || 'Today',
       toDate: searchParams.get('toDate') || 'Next Week',
-      seats: seats
+      seats: seats,
+      itemData: item
     });
-    setIsReviewOpen(true);
   };
 
   return (
@@ -197,10 +258,94 @@ export default function BookingGrid() {
             <p className="text-gray-500 mt-2">{filtered.length} options found matching your criteria.</p>
           </div>
           
-          {selectedBooking && (
-            <PDFSummaryGenerator bookingData={selectedBooking} />
-          )}
         </div>
+
+        {/* Selected Booking Checkout Panel */}
+        {selectedBooking && (
+          <div className="mb-8 bg-white border border-[#D4B15A]/30 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#121619] via-[#D4B15A] to-[#121619]" />
+            
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <span className="text-xs font-bold text-[#D4B15A] uppercase tracking-widest bg-[#D4B15A]/10 px-3 py-1 rounded-full border border-[#D4B15A]/20">
+                  Selected Booking Review
+                </span>
+                <h2 className="text-2xl font-bold text-[#121619] mt-3">Confirm Your {type === 'hotels' ? 'Stay' : 'Journey'}</h2>
+              </div>
+              <button 
+                onClick={() => { setSelectedBooking(null); setBookingConfirmed(false); }}
+                className="text-gray-400 hover:text-gray-600 font-medium text-sm transition-colors cursor-pointer"
+              >
+                ✕ Cancel
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Details</p>
+                <p className="font-bold text-gray-900 mt-1">{selectedBooking.vendorName}</p>
+                {selectedBooking.seats && selectedBooking.seats.length > 0 && (
+                  <p className="text-xs text-gray-500 mt-1">Seats: {selectedBooking.seats.join(', ')}</p>
+                )}
+              </div>
+
+              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Schedule</p>
+                <p className="font-bold text-gray-900 mt-1">{selectedBooking.from} → {selectedBooking.to}</p>
+                <p className="text-xs text-gray-500 mt-1">{selectedBooking.fromDate} to {selectedBooking.toDate}</p>
+              </div>
+
+              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 flex flex-col justify-between">
+                <div>
+                  <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Price</p>
+                  <p className="text-2xl font-extrabold text-gray-900 mt-0.5">
+                    ₹{((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {bookingConfirmed ? (
+              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-emerald-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🎉</span>
+                  <div>
+                    <p className="font-bold">Booking Confirmed successfully!</p>
+                    <p className="text-sm text-emerald-700">Check your email, WhatsApp, & SMS notifications.</p>
+                  </div>
+                </div>
+                {confirmedPdfUrl && (
+                  <a 
+                    href={confirmedPdfUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-sm shrink-0"
+                  >
+                    Download PDF Ticket 📄
+                  </a>
+                )}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-4 items-center">
+                <button 
+                  onClick={handlePayment}
+                  disabled={bookingLoading}
+                  className="bg-[#121619] hover:bg-[#1e2429] text-[#D4B15A] font-bold px-8 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                >
+                  {bookingLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#D4B15A] border-t-transparent" />
+                      Processing payment...
+                    </>
+                  ) : (
+                    `Pay Now ₹${((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}`
+                  )}
+                </button>
+                <span className="text-xs text-gray-400">Secured via Razorpay/PhonePe Mock. By paying you agree to terms.</span>
+              </div>
+            )}
+          </div>
+        )}
 
         {loading ? (
           <div className="flex justify-center py-20">
