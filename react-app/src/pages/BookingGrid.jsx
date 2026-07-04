@@ -74,7 +74,7 @@ export default function BookingGrid() {
 
   // Apply filters
   const filtered = results.filter(item => {
-    const price = item.price_per_night_inr || item.price || item.price_per_km * 100 || 0;
+    const price = item.price_per_night_inr || item.price_inr || item.price || (item.price_per_km ? item.price_per_km * 100 : 0);
     if (price > priceRange) return false;
     
     if (type === 'hotels') {
@@ -115,7 +115,7 @@ export default function BookingGrid() {
 
     setBookingLoading(true);
     try {
-      const priceVal = selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0);
+      const priceVal = selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0);
       const totalAmount = priceVal * (selectedBooking.seats?.length || 1);
 
       const bookingData = {
@@ -299,7 +299,7 @@ export default function BookingGrid() {
                 <div>
                   <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Price</p>
                   <p className="text-2xl font-extrabold text-gray-900 mt-0.5">
-                    ₹{((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}
+                    ₹{((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function BookingGrid() {
                       Processing payment...
                     </>
                   ) : (
-                    `Pay Now ₹${((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}`
+                    `Pay Now ₹${((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}`
                   )}
                 </button>
                 <span className="text-xs text-gray-400">Secured via Razorpay/PhonePe Mock. By paying you agree to terms.</span>
@@ -403,7 +403,7 @@ export default function BookingGrid() {
                     <div>
                       <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Starting from</p>
                       <p className="text-2xl font-bold text-[#121619]">
-                        ₹{item.price_per_night_inr || item.price || item.price_per_km * 100}
+                        ₹{(item.price_per_night_inr || item.price_inr || item.price || (item.price_per_km ? item.price_per_km * 100 : 0)).toLocaleString()}
                         <span className="text-sm font-normal text-gray-500"> {type === 'hotels' && '/ night'}</span>
                       </p>
                     </div>
