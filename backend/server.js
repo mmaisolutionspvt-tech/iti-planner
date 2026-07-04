@@ -137,7 +137,7 @@ async function generatePDF(booking) {
   });
 
   const itemName = booking.itemData?.name || booking.itemData?.airline || booking.itemData?.vendor_id || 'Travel Booking';
-  const price = booking.itemData?.price_per_night_inr || booking.itemData?.price || (booking.itemData?.price_per_km ? booking.itemData.price_per_km * 100 : 0);
+  const price = booking.itemData?.price_inr || booking.itemData?.price_per_night_inr || booking.itemData?.price || (booking.itemData?.price_per_km ? booking.itemData.price_per_km * 100 : 0);
 
   currentY -= 30;
   page.drawText(`Item Type: ${booking.itemType ? booking.itemType.toUpperCase() : 'N/A'}`, { x: 50, y: currentY, size: 11, color: primaryColor });
