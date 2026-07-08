@@ -71,7 +71,7 @@ export default function WeatherDiagnostics() {
           </div>
           
           <button
-            onClick={() => navigate(`/booking-grid?${searchParams.toString()}`)}
+            onClick={() => navigate(`/select-hotel?${searchParams.toString()}`)}
             className="flex items-center gap-2 bg-[#FFAA00] hover:bg-[#FFBC1A] text-[#121619] px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl hover:scale-105"
           >
             Proceed to Booking

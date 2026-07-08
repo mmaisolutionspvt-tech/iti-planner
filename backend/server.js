@@ -74,7 +74,7 @@ app.post('/api/book', async (req, res) => {
 
 async function generatePDF(booking) {
   const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([600, 450]);
+  const page = pdfDoc.addPage([600, 540]);
   const { width, height } = page.getSize();
   
   // Custom theme colors (Firstflight Branding)
@@ -109,7 +109,7 @@ async function generatePDF(booking) {
   // Ticket Body
   let currentY = height - 140;
 
-  // Draw Section Header
+  // Draw Section Header: Passenger Details
   page.drawText('PASSENGER DETAILS', { x: 40, y: currentY, size: 12, color: accentColor });
   page.drawLine({
     start: { x: 40, y: currentY - 5 },
@@ -126,9 +126,9 @@ async function generatePDF(booking) {
   page.drawText(`Phone: ${booking.phone || 'N/A'}`, { x: 50, y: currentY, size: 11, color: primaryColor });
   page.drawText(`User ID: ${booking.userId || 'N/A'}`, { x: 300, y: currentY, size: 10, color: darkGray });
 
-  // Draw Section Header for Item
+  // Draw Section Header: Transport Details
   currentY -= 40;
-  page.drawText('BOOKING DETAILS', { x: 40, y: currentY, size: 12, color: accentColor });
+  page.drawText('TRANSPORT DETAILS', { x: 40, y: currentY, size: 12, color: accentColor });
   page.drawLine({
     start: { x: 40, y: currentY - 5 },
     end: { x: width - 40, y: currentY - 5 },
@@ -137,11 +137,11 @@ async function generatePDF(booking) {
   });
 
   const itemName = booking.itemData?.name || booking.itemData?.airline || booking.itemData?.vendor_id || 'Travel Booking';
-  const price = booking.itemData?.price_inr || booking.itemData?.price_per_night_inr || booking.itemData?.price || (booking.itemData?.price_per_km ? booking.itemData.price_per_km * 100 : 0);
+  const transportPrice = booking.itemData?.price_inr || booking.itemData?.price_per_night_inr || booking.itemData?.price || (booking.itemData?.price_per_km ? booking.itemData.price_per_km * 100 : 0);
 
   currentY -= 30;
   page.drawText(`Item Type: ${booking.itemType ? booking.itemType.toUpperCase() : 'N/A'}`, { x: 50, y: currentY, size: 11, color: primaryColor });
-  page.drawText(`Provider/Hotel: ${itemName}`, { x: 300, y: currentY, size: 11, color: primaryColor });
+  page.drawText(`Provider/Line: ${itemName}`, { x: 300, y: currentY, size: 11, color: primaryColor });
 
   if (booking.itemData?.from && booking.itemData?.to) {
     currentY -= 20;
@@ -151,7 +151,28 @@ async function generatePDF(booking) {
     page.drawText(`City: ${booking.itemData.city}`, { x: 50, y: currentY, size: 11, color: primaryColor });
   }
 
-  // Draw Price Details
+  // Draw Section Header: Hotel Details (If present)
+  let hotelTotalPrice = 0;
+  if (booking.hotelData) {
+    hotelTotalPrice = booking.hotelData.total_price_inr || 0;
+    currentY -= 40;
+    page.drawText('ACCOMMODATION DETAILS', { x: 40, y: currentY, size: 12, color: accentColor });
+    page.drawLine({
+      start: { x: 40, y: currentY - 5 },
+      end: { x: width - 40, y: currentY - 5 },
+      thickness: 1,
+      color: accentColor,
+    });
+
+    currentY -= 30;
+    page.drawText(`Hotel Name: ${booking.hotelData.name}`, { x: 50, y: currentY, size: 11, color: primaryColor });
+    page.drawText(`Duration: ${booking.hotelData.nights || 1} Night(s)`, { x: 350, y: currentY, size: 11, color: primaryColor });
+    
+    currentY -= 20;
+    page.drawText(`Price / Night: INR ${(booking.hotelData.price_per_night_inr || 0).toLocaleString()}`, { x: 50, y: currentY, size: 11, color: primaryColor });
+  }
+
+  // Draw Section Header: Billing Details
   currentY -= 40;
   page.drawText('BILLING DETAILS', { x: 40, y: currentY, size: 12, color: accentColor });
   page.drawLine({
@@ -162,8 +183,19 @@ async function generatePDF(booking) {
   });
 
   currentY -= 30;
-  page.drawText(`Base Fare:`, { x: 50, y: currentY, size: 11, color: primaryColor });
-  page.drawText(`INR ${price.toLocaleString()}`, { x: 200, y: currentY, size: 11, color: primaryColor });
+  page.drawText(`Transport Fare:`, { x: 50, y: currentY, size: 11, color: primaryColor });
+  page.drawText(`INR ${transportPrice.toLocaleString()}`, { x: 200, y: currentY, size: 11, color: primaryColor });
+  
+  if (booking.hotelData) {
+    currentY -= 20;
+    page.drawText(`Hotel Fare:`, { x: 50, y: currentY, size: 11, color: primaryColor });
+    page.drawText(`INR ${hotelTotalPrice.toLocaleString()}`, { x: 200, y: currentY, size: 11, color: primaryColor });
+  }
+
+  const finalTotal = transportPrice + hotelTotalPrice;
+  currentY -= 20;
+  page.drawText(`Total Charged:`, { x: 50, y: currentY, size: 11, fontStyle: 'bold', color: primaryColor });
+  page.drawText(`INR ${finalTotal.toLocaleString()}`, { x: 200, y: currentY, size: 11, fontStyle: 'bold', color: primaryColor });
   
   currentY -= 20;
   page.drawText(`Status:`, { x: 50, y: currentY, size: 11, color: primaryColor });
@@ -172,7 +204,7 @@ async function generatePDF(booking) {
   // Footer text
   page.drawText('Thank you for booking with Firstflight Travels. Have a safe journey!', {
     x: 40,
-    y: 40,
+    y: 30,
     size: 10,
     color: darkGray,
   });

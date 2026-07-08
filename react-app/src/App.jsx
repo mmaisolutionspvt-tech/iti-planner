@@ -17,6 +17,7 @@ import Register from './pages/Register';
 // New features
 import BookingGrid from './pages/BookingGrid';
 import WeatherDiagnostics from './pages/WeatherDiagnostics';
+import SelectHotel from './pages/SelectHotel';
 
 // Placeholder components for routing before they are built
 const Placeholder = ({ title }) => <div className="pt-24 min-h-screen text-center"><h1 className="text-3xl font-bold">{title} Page</h1></div>;
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/book-flight" element={<BookFlight />} />
           <Route path="/schedule-trip" element={<ScheduleTrip />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/select-hotel" element={<SelectHotel />} />
           <Route path="/booking-grid" element={<BookingGrid />} />
           <Route path="/weather-diagnostics" element={<WeatherDiagnostics />} />
           <Route path="*" element={<Placeholder title="404 Not Found" />} />

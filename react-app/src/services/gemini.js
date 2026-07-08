@@ -122,8 +122,8 @@ function extractJSON(text) {
  * Main itinerary generator.
  * Sends the full system prompt as systemInstruction + a clean user query.
  */
-export async function generateTripPlan({ locations, fromDate, toDate, mode, budget, fromCity = 'Delhi', travellerCount = 2 }) {
-  const userMessage = `Generate a complete travel itinerary with the following inputs:
+export async function generateTripPlan({ locations, fromDate, toDate, mode, budget, fromCity = 'Delhi', travellerCount = 2, selectedHotel = null }) {
+  let userMessage = `Generate a complete travel itinerary with the following inputs:
 
 - destinations: ${locations.join(', ')}
 - from_date: ${fromDate}
@@ -131,9 +131,14 @@ export async function generateTripPlan({ locations, fromDate, toDate, mode, budg
 - travel_mode: ${mode}
 - budget_tier: ${budget}
 - from_city: ${fromCity}
-- traveller_count: ${travellerCount}
+- traveller_count: ${travellerCount}`;
 
-Output ONLY the raw JSON object. No markdown, no explanation, no code fences.`;
+  if (selectedHotel) {
+    userMessage += `\n- selected_hotel: "${selectedHotel.name}" (Rating: ${selectedHotel.rating} Stars, Price: ₹${selectedHotel.price_per_night_inr || selectedHotel.price_inr || selectedHotel.price || 0}/night, Address: ${selectedHotel.address}, Amenities: ${selectedHotel.amenities?.join(', ') || 'None'})`;
+    userMessage += `\n\nCRITICAL INSTRUCTION: You MUST use the selected_hotel above ("${selectedHotel.name}") as the accommodation for all nights in the itinerary. Do not invent other hotels.`;
+  }
+
+  userMessage += `\n\nOutput ONLY the raw JSON object. No markdown, no explanation, no code fences.`;
 
   const text = await callGemini(userMessage, SYSTEM_PROMPT);
   return extractJSON(text);

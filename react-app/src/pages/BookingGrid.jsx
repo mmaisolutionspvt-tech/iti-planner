@@ -116,7 +116,30 @@ export default function BookingGrid() {
     setBookingLoading(true);
     try {
       const priceVal = selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0);
-      const totalAmount = priceVal * (selectedBooking.seats?.length || 1);
+      const transportCost = priceVal * (selectedBooking.seats?.length || 1);
+
+      const hotelId = searchParams.get('hotelId');
+      const hotelName = searchParams.get('hotelName');
+      const hotelPrice = parseInt(searchParams.get('hotelPrice')) || 0;
+
+      let hotelData = null;
+      let hotelTotal = 0;
+      if (hotelId && type !== 'hotels') {
+        const fromD = new Date(selectedBooking.fromDate);
+        const toD = new Date(selectedBooking.toDate);
+        const diffTime = Math.abs(toD - fromD);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+        hotelTotal = hotelPrice * diffDays;
+        hotelData = {
+          hotelId,
+          name: hotelName,
+          price_per_night_inr: hotelPrice,
+          nights: diffDays,
+          total_price_inr: hotelTotal
+        };
+      }
+
+      const totalAmount = transportCost + hotelTotal;
 
       const bookingData = {
         userId: user.id,
@@ -127,13 +150,14 @@ export default function BookingGrid() {
         itemData: {
           ...selectedBooking.itemData,
           name: selectedBooking.vendorName,
-          price_inr: totalAmount,
+          price_inr: transportCost,
           from: selectedBooking.from,
           to: selectedBooking.to,
           fromDate: selectedBooking.fromDate,
           toDate: selectedBooking.toDate,
           seats: selectedBooking.seats
-        }
+        },
+        hotelData
       };
 
       const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
@@ -180,6 +204,26 @@ export default function BookingGrid() {
       itemData: item
     });
   };
+
+  const hotelId = searchParams.get('hotelId');
+  const hotelName = searchParams.get('hotelName');
+  const hotelPrice = parseInt(searchParams.get('hotelPrice')) || 0;
+
+  let totalPrice = 0;
+  if (selectedBooking) {
+    const transportPrice = selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0);
+    const transportTotal = transportPrice * (selectedBooking.seats?.length || 1);
+    
+    let hotelTotal = 0;
+    if (hotelId && type !== 'hotels') {
+      const fromD = new Date(selectedBooking.fromDate);
+      const toD = new Date(selectedBooking.toDate);
+      const diffTime = Math.abs(toD - fromD);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+      hotelTotal = hotelPrice * diffDays;
+    }
+    totalPrice = transportTotal + hotelTotal;
+  }
 
   return (
     <div className="pt-24 min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -280,6 +324,20 @@ export default function BookingGrid() {
               </button>
             </div>
 
+            {/* Hotel stay sub-card */}
+            {hotelId && type !== 'hotels' && (
+              <div className="mb-6 p-4 bg-[#D4B15A]/10 border border-[#D4B15A]/20 rounded-2xl flex justify-between items-center">
+                <div>
+                  <span className="text-[10px] font-bold text-[#D4B15A] uppercase tracking-wider block mb-1">🏨 Accommodation reservation</span>
+                  <p className="font-bold text-gray-900 text-sm">{hotelName}</p>
+                  <p className="text-[11px] text-gray-500">Stay from {selectedBooking.fromDate} to {selectedBooking.toDate}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-extrabold text-gray-900 text-sm">₹{hotelPrice.toLocaleString()} / night</p>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
                 <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Details</p>
@@ -297,9 +355,9 @@ export default function BookingGrid() {
 
               <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 flex flex-col justify-between">
                 <div>
-                  <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Price</p>
+                  <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Combined Price</p>
                   <p className="text-2xl font-extrabold text-gray-900 mt-0.5">
-                    ₹{((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}
+                    ₹{totalPrice.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -338,7 +396,7 @@ export default function BookingGrid() {
                       Processing payment...
                     </>
                   ) : (
-                    `Pay Now ₹${((selectedBooking.itemData.price_per_night_inr || selectedBooking.itemData.price_inr || selectedBooking.itemData.price || (selectedBooking.itemData.price_per_km ? selectedBooking.itemData.price_per_km * 100 : 0)) * (selectedBooking.seats?.length || 1)).toLocaleString()}`
+                    `Pay Now ₹${totalPrice.toLocaleString()}`
                   )}
                 </button>
                 <span className="text-xs text-gray-400">Secured via Razorpay/PhonePe Mock. By paying you agree to terms.</span>

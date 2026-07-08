@@ -14,11 +14,46 @@ export default function ScheduleTrip() {
   const [apiError, setApiError] = useState(null);
   const { addToast, addDraft } = useAppStore();
 
-  const handleGenerate = async (e) => {
+  // Hotel selector steps
+  const [step, setStep] = useState('input'); // 'input' | 'hotel'
+  const [availableHotels, setAvailableHotels] = useState([]);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setApiError(null);
+    const locList = params.locations.split(',').map(s => s.trim()).filter(Boolean);
+    if (locList.length === 0) return;
+
+    try {
+      setLoading(true);
+      const res = await fetch('/src/data/hotels.json');
+      const data = await res.json();
+      const firstDest = locList[0].toLowerCase();
+      const matched = data.filter(h => h.city.toLowerCase() === firstDest);
+      
+      setLoading(false);
+      if (matched.length > 0) {
+        setAvailableHotels(matched);
+        setStep('hotel');
+      } else {
+        // Proceed directly if no hotels match
+        triggerGeneration(null);
+      }
+    } catch (err) {
+      setLoading(false);
+      console.warn("Failed to load hotels, generating directly:", err);
+      triggerGeneration(null);
+    }
+  };
+
+  const triggerGeneration = async (hotel) => {
     setLoading(true);
     setPlan(null);
     setApiError(null);
+    setSelectedHotel(hotel);
+    setStep('input');
+
     try {
       const locList = params.locations.split(',').map(s => s.trim()).filter(Boolean);
       const generated = await generateTripPlan({
@@ -26,7 +61,8 @@ export default function ScheduleTrip() {
         fromDate: params.fromDate,
         toDate: params.toDate,
         mode: params.mode,
-        budget: params.budget
+        budget: params.budget,
+        selectedHotel: hotel
       });
 
       if (generated.error) {
@@ -49,7 +85,7 @@ export default function ScheduleTrip() {
     <div className="pt-20 min-h-screen bg-gray-50 pb-20">
       <div className="max-w-7xl mx-auto px-4">
         
-        {!plan && (
+        {!plan && step === 'input' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -86,7 +122,7 @@ export default function ScheduleTrip() {
               </div>
             )}
 
-            <form onSubmit={handleGenerate} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Where do you want to go?</label>
                 <div className="relative">
@@ -139,10 +175,75 @@ export default function ScheduleTrip() {
 
               <div className="md:col-span-2 mt-4">
                 <button type="submit" disabled={loading} className="w-full bg-[#121619] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1e2429] transition-colors shadow-lg shadow-[#121619]/30 disabled:bg-gray-400 flex items-center justify-center gap-2">
-                  {loading ? <><FontAwesomeIcon icon={faSpinner} spin /> Generating...</> : <><FontAwesomeIcon icon={faWandMagicSparkles} /> Generate Itinerary</>}
+                  {loading ? <><FontAwesomeIcon icon={faSpinner} spin /> Loading hotels...</> : <><FontAwesomeIcon icon={faWandMagicSparkles} /> Choose Hotel stay</>}
                 </button>
               </div>
             </form>
+          </motion.div>
+        )}
+
+        {!plan && step === 'hotel' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-3xl p-8 shadow-xl max-w-4xl mx-auto mb-10"
+          >
+            <div className="text-center mb-8">
+              <span className="text-xs font-bold text-[#D4B15A] uppercase tracking-widest bg-[#D4B15A]/10 px-3 py-1 rounded-full border border-[#D4B15A]/20">
+                Itinerary Step 2: Accommodation Selection
+              </span>
+              <h2 className="text-3xl font-bold text-gray-900 font-display mt-3">Select Your Hotel Stay</h2>
+              <p className="text-gray-500 mt-2">AI will build the itinerary centered around this selected hotel.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-h-[450px] overflow-y-auto pr-2">
+              {availableHotels.map(h => (
+                <div 
+                  key={h.hotel_id} 
+                  className="bg-gray-50 hover:bg-white border border-gray-100 hover:border-[#D4B15A] rounded-2xl p-5 transition-all shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between" 
+                  onClick={() => triggerGeneration(h)}
+                >
+                  <div>
+                    <div className="flex justify-between items-start gap-2 mb-2">
+                      <h4 className="font-bold text-gray-900 leading-snug">{h.name}</h4>
+                      <span className="text-xs text-gray-400 shrink-0 font-medium">★ {h.star_category} Star</span>
+                    </div>
+                    <p className="text-xs text-gray-500 line-clamp-1 mb-3">📍 {h.address}</p>
+                    
+                    {/* Attractions info */}
+                    {h.nearby_attractions_km && (
+                      <p className="text-[10px] text-gray-400 line-clamp-1 mb-3">
+                        {Object.entries(h.nearby_attractions_km).map(([name, dist]) => `${name} (${dist}km)`).join(', ')}
+                      </p>
+                    )}
+
+                    {h.amenities && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {h.amenities.slice(0, 3).map(a => (
+                          <span key={a} className="text-[9px] bg-white text-gray-500 border border-gray-100 px-2 py-0.5 rounded-md uppercase font-semibold">{a}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex justify-between items-center pt-3 border-t border-gray-100 mt-2">
+                    <span className="text-sm font-extrabold text-[#121619]">₹{(h.price_per_night_inr || h.price_inr || 0).toLocaleString()} / night</span>
+                    <button className="bg-[#121619] hover:bg-[#1e2429] text-[#D4B15A] font-bold text-xs px-4 py-2 rounded-xl transition-all cursor-pointer">
+                      Select stay
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-between">
+              <button onClick={() => setStep('input')} className="px-6 py-3 border border-gray-200 hover:border-gray-300 text-gray-600 rounded-xl font-semibold transition-colors cursor-pointer">
+                ← Back
+              </button>
+              <button onClick={() => triggerGeneration(null)} className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-colors cursor-pointer">
+                Skip & Generate Itinerary →
+              </button>
+            </div>
           </motion.div>
         )}
 
