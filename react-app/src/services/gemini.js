@@ -223,7 +223,8 @@ function generateFallbackTripPlan(config) {
     returnTransport = null
   } = config;
 
-  const destKey = (locations[0] || 'Goa').toLowerCase().trim();
+  const destCity = (locations[0] || 'Goa').trim();
+  const destKey = destCity.toLowerCase();
   const dbKey = Object.keys(CITY_FALLBACK_DB).find(k => destKey.includes(k)) || 'goa';
   const cityData = CITY_FALLBACK_DB[dbKey];
 
