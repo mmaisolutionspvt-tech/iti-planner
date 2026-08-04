@@ -70,3 +70,64 @@
 .leaflet-control-zoom a:hover {
   background-color: #f0fdf4 !important;
 }
+
+/* Print Media Styles for Clean PDF Exports */
+@media print {
+  /* Hide all non-essential UI elements */
+  nav,
+  footer,
+  header,
+  .no-print,
+  .glowing-dot,
+  #welcome-modal,
+  #login-modal,
+  #toast-container {
+    display: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm 10mm 12mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Remove heavy shadows on print */
+  .shadow-xl, .shadow-lg, .shadow-md, .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  /* Page break controls to prevent chopped content and trailing empty pages */
+  .break-inside-avoid,
+  .day-container,
+  .transport-card,
+  .activity-card,
+  .hotel-card,
+  .budget-summary-box,
+  .tips-box {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Prevent trailing page breaks */
+  body, main, #root {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}

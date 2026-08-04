@@ -3,6 +3,8 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import WelcomeModal from './components/global/WelcomeModal';
 import ToastContainer from './components/global/ToastContainer';
+import LoginModal from './components/global/LoginModal';
+import useAppStore from './stores/useAppStore';
 import Home from './pages/Home';
 import BookBus from './pages/BookBus';
 import BookFlight from './pages/BookFlight';
@@ -23,6 +25,8 @@ import SelectHotel from './pages/SelectHotel';
 const Placeholder = ({ title }) => <div className="pt-24 min-h-screen text-center"><h1 className="text-3xl font-bold">{title} Page</h1></div>;
 
 export default function App() {
+  const { isLoginModalOpen, closeLoginModal } = useAppStore();
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -47,6 +51,7 @@ export default function App() {
       <Footer />
       <WelcomeModal />
       <ToastContainer />
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </div>
   );
 }

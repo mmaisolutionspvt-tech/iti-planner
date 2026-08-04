@@ -11,23 +11,77 @@ export default function WeatherDiagnostics() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   
-  // Hardcode lat/lng for Delhi for demo, or read from query params
-  const lat = 28.6139;
-  const lng = 77.2090;
+  const [coords, setCoords] = useState({ lat: 28.6139, lng: 77.2090, cityName: 'Delhi' });
+  const destination = searchParams.get('to') || 'Delhi';
+
+  useEffect(() => {
+    const getCoordinates = async () => {
+      try {
+        const CITY_COORDS = {
+          'delhi': { lat: 28.6139, lng: 77.2090 },
+          'mumbai': { lat: 19.0760, lng: 72.8777 },
+          'kolkata': { lat: 22.5726, lng: 88.3639 },
+          'chennai': { lat: 13.0827, lng: 80.2707 },
+          'bengaluru': { lat: 12.9716, lng: 77.5946 },
+          'bangalore': { lat: 12.9716, lng: 77.5946 },
+          'hyderabad': { lat: 17.3850, lng: 78.4867 },
+          'nainital': { lat: 29.3803, lng: 79.4636 },
+          'manali': { lat: 32.2396, lng: 77.1887 },
+          'shimla': { lat: 31.1048, lng: 77.1734 },
+          'goa': { lat: 15.2993, lng: 74.1240 },
+          'rishikesh': { lat: 30.0869, lng: 78.2676 },
+          'pune': { lat: 18.5204, lng: 73.8567 },
+          'jaipur': { lat: 26.9124, lng: 75.7873 }
+        };
+
+        const cleanCity = destination.toLowerCase().trim();
+        if (CITY_COORDS[cleanCity]) {
+          setCoords({
+            lat: CITY_COORDS[cleanCity].lat,
+            lng: CITY_COORDS[cleanCity].lng,
+            cityName: destination
+          });
+          return;
+        }
+
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(destination)}&count=1`);
+        if (geoRes.ok) {
+          const geoData = await geoRes.json();
+          if (geoData.results && geoData.results.length > 0) {
+            const match = geoData.results[0];
+            setCoords({
+              lat: match.latitude,
+              lng: match.longitude,
+              cityName: match.name
+            });
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Geocoding failed, falling back to Delhi:", err);
+      }
+      setCoords({ lat: 28.6139, lng: 77.2090, cityName: 'Delhi' });
+    };
+
+    getCoordinates();
+  }, [destination]);
 
   useEffect(() => {
     const fetchWeather = async () => {
+      setLoading(true);
       try {
-        // Open-Meteo API (no key required)
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max&current_weather=true&timezone=auto`);
+        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max&current_weather=true&timezone=auto`);
         const result = await res.json();
         
-        // Format for Recharts
-        const chartData = result.daily.time.map((date, idx) => ({
-          date: new Date(date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
-          maxTemp: result.daily.temperature_2m_max[idx],
-          minTemp: result.daily.temperature_2m_min[idx],
-        }));
+        const chartData = result.daily.time.map((date, idx) => {
+          const parts = date.split('-');
+          const d = parts.length === 3 ? new Date(parts[0], parts[1] - 1, parts[2]) : new Date(date);
+          return {
+            date: d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
+            maxTemp: Math.round(result.daily.temperature_2m_max[idx]),
+            minTemp: Math.round(result.daily.temperature_2m_min[idx]),
+          };
+        });
 
         setData({
           current: result.current_weather,
@@ -42,7 +96,7 @@ export default function WeatherDiagnostics() {
     };
 
     fetchWeather();
-  }, [lat, lng]);
+  }, [coords.lat, coords.lng]);
 
   if (loading) {
     return (
@@ -65,8 +119,8 @@ export default function WeatherDiagnostics() {
               <FontAwesomeIcon icon={faLocationDot} />
             </div>
             <div>
-              <h1 className="text-3xl font-display font-bold text-[#121619]">Weather Diagnostics</h1>
-              <p className="text-gray-500 font-medium">Real-time telemetry & forecasting</p>
+              <h1 className="text-3xl font-display font-bold text-[#121619]">Weather Diagnostics: {coords.cityName}</h1>
+              <p className="text-gray-500 font-medium">Real-time telemetry & forecasting for your destination</p>
             </div>
           </div>
           

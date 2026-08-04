@@ -7,6 +7,8 @@ import PDFSummaryGenerator from '../components/planner/PDFSummaryGenerator';
 import SeatChartModal from '../components/global/SeatChartModal';
 import { useUser, useClerk } from '@clerk/clerk-react';
 import axios from 'axios';
+import useAppStore from '../stores/useAppStore';
+import HotelCard from '../components/global/HotelCard';
 
 export default function BookingGrid() {
   const [searchParams] = useSearchParams();
@@ -78,14 +80,19 @@ export default function BookingGrid() {
     if (price > priceRange) return false;
     
     if (type === 'hotels') {
-      if (item.star_category < minStars) return false;
-      if (fssaiOnly && !item.fssai_certified) return false;
+      if ((item.hotel_stars || 3) < minStars) return false;
     }
     return true;
   });
 
-  const { user, isSignedIn } = useUser();
+  const { user: clerkUser, isSignedIn } = useUser();
   const { openSignIn } = useClerk();
+  const storeUser = useAppStore(state => state.user);
+  const openLoginModal = useAppStore(state => state.openLoginModal);
+  
+  const user = clerkUser || storeUser;
+  const isAuthed = isSignedIn || !!storeUser;
+
   const [isSeatChartOpen, setIsSeatChartOpen] = useState(false);
   const [selectedTransportItem, setSelectedTransportItem] = useState(null);
 
@@ -106,8 +113,8 @@ export default function BookingGrid() {
   };
 
   const handlePayment = async () => {
-    if (!isSignedIn) {
-      openSignIn({ mode: 'modal' });
+    if (!isAuthed) {
+      openLoginModal();
       return;
     }
 
@@ -142,10 +149,10 @@ export default function BookingGrid() {
       const totalAmount = transportCost + hotelTotal;
 
       const bookingData = {
-        userId: user.id,
-        email: user.primaryEmailAddress?.emailAddress,
-        phone: user.phoneNumbers?.[0]?.phoneNumber || 'N/A',
-        name: user.fullName || user.username || user.primaryEmailAddress?.emailAddress.split('@')[0],
+        userId: user?.id,
+        email: user?.email || user?.primaryEmailAddress?.emailAddress || 'N/A',
+        phone: user?.phone || user?.phoneNumbers?.[0]?.phoneNumber || 'N/A',
+        name: user?.name || user?.fullName || user?.username || (user?.email || user?.primaryEmailAddress?.emailAddress || 'Passenger').split('@')[0],
         itemType: type,
         itemData: {
           ...selectedBooking.itemData,
@@ -183,8 +190,8 @@ export default function BookingGrid() {
   };
 
   const proceedToReview = (item, seats) => {
-    if (!isSignedIn) {
-      openSignIn({ mode: 'modal' });
+    if (!isAuthed) {
+      openLoginModal();
       return;
     }
 
@@ -194,8 +201,8 @@ export default function BookingGrid() {
     setSelectedBooking({
       id: `FF-${Math.floor(Math.random() * 10000)}`,
       type,
-      vendorName: item.name || item.airline || item.vendor_id,
-      hotelName: type === 'hotels' ? item.name : 'None',
+      vendorName: item.property_name || item.name || item.airline || item.vendor_id,
+      hotelName: type === 'hotels' ? (item.property_name || item.name) : 'None',
       from: searchParams.get('from') || 'Origin',
       to: searchParams.get('to') || 'Destination',
       fromDate: searchParams.get('fromDate') || 'Today',
@@ -411,67 +418,80 @@ export default function BookingGrid() {
           </div>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {filtered.map((item, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all border border-gray-100 flex flex-col sm:flex-row gap-6 group">
-                
-                {/* Image Section */}
-                <div className="sm:w-48 h-48 rounded-xl overflow-hidden shrink-0 relative bg-gray-100">
-                  {item.images ? (
-                    <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
-                  )}
-                  {item.star_category && (
-                    <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1 text-[#FFAA00] text-xs font-bold">
-                      {item.star_category} <FontAwesomeIcon icon={faStar} />
-                    </div>
-                  )}
-                </div>
+            {filtered.map((item, idx) => {
+              if (type === 'hotels') {
+                return (
+                  <HotelCard
+                    key={idx}
+                    hotel={item}
+                    onSelect={(hotel) => handleBookNow(hotel)}
+                    selectLabel="Book Stay"
+                  />
+                );
+              }
 
-                {/* Content Section */}
-                <div className="flex-1 flex flex-col justify-between py-2">
-                  <div>
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-xl font-bold text-[#121619] leading-tight">
-                        {item.name || item.airline || item.vendor_id}
-                      </h3>
-                      {item.fssai_certified && (
-                        <span title="FSSAI Certified" className="text-green-500 text-lg">
-                          <FontAwesomeIcon icon={faCheckCircle} />
-                        </span>
-                      )}
-                    </div>
-                    
-                    {item.address && (
-                      <p className="text-gray-500 text-sm mt-1 mb-3 line-clamp-1">{item.address}</p>
+              return (
+                <div key={idx} className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-all border border-gray-100 flex flex-col sm:flex-row gap-6 group">
+                  
+                  {/* Image Section */}
+                  <div className="sm:w-48 h-48 rounded-xl overflow-hidden shrink-0 relative bg-gray-100">
+                    {item.images ? (
+                      <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
                     )}
-                    
-                    {item.amenities && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {item.amenities.slice(0, 4).map(am => (
-                          <span key={am} className="text-[10px] uppercase tracking-wider font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-md">
-                            {am}
-                          </span>
-                        ))}
+                    {item.star_category && (
+                      <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1 text-[#FFAA00] text-xs font-bold">
+                        {item.star_category} <FontAwesomeIcon icon={faStar} />
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-end justify-between mt-6">
+                  {/* Content Section */}
+                  <div className="flex-1 flex flex-col justify-between py-2">
                     <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Starting from</p>
-                      <p className="text-2xl font-bold text-[#121619]">
-                        ₹{(item.price_per_night_inr || item.price_inr || item.price || (item.price_per_km ? item.price_per_km * 100 : 0)).toLocaleString()}
-                        <span className="text-sm font-normal text-gray-500"> {type === 'hotels' && '/ night'}</span>
-                      </p>
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-xl font-bold text-[#121619] leading-tight">
+                          {item.name || item.airline || item.vendor_id}
+                        </h3>
+                        {item.fssai_certified && (
+                          <span title="FSSAI Certified" className="text-green-500 text-lg">
+                            <FontAwesomeIcon icon={faCheckCircle} />
+                          </span>
+                        )}
+                      </div>
+                      
+                      {item.address && (
+                        <p className="text-gray-500 text-sm mt-1 mb-3 line-clamp-1">{item.address}</p>
+                      )}
+                      
+                      {item.amenities && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {item.amenities.slice(0, 4).map(am => (
+                            <span key={am} className="text-[10px] uppercase tracking-wider font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-md">
+                              {am}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <button onClick={() => handleBookNow(item)} className="bg-[#121619] hover:bg-[#1e2429] text-[#FFAA00] font-semibold px-6 py-2.5 rounded-xl transition-colors">
-                      Book Now
-                    </button>
+
+                    <div className="flex items-end justify-between mt-6">
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Starting from</p>
+                        <p className="text-2xl font-bold text-[#121619]">
+                          ₹{(item.price_per_night_inr || item.price_inr || item.price || (item.price_per_km ? item.price_per_km * 100 : 0)).toLocaleString()}
+                          <span className="text-sm font-normal text-gray-500"> {type === 'hotels' && '/ night'}</span>
+                        </p>
+                      </div>
+                      <button onClick={() => handleBookNow(item)} className="bg-[#121619] hover:bg-[#1e2429] text-[#FFAA00] font-semibold px-6 py-2.5 rounded-xl transition-colors">
+                        Book Now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {filtered.length === 0 && (
               <div className="col-span-full py-20 text-center">

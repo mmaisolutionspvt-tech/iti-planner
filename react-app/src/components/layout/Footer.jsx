@@ -22,7 +22,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#121619] text-white">
+    <footer className="bg-[#121619] text-white no-print">
       {/* Trust Layer */}
       <div className="border-b border-white/10 py-8">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6">

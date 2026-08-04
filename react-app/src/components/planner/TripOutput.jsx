@@ -1,17 +1,19 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faEdit, faCheckCircle, faSpinner, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faEdit, faCheckCircle, faSpinner, faPrint, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { redraftTripPlan } from '../../services/gemini';
 import useAppStore from '../../stores/useAppStore';
 import TripPDFDocument from './TripPDFDocument';
 
-export default function TripOutput({ plan, setPlan }) {
+export default function TripOutput({ plan, setPlan, params = null, selectedHotel = null }) {
   const [isEditing, setIsEditing] = useState(false);
   const [instruction, setInstruction] = useState('');
   const [loading, setLoading] = useState(false);
   const { addToast } = useAppStore();
   const printRef = useRef();
+  const navigate = useNavigate();
 
   if (!plan) return null;
 
@@ -39,6 +41,39 @@ export default function TripOutput({ plan, setPlan }) {
     window.print();
   };
 
+  const handleProceedToBooking = () => {
+    const locList = (params?.locations || plan?.destinations || ['Destination'])
+      .toString()
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+    const toCity = locList[0] || 'Destination';
+    const travelMode = params?.mode?.toLowerCase().includes('flight') ? 'flight' : 'bus';
+    
+    const queryParams = new URLSearchParams({
+      type: travelMode,
+      from: 'Delhi',
+      to: toCity,
+      fromDate: params?.fromDate || plan?.from_date || '',
+      toDate: params?.toDate || plan?.to_date || '',
+    });
+
+    if (selectedHotel) {
+      queryParams.append('hotelId', selectedHotel.hotel_id || 'selected');
+      queryParams.append('hotelName', selectedHotel.name);
+      queryParams.append('hotelPrice', (selectedHotel.price_per_night_inr || selectedHotel.price_inr || 0).toString());
+    } else if (plan?.days?.[0]?.hotel?.name) {
+      const hotel = plan.days[0].hotel;
+      if (hotel.name && hotel.name !== 'null' && hotel.name !== 'N/A') {
+        queryParams.append('hotelId', hotel.hotel_id || 'ai-selected');
+        queryParams.append('hotelName', hotel.name);
+        queryParams.append('hotelPrice', (hotel.price_per_night_inr || hotel.price || 0).toString());
+      }
+    }
+
+    navigate(`/booking-grid?${queryParams.toString()}`);
+  };
+
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       
@@ -50,6 +85,9 @@ export default function TripOutput({ plan, setPlan }) {
           </button>
           <button onClick={handlePrint} className="px-4 py-2 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 flex items-center gap-2">
             <FontAwesomeIcon icon={faPrint} /> Print / PDF
+          </button>
+          <button onClick={handleProceedToBooking} className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 flex items-center gap-2 shadow-md shadow-emerald-600/20">
+            <FontAwesomeIcon icon={faWallet} /> Book & Pay Stay + Transport
           </button>
         </div>
         <div className="text-right">

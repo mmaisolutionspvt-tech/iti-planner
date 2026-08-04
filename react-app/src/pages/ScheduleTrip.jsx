@@ -1,59 +1,131 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWandMagicSparkles, faMapLocationDot, faCalendarAlt, faCarSide, faWallet, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faWandMagicSparkles, 
+  faMapLocationDot, 
+  faCalendarAlt, 
+  faCarSide, 
+  faWallet, 
+  faUsers,
+  faSliders,
+  faArrowRight,
+  faRotateLeft
+} from '@fortawesome/free-solid-svg-icons';
 import { generateTripPlan } from '../services/gemini';
 import useAppStore from '../stores/useAppStore';
 import TripOutput from '../components/planner/TripOutput';
 import DraftHistory from '../components/planner/DraftHistory';
 
+import CustomizationHeader from '../components/planner/CustomizationHeader';
+import Step1Places from '../components/planner/Step1Places';
+import Step2SchedulePlaces from '../components/planner/Step2SchedulePlaces';
+import Step3Hotels from '../components/planner/Step3Hotels';
+import Step4Rides from '../components/planner/Step4Rides';
+import Step5Dining from '../components/planner/Step5Dining';
+import StepTransport from '../components/planner/StepTransport';
+import Step6Review from '../components/planner/Step6Review';
+
 export default function ScheduleTrip() {
-  const [params, setParams] = useState({ locations: '', fromDate: '', toDate: '', mode: 'Bus / Coach', budget: 'balanced' });
+  const [params, setParams] = useState({ 
+    fromCity: 'Delhi',
+    locations: '', 
+    fromDate: '', 
+    toDate: '', 
+    mode: 'Bus / Coach', 
+    budget: 'balanced',
+    travellers: 2,
+    tripType: 'Family Trip'
+  });
+
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState(null);
   const [apiError, setApiError] = useState(null);
   const { addToast, addDraft } = useAppStore();
 
-  // Hotel selector steps
-  const [step, setStep] = useState('input'); // 'input' | 'hotel'
-  const [availableHotels, setAvailableHotels] = useState([]);
-  const [selectedHotel, setSelectedHotel] = useState(null);
+  // Navigation Pages: 'input' | 'modeChoice' | 'wizard' | 'result'
+  const [pageState, setPageState] = useState('input');
+  
+  // Customization Wizard Step (1..7)
+  const [wizardStep, setWizardStep] = useState(1);
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    setApiError(null);
-    const locList = params.locations.split(',').map(s => s.trim()).filter(Boolean);
-    if (locList.length === 0) return;
+  // Wizard State
+  const [wizardData, setWizardData] = useState({
+    selectedPlaces: [],
+    scheduleData: {}, // { [placeId]: { day: 'Day 1', timeSlot: 'Morning' } }
+    selectedHotels: [], // [ { ...hotel, stayOrder: 1, nights: 1 } ]
+    selectedRides: [],  // [ { ...ride } ]
+    selectedCafes: [],       // [ { ...cafe, seats: 2, day: 'Day 1', timeSlot: 'Lunch' } ]
+    selectedRestaurants: [], // [ { ...rest, seats: 2, day: 'Day 1', timeSlot: 'Dinner' } ]
+    outboundTransport: null, // Outbound flight/bus
+    returnTransport: null    // Return flight/bus
+  });
 
-    try {
-      setLoading(true);
-      const res = await fetch('/src/data/hotels.json');
-      const data = await res.json();
-      const firstDest = locList[0].toLowerCase();
-      const matched = data.filter(h => h.city.toLowerCase() === firstDest);
-      
-      setLoading(false);
-      if (matched.length > 0) {
-        setAvailableHotels(matched);
-        setStep('hotel');
-      } else {
-        // Proceed directly if no hotels match
-        triggerGeneration(null);
-      }
-    } catch (err) {
-      setLoading(false);
-      console.warn("Failed to load hotels, generating directly:", err);
-      triggerGeneration(null);
-    }
+  // Calculate Days count between fromDate and toDate
+  const calculateTotalDays = () => {
+    if (!params.fromDate || !params.toDate) return 3;
+    const f = new Date(params.fromDate);
+    const t = new Date(params.toDate);
+    const diff = Math.ceil(Math.abs(t - f) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 3;
   };
 
-  const triggerGeneration = async (hotel) => {
+  // Cumulative Total Cost Tracker
+  const calculateTotalCost = () => {
+    let total = 0;
+
+    // Outbound & Return Tickets (price * travellers)
+    if (wizardData.outboundTransport) {
+      total += (wizardData.outboundTransport.price || 0) * params.travellers;
+    }
+    if (wizardData.returnTransport) {
+      total += (wizardData.returnTransport.price || 0) * params.travellers;
+    }
+
+    // Entrance fees (fee * travellers)
+    wizardData.selectedPlaces.forEach(p => {
+      total += (p.entrance_fee_inr || 0) * params.travellers;
+    });
+
+    // Multi-Hotels Cost (price * nights * rooms)
+    wizardData.selectedHotels.forEach(h => {
+      const hPrice = h.price_per_night_inr || h.price_inr || 0;
+      total += hPrice * (h.nights || 1) * (h.rooms || 1);
+    });
+
+    // Multi-Rides Cost
+    wizardData.selectedRides.forEach(r => {
+      total += r.price || 0;
+    });
+
+    // Cafes (rate_for_two * ceil(seats / 2))
+    wizardData.selectedCafes.forEach(c => {
+      total += (c.rate_for_two || 500) * Math.ceil((c.seats || 2) / 2);
+    });
+
+    // Restaurants (price * ceil(seats / 2))
+    wizardData.selectedRestaurants.forEach(r => {
+      total += (r.price || 400) * Math.ceil((r.seats || 2) / 2);
+    });
+
+    return total;
+  };
+
+  // Form Submit on Page 1
+  const handleInputSubmit = (e) => {
+    e.preventDefault();
+    if (!params.locations.trim()) {
+      addToast({ type: 'error', message: 'Please enter a destination city.' });
+      return;
+    }
+    setPageState('modeChoice');
+  };
+
+  // Auto-Plan Generator Trigger
+  const handleAutoPlan = async () => {
     setLoading(true);
     setPlan(null);
     setApiError(null);
-    setSelectedHotel(hotel);
-    setStep('input');
-
     try {
       const locList = params.locations.split(',').map(s => s.trim()).filter(Boolean);
       const generated = await generateTripPlan({
@@ -62,7 +134,9 @@ export default function ScheduleTrip() {
         toDate: params.toDate,
         mode: params.mode,
         budget: params.budget,
-        selectedHotel: hotel
+        fromCity: params.fromCity || 'Delhi',
+        travellerCount: params.travellers,
+        tripType: params.tripType
       });
 
       if (generated.error) {
@@ -70,8 +144,9 @@ export default function ScheduleTrip() {
         addToast({ type: 'error', message: generated.error });
       } else {
         setPlan(generated);
+        setPageState('result');
         addDraft({ params, plan: generated, date: new Date().toISOString() });
-        addToast({ type: 'success', title: 'Plan Generated!', message: 'Your AI trip is ready.' });
+        addToast({ type: 'success', title: 'Auto-Plan Ready!', message: 'AI generated your itinerary.' });
       }
     } catch (err) {
       setApiError(err.message);
@@ -81,192 +156,538 @@ export default function ScheduleTrip() {
     }
   };
 
+  // Trigger Custom Itinerary Generation
+  const handleCustomPlanGenerate = async () => {
+    setLoading(true);
+    setPlan(null);
+    setApiError(null);
+    try {
+      const locList = params.locations.split(',').map(s => s.trim()).filter(Boolean);
+      const generated = await generateTripPlan({
+        locations: locList,
+        fromDate: params.fromDate,
+        toDate: params.toDate,
+        mode: params.mode,
+        budget: params.budget,
+        fromCity: params.fromCity || 'Delhi',
+        travellerCount: params.travellers,
+        tripType: params.tripType,
+        selectedHotels: wizardData.selectedHotels,
+        customPlaces: wizardData.selectedPlaces,
+        scheduleData: wizardData.scheduleData,
+        selectedRides: wizardData.selectedRides,
+        selectedCafes: wizardData.selectedCafes,
+        selectedRestaurants: wizardData.selectedRestaurants,
+        outboundTransport: wizardData.outboundTransport,
+        returnTransport: wizardData.returnTransport
+      });
+
+      if (generated.error) {
+        setApiError(generated.error);
+        addToast({ type: 'error', message: generated.error });
+      } else {
+        setPlan(generated);
+        setPageState('result');
+        addDraft({ params, plan: generated, date: new Date().toISOString() });
+        addToast({ type: 'success', title: 'Customized Itinerary Ready!', message: 'Your tailored trip plan has been generated.' });
+      }
+    } catch (err) {
+      setApiError(err.message);
+      addToast({ type: 'error', message: err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // State Updaters for Wizard Data
+  const togglePlace = (place) => {
+    setWizardData(prev => {
+      const exists = prev.selectedPlaces.some(p => p.id === place.id);
+      let updatedPlaces;
+      if (exists) {
+        updatedPlaces = prev.selectedPlaces.filter(p => p.id !== place.id);
+      } else {
+        updatedPlaces = [...prev.selectedPlaces, place];
+      }
+      return { ...prev, selectedPlaces: updatedPlaces };
+    });
+  };
+
+  const updateSchedule = (placeId, day, timeSlot) => {
+    setWizardData(prev => ({
+      ...prev,
+      scheduleData: {
+        ...prev.scheduleData,
+        [placeId]: { day, timeSlot }
+      }
+    }));
+  };
+
+  const toggleHotel = (hotel) => {
+    setWizardData(prev => {
+      const exists = prev.selectedHotels.some(h => h.id === hotel.id);
+      let updated;
+      if (exists) {
+        updated = prev.selectedHotels.filter(h => h.id !== hotel.id);
+      } else {
+        const nextOrder = prev.selectedHotels.length + 1;
+        updated = [...prev.selectedHotels, { ...hotel, stayOrder: nextOrder, nights: 1, rooms: 1 }];
+      }
+      return { ...prev, selectedHotels: updated };
+    });
+  };
+
+  const updateHotelConfig = (hotelId, stayOrder, nights, rooms = 1) => {
+    setWizardData(prev => ({
+      ...prev,
+      selectedHotels: prev.selectedHotels.map(h => h.id === hotelId ? { ...h, stayOrder, nights, rooms } : h)
+    }));
+  };
+
+  const toggleRide = (ride) => {
+    setWizardData(prev => {
+      const exists = prev.selectedRides.some(r => r.ride_id === ride.ride_id);
+      let updated;
+      if (exists) {
+        updated = prev.selectedRides.filter(r => r.ride_id !== ride.ride_id);
+      } else {
+        updated = [...prev.selectedRides, ride];
+      }
+      return { ...prev, selectedRides: updated };
+    });
+  };
+
+  // Multi-reservation Cafe Handlers
+  const addCafeReservation = (cafe, day = 'Day 1', timeSlot = 'Lunch') => {
+    setWizardData(prev => {
+      const bookingId = `c_${cafe.id}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+      const newEntry = { ...cafe, bookingId, seats: params.travellers || 2, day, timeSlot };
+      return { ...prev, selectedCafes: [...prev.selectedCafes, newEntry] };
+    });
+  };
+
+  const removeCafeReservation = (bookingId) => {
+    setWizardData(prev => ({
+      ...prev,
+      selectedCafes: prev.selectedCafes.filter(c => c.bookingId !== bookingId && c.id !== bookingId)
+    }));
+  };
+
+  const updateCafeConfig = (bookingId, seats, day, timeSlot) => {
+    setWizardData(prev => ({
+      ...prev,
+      selectedCafes: prev.selectedCafes.map(c => (c.bookingId === bookingId || c.id === bookingId) ? { ...c, seats, day, timeSlot } : c)
+    }));
+  };
+
+  // Multi-reservation Restaurant Handlers
+  const addRestaurantReservation = (rest, day = 'Day 1', timeSlot = 'Dinner') => {
+    setWizardData(prev => {
+      const bookingId = `r_${rest.id}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+      const newEntry = { ...rest, bookingId, seats: params.travellers || 2, day, timeSlot };
+      return { ...prev, selectedRestaurants: [...prev.selectedRestaurants, newEntry] };
+    });
+  };
+
+  const removeRestaurantReservation = (bookingId) => {
+    setWizardData(prev => ({
+      ...prev,
+      selectedRestaurants: prev.selectedRestaurants.filter(r => r.bookingId !== bookingId && r.id !== bookingId)
+    }));
+  };
+
+  const updateRestaurantConfig = (bookingId, seats, day, timeSlot) => {
+    setWizardData(prev => ({
+      ...prev,
+      selectedRestaurants: prev.selectedRestaurants.map(r => (r.bookingId === bookingId || r.id === bookingId) ? { ...r, seats, day, timeSlot } : r)
+    }));
+  };
+
+  const selectOutboundTransport = (item) => {
+    setWizardData(prev => ({ ...prev, outboundTransport: item }));
+  };
+
+  const selectReturnTransport = (item) => {
+    setWizardData(prev => ({ ...prev, returnTransport: item }));
+  };
+
   return (
-    <div className="pt-20 min-h-screen bg-gray-50 pb-20">
-      <div className="max-w-7xl mx-auto px-4">
-        
-        {!plan && step === 'input' && (
+    <div className="pt-16 min-h-screen bg-gray-50 pb-20">
+      
+      {/* Sticky Customization Header (Visible inside Wizard mode) */}
+      {pageState === 'wizard' && (
+        <CustomizationHeader
+          currentStep={wizardStep}
+          setStep={(s) => setWizardStep(s)}
+          wizardData={wizardData}
+          calculateTotalCost={calculateTotalCost}
+        />
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 mt-6">
+
+        {/* PAGE 1: INPUT FORM */}
+        {pageState === 'input' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-3xl p-8 shadow-xl max-w-4xl mx-auto mb-10"
+            className="bg-white rounded-3xl p-8 shadow-xl max-w-4xl mx-auto mb-10 border border-gray-100"
           >
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-tr from-[#121619] to-[#1e2429] rounded-2xl flex items-center justify-center mx-auto mb-4 text-white text-2xl shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-tr from-[#121619] to-[#1e2429] rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#D4B15A] text-2xl shadow-lg">
                 <FontAwesomeIcon icon={faWandMagicSparkles} />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 font-display">AI Trip Planner</h2>
-              <p className="text-gray-500 mt-2">Let our AI build your perfect itinerary in 60 seconds.</p>
+              <p className="text-gray-500 mt-2">Plan your custom itinerary in 60 seconds.</p>
             </div>
 
-            {/* API Error Banner */}
-            {apiError && (
-              <div className="mb-6 bg-red-50 border border-red-200 rounded-2xl p-5">
-                <div className="flex gap-3 items-start">
-                  <span className="text-red-500 text-xl mt-0.5">⚠️</span>
-                  <div>
-                    <p className="font-bold text-red-800 mb-1">Itinerary Generation Failed</p>
-                    <p className="text-red-700 text-sm">{apiError}</p>
-                    {apiError.includes('API key') && (
-                      <div className="mt-3 bg-white rounded-xl p-4 border border-red-100 text-sm">
-                        <p className="font-bold text-gray-800 mb-2">🔑 How to fix: Get a valid Gemini API key</p>
-                        <ol className="list-decimal list-inside space-y-1 text-gray-600">
-                          <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-600 underline">Google AI Studio</a> and create a free API key</li>
-                          <li>Open <code className="bg-gray-100 px-1 rounded">react-app/.env</code> and update: <code className="bg-gray-100 px-1 rounded">VITE_GEMINI_API_KEY=AIza...</code></li>
-                          <li>Restart the dev server with <code className="bg-gray-100 px-1 rounded">npm run dev</code></li>
-                        </ol>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Where do you want to go?</label>
-                <div className="relative">
-                  <FontAwesomeIcon icon={faMapLocationDot} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input type="text" required className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none" placeholder="e.g. Manali, Shimla, Kasol" value={params.locations} onChange={e => setParams({...params, locations: e.target.value})} />
-                </div>
-                <p className="text-xs text-gray-400 mt-1">Comma separated list of cities/places</p>
-              </div>
+            <form onSubmit={handleInputSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">From Location (Origin City)</label>
                 <div className="relative">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input type="date" required className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none" value={params.fromDate} onChange={e => setParams({...params, fromDate: e.target.value})} />
+                  <FontAwesomeIcon icon={faMapLocationDot} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Delhi, Mumbai, Bangalore, Jaipur"
+                    value={params.fromCity}
+                    onChange={e => setParams({...params, fromCity: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium"
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">To Date</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Destination City / Cities</label>
                 <div className="relative">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input type="date" required className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none" value={params.toDate} onChange={e => setParams({...params, toDate: e.target.value})} />
+                  <FontAwesomeIcon icon={faMapLocationDot} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#D4B15A]" />
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Mumbai, Jaipur, Manali, Goa"
+                    value={params.locations}
+                    onChange={e => setParams({...params, locations: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none transition-all text-sm font-medium"
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Primary Travel Mode</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">From Date</label>
+                <div className="relative">
+                  <FontAwesomeIcon icon={faCalendarAlt} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="date"
+                    required
+                    value={params.fromDate}
+                    onChange={e => setParams({...params, fromDate: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">To Date</label>
+                <div className="relative">
+                  <FontAwesomeIcon icon={faCalendarAlt} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="date"
+                    required
+                    value={params.toDate}
+                    onChange={e => setParams({...params, toDate: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Travel Mode</label>
                 <div className="relative">
                   <FontAwesomeIcon icon={faCarSide} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <select className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none appearance-none" value={params.mode} onChange={e => setParams({...params, mode: e.target.value})}>
-                    <option value="Bus">Bus / Coach</option>
+                  <select 
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium appearance-none" 
+                    value={params.mode} 
+                    onChange={e => setParams({...params, mode: e.target.value})}
+                  >
+                    <option value="Bus / Coach">Bus / Coach</option>
                     <option value="Flight">Flight</option>
                     <option value="Train">Train</option>
-                    <option value="Car">Personal/Rental Car</option>
+                    <option value="Personal/Rental Car">Personal/Rental Car</option>
+                    <option value="Bike / Personal Vehicle">Bike / Personal Vehicle 🏍️</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Budget Level</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Trip Category / Vibe</label>
                 <div className="relative">
-                  <FontAwesomeIcon icon={faWallet} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <select className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none appearance-none" value={params.budget} onChange={e => setParams({...params, budget: e.target.value})}>
-                    <option value="budget">Backpacker / Budget</option>
-                    <option value="balanced">Balanced / Standard</option>
-                    <option value="comfort">Comfort / Luxury</option>
+                  <FontAwesomeIcon icon={faUsers} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#D4B15A]" />
+                  <select 
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium appearance-none" 
+                    value={params.tripType} 
+                    onChange={e => setParams({...params, tripType: e.target.value})}
+                  >
+                    <option value="Family Trip">👨‍👩‍👧‍👦 Family Trip</option>
+                    <option value="Friends Trip">🧑‍🤝‍🧑 Friends Trip</option>
+                    <option value="Couples / Romantic Trip">❤️ Couples / Romantic Trip</option>
+                    <option value="Solo Trip">🎒 Solo Trip</option>
+                    <option value="Corporate / Business Trip">💼 Corporate / Business Trip</option>
                   </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Number of Travellers</label>
+                <div className="relative">
+                  <FontAwesomeIcon icon={faUsers} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={params.travellers}
+                    onChange={e => setParams({...params, travellers: parseInt(e.target.value) || 1})}
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium"
+                  />
                 </div>
               </div>
 
               <div className="md:col-span-2 mt-4">
-                <button type="submit" disabled={loading} className="w-full bg-[#121619] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1e2429] transition-colors shadow-lg shadow-[#121619]/30 disabled:bg-gray-400 flex items-center justify-center gap-2">
-                  {loading ? <><FontAwesomeIcon icon={faSpinner} spin /> Loading hotels...</> : <><FontAwesomeIcon icon={faWandMagicSparkles} /> Choose Hotel stay</>}
+                <button 
+                  type="submit" 
+                  className="w-full bg-[#121619] hover:bg-[#1e2429] text-[#D4B15A] py-4 rounded-xl font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Proceed to Planning Options</span>
+                  <FontAwesomeIcon icon={faArrowRight} />
                 </button>
               </div>
+
             </form>
           </motion.div>
         )}
 
-        {!plan && step === 'hotel' && (
+        {/* PAGE 2: MODE CHOICE (AUTO VS CUSTOMIZE) */}
+        {pageState === 'modeChoice' && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-3xl p-8 shadow-xl max-w-4xl mx-auto mb-10"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-4xl mx-auto py-10"
           >
-            <div className="text-center mb-8">
+            <div className="text-center mb-10">
               <span className="text-xs font-bold text-[#D4B15A] uppercase tracking-widest bg-[#D4B15A]/10 px-3 py-1 rounded-full border border-[#D4B15A]/20">
-                Itinerary Step 2: Accommodation Selection
+                Choose Planning Experience
               </span>
-              <h2 className="text-3xl font-bold text-gray-900 font-display mt-3">Select Your Hotel Stay</h2>
-              <p className="text-gray-500 mt-2">AI will build the itinerary centered around this selected hotel.</p>
+              <h2 className="text-3xl font-display font-bold text-gray-900 mt-3">
+                How would you like to build your trip to {params.locations}?
+              </h2>
+              <p className="text-gray-500 text-sm mt-2">
+                Select automatic generation or customize tourist spots, hotels, rides, and dining step-by-step.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-h-[450px] overflow-y-auto pr-2">
-              {availableHotels.map(h => (
-                <div 
-                  key={h.hotel_id} 
-                  className="bg-gray-50 hover:bg-white border border-gray-100 hover:border-[#D4B15A] rounded-2xl p-5 transition-all shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between" 
-                  onClick={() => triggerGeneration(h)}
-                >
-                  <div>
-                    <div className="flex justify-between items-start gap-2 mb-2">
-                      <h4 className="font-bold text-gray-900 leading-snug">{h.name}</h4>
-                      <span className="text-xs text-gray-400 shrink-0 font-medium">★ {h.star_category} Star</span>
-                    </div>
-                    <p className="text-xs text-gray-500 line-clamp-1 mb-3">📍 {h.address}</p>
-                    
-                    {/* Attractions info */}
-                    {h.nearby_attractions_km && (
-                      <p className="text-[10px] text-gray-400 line-clamp-1 mb-3">
-                        {Object.entries(h.nearby_attractions_km).map(([name, dist]) => `${name} (${dist}km)`).join(', ')}
-                      </p>
-                    )}
-
-                    {h.amenities && (
-                      <div className="flex flex-wrap gap-1 mb-4">
-                        {h.amenities.slice(0, 3).map(a => (
-                          <span key={a} className="text-[9px] bg-white text-gray-500 border border-gray-100 px-2 py-0.5 rounded-md uppercase font-semibold">{a}</span>
-                        ))}
-                      </div>
-                    )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
+              {/* Option 1: AI Auto Plan */}
+              <div 
+                onClick={handleAutoPlan}
+                className="bg-white rounded-3xl p-8 border border-gray-200 hover:border-[#D4B15A] shadow-md hover:shadow-2xl transition-all cursor-pointer group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-[#D4B15A] text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    <FontAwesomeIcon icon={faWandMagicSparkles} />
                   </div>
-
-                  <div className="flex justify-between items-center pt-3 border-t border-gray-100 mt-2">
-                    <span className="text-sm font-extrabold text-[#121619]">₹{(h.price_per_night_inr || h.price_inr || 0).toLocaleString()} / night</span>
-                    <button className="bg-[#121619] hover:bg-[#1e2429] text-[#D4B15A] font-bold text-xs px-4 py-2 rounded-xl transition-all cursor-pointer">
-                      Select stay
-                    </button>
-                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[#D4B15A] transition-colors mb-2">
+                    Let AI Auto-Plan for You ✨
+                  </h3>
+                  <p className="text-xs text-gray-500 leading-relaxed mb-6">
+                    Our AI instantly generates a complete day-by-day itinerary with sightseeing, accommodation, and travel tips based on your budget tier.
+                  </p>
                 </div>
-              ))}
+
+                <button 
+                  disabled={loading}
+                  className="w-full bg-[#121619] hover:bg-[#1e2429] text-[#D4B15A] font-bold py-3.5 rounded-2xl text-sm transition-all shadow-md flex items-center justify-center gap-2"
+                >
+                  {loading ? 'Generating...' : 'Generate Auto-Itinerary ✨'}
+                </button>
+              </div>
+
+              {/* Option 2: Customize Your Trip */}
+              <div 
+                onClick={() => {
+                  setPageState('wizard');
+                  setWizardStep(1);
+                }}
+                className="bg-white rounded-3xl p-8 border border-gray-200 hover:border-[#D4B15A] shadow-md hover:shadow-2xl transition-all cursor-pointer group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    <FontAwesomeIcon icon={faSliders} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
+                    Customize Your Trip 🎨
+                  </h3>
+                  <p className="text-xs text-gray-500 leading-relaxed mb-6">
+                    Handpick popular tourist hubs, schedule visit times, pick your hotel, book private ground rides, and reserve dining table seats step-by-step.
+                  </p>
+                </div>
+
+                <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl text-sm transition-all shadow-md flex items-center justify-center gap-2">
+                  <span>Start Step-by-Step Customization 🎨</span>
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </button>
+              </div>
+
             </div>
 
-            <div className="flex justify-between">
-              <button onClick={() => setStep('input')} className="px-6 py-3 border border-gray-200 hover:border-gray-300 text-gray-600 rounded-xl font-semibold transition-colors cursor-pointer">
-                ← Back
-              </button>
-              <button onClick={() => triggerGeneration(null)} className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-colors cursor-pointer">
-                Skip & Generate Itinerary →
+            <div className="mt-8 text-center">
+              <button 
+                onClick={() => setPageState('input')}
+                className="text-xs font-semibold text-gray-500 hover:text-gray-900 underline cursor-pointer"
+              >
+                ← Back to Input Form
               </button>
             </div>
           </motion.div>
         )}
 
-        <AnimatePresence mode="wait">
-          {plan && (
+        {/* PAGE 3: CUSTOMIZATION WIZARD STEPS */}
+        {pageState === 'wizard' && (
+          <div className="py-6">
+            
+            {wizardStep === 1 && (
+              <Step1Places
+                destination={params.locations}
+                selectedPlaces={wizardData.selectedPlaces}
+                onTogglePlace={togglePlace}
+                tripType={params.tripType}
+                onNext={() => setWizardStep(2)}
+              />
+            )}
+
+            {wizardStep === 2 && (
+              <StepTransport
+                fromCity={params.fromCity}
+                destination={params.locations}
+                fromDate={params.fromDate}
+                toDate={params.toDate}
+                outboundTransport={wizardData.outboundTransport}
+                returnTransport={wizardData.returnTransport}
+                onSelectOutbound={selectOutboundTransport}
+                onSelectReturn={selectReturnTransport}
+                travellers={params.travellers}
+                onNext={() => setWizardStep(3)}
+                onBack={() => setWizardStep(1)}
+              />
+            )}
+
+            {wizardStep === 3 && (
+              <Step2SchedulePlaces
+                selectedPlaces={wizardData.selectedPlaces}
+                scheduleData={wizardData.scheduleData}
+                onUpdateSchedule={updateSchedule}
+                totalDays={calculateTotalDays()}
+                outboundTransport={wizardData.outboundTransport}
+                returnTransport={wizardData.returnTransport}
+                onNext={() => setWizardStep(4)}
+                onBack={() => setWizardStep(2)}
+              />
+            )}
+
+            {wizardStep === 4 && (
+              <Step3Hotels
+                destination={params.locations}
+                selectedHotels={wizardData.selectedHotels}
+                onToggleHotel={toggleHotel}
+                onUpdateHotelConfig={updateHotelConfig}
+                onNext={() => setWizardStep(5)}
+                onBack={() => setWizardStep(3)}
+              />
+            )}
+
+            {wizardStep === 5 && (
+              <Step4Rides
+                destination={params.locations}
+                selectedRides={wizardData.selectedRides}
+                onToggleRide={toggleRide}
+                onNext={() => setWizardStep(6)}
+                onBack={() => setWizardStep(4)}
+              />
+            )}
+
+            {wizardStep === 6 && (
+              <Step5Dining
+                destination={params.locations}
+                selectedPlaces={wizardData.selectedPlaces}
+                selectedCafes={wizardData.selectedCafes}
+                onAddCafeReservation={addCafeReservation}
+                onRemoveCafeReservation={removeCafeReservation}
+                onUpdateCafeConfig={updateCafeConfig}
+                selectedRestaurants={wizardData.selectedRestaurants}
+                onAddRestaurantReservation={addRestaurantReservation}
+                onRemoveRestaurantReservation={removeRestaurantReservation}
+                onUpdateRestaurantConfig={updateRestaurantConfig}
+                totalDays={calculateTotalDays()}
+                travellers={params.travellers}
+                onNext={() => setWizardStep(7)}
+                onBack={() => setWizardStep(5)}
+              />
+            )}
+
+            {wizardStep === 7 && (
+              <Step6Review
+                wizardData={wizardData}
+                scheduleData={wizardData.scheduleData}
+                calculateTotalCost={calculateTotalCost}
+                onJumpToStep={(stepNum) => setWizardStep(stepNum)}
+                onConfirmGenerate={handleCustomPlanGenerate}
+                loading={loading}
+                travellers={params.travellers}
+              />
+            )}
+
+          </div>
+        )}
+
+        {/* RESULT PAGE: GENERATED ITINERARY */}
+        {pageState === 'result' && plan && (
+          <AnimatePresence mode="wait">
             <motion.div
-              key="plan"
+              key="planResult"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
             >
-              <div className="flex justify-between items-center mb-6 max-w-5xl mx-auto">
-                <h3 className="text-2xl font-bold text-gray-900 font-display">Your AI Itinerary</h3>
-                <button onClick={() => setPlan(null)} className="text-[#121619] font-medium hover:underline">
-                  Start Over
+              <div className="flex justify-between items-center mb-6 max-w-5xl mx-auto no-print">
+                <h3 className="text-2xl font-bold text-gray-900 font-display">Your Customized AI Itinerary</h3>
+                <button 
+                  onClick={() => setPageState('input')} 
+                  className="text-xs font-bold bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-xl transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <FontAwesomeIcon icon={faRotateLeft} />
+                  Start New Customization
                 </button>
               </div>
-              <TripOutput plan={plan} setPlan={setPlan} />
+
+              <TripOutput 
+                plan={plan} 
+                setPlan={setPlan} 
+                params={params} 
+                selectedHotel={wizardData.selectedHotel} 
+              />
             </motion.div>
-          )}
-        </AnimatePresence>
-        
-        {!plan && <DraftHistory onSelectDraft={(draft) => { setParams(draft.params); setPlan(draft.plan); }} />}
+          </AnimatePresence>
+        )}
+
+        {pageState !== 'wizard' && !plan && (
+          <DraftHistory 
+            onSelectDraft={(draft) => { 
+              setParams(draft.params); 
+              setPlan(draft.plan); 
+              setPageState('result');
+            }} 
+          />
+        )}
 
       </div>
     </div>

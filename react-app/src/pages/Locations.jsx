@@ -83,7 +83,7 @@ export default function Locations() {
                 />
               </div>
               <div className="absolute top-4 right-4 z-[60]">
-                <WeatherIcon city={loc.weather_city || loc.name} className="bg-black/40 backdrop-blur-md !text-white rounded-xl shadow-lg border border-white/20" />
+                <WeatherIcon city={loc.weather_city || loc.name} lat={loc.lat} lng={loc.lng} className="bg-black/40 backdrop-blur-md !text-white rounded-xl shadow-lg border border-white/20" />
               </div>
               {loc.heat_score > 0.8 && (
                 <div className="absolute top-4 left-4 z-[50] bg-[#FFAA00] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">

@@ -6,6 +6,9 @@ import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import pool from './services/db.js';
+import './services/weatherAlertCron.js';
+import twilio from 'twilio';
 
 dotenv.config();
 
@@ -61,6 +64,32 @@ app.post('/api/book', async (req, res) => {
       // but we warn the user in the response.
     }
 
+    // 3. SAVE BOOKING TO POSTGRESQL DATABASE
+    try {
+      const destination = booking.itemData?.to || 'Unknown';
+      const startDate = booking.itemData?.fromDate || new Date().toISOString().split('T')[0];
+      
+      const insertQuery = `
+        INSERT INTO bookings (user_id, email, phone, name, destination, start_date)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING id;
+      `;
+      
+      const insertValues = [
+        booking.userId,
+        booking.email,
+        booking.phone || 'N/A',
+        booking.name || 'Passenger',
+        destination,
+        startDate
+      ];
+      
+      await pool.query(insertQuery, insertValues);
+      console.log('Booking stored in PostgreSQL cache database successfully');
+    } catch (dbErr) {
+      console.error('Failed to store booking in database:', dbErr.message);
+    }
+
     res.json({ 
       success: true, 
       message: 'Booking confirmed!', 
@@ -69,6 +98,23 @@ app.post('/api/book', async (req, res) => {
   } catch (err) {
     console.error('Booking endpoint error:', err);
     res.status(500).json({ success: false, message: 'Internal Server Error', error: err.message });
+  }
+});
+
+// GET endpoint for cron/internal tracking of upcoming trips
+app.get('/api/bookings/upcoming', async (req, res) => {
+  try {
+    const days = parseInt(req.query.days || '2');
+    const query = `
+      SELECT id, name, phone, email, destination, start_date::text AS start_date
+      FROM bookings
+      WHERE start_date = CURRENT_DATE + CAST($1 || ' days' AS INTERVAL);
+    `;
+    const { rows } = await pool.query(query, [days]);
+    res.json(rows);
+  } catch (err) {
+    console.error('Upcoming bookings endpoint error:', err);
+    res.status(500).json({ success: false, message: 'Failed to retrieve upcoming bookings', error: err.message });
   }
 });
 
@@ -211,6 +257,79 @@ async function generatePDF(booking) {
 
   return await pdfDoc.save();
 }
+
+// Custom WhatsApp OTP Authentication Setup (WasenderAPI)
+const otps = new Map();
+
+app.post('/api/auth/send-otp', async (req, res) => {
+  try {
+    const { phone } = req.body;
+    if (!phone) {
+      return res.status(400).json({ success: false, message: 'Phone number is required' });
+    }
+    
+    // Generate random 6-digit code
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = Date.now() + 5 * 60 * 1000; // 5-minute lifespan
+    otps.set(phone, { code: otp, expiresAt });
+
+    console.log(`[AUTH] Sending WhatsApp OTP ${otp} to ${phone} via WasenderAPI`);
+    
+    const token = process.env.WASENDER_API_KEY || '6e388b8a96f6bea7f714d930f211fea7554038bbcc45727bc228c4e9a314c276';
+    await axios.post('https://wasenderapi.com/api/send-message', {
+      to: phone,
+      text: `Your Firstflight verification OTP code is: ${otp}. Valid for 5 minutes.`
+    }, {
+      headers: { 
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+      
+    res.json({ success: true, message: 'OTP sent successfully via WhatsApp' });
+  } catch (err) {
+    console.error('[AUTH ERROR] Send OTP failed:', err.message);
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post('/api/auth/verify-otp', async (req, res) => {
+  try {
+    const { phone, code } = req.body;
+    if (!phone || !code) {
+      return res.status(400).json({ success: false, message: 'Phone and OTP code are required' });
+    }
+    
+    console.log(`[AUTH] Verifying code ${code} for ${phone}`);
+    const record = otps.get(phone);
+    if (!record) {
+      return res.status(400).json({ success: false, message: 'No OTP requested for this phone number' });
+    }
+
+    if (Date.now() > record.expiresAt) {
+      otps.delete(phone);
+      return res.status(400).json({ success: false, message: 'OTP code has expired' });
+    }
+
+    if (record.code !== code) {
+      return res.status(400).json({ success: false, message: 'Invalid OTP code' });
+    }
+
+    // OTP Verified, clear map entry
+    otps.delete(phone);
+
+    const mockUser = {
+      id: `usr_${Date.now()}`,
+      name: `User ${phone.slice(-4)}`,
+      phone: phone,
+      email: `${phone.replace('+', '')}@firstflight.com`
+    };
+    res.json({ success: true, user: mockUser });
+  } catch (err) {
+    console.error('[AUTH ERROR] Verify OTP failed:', err.message);
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Firstflight backend running on http://localhost:${PORT}`);

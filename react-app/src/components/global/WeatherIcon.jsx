@@ -5,7 +5,7 @@ import { faCloudSun, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { fetchWeather, getPrecautions, REROUTE_SUGGESTIONS } from '../../services/weather';
 import useAppStore from '../../stores/useAppStore';
 
-export default function WeatherIcon({ city, className = '' }) {
+export default function WeatherIcon({ city, lat = null, lng = null, className = '' }) {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
@@ -18,7 +18,7 @@ export default function WeatherIcon({ city, className = '' }) {
     }
     setLoading(true);
     try {
-      const data = await fetchWeather(city);
+      const data = await fetchWeather(city, lat, lng);
       setWeather(data);
       setShowPanel(true);
     } catch (err) {

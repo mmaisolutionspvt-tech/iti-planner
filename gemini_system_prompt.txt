@@ -188,7 +188,7 @@ Use this exact schema:
     }
   ],
   "trip_summary": {
-    "total_cost_inr": number,
+    "total_cost_inr": number (MUST match the exact sum of intercity_transport + accommodation + ground_rides + dining + entrance_fees),
     "budget_breakdown": {
       "intercity_transport_inr": number,
       "local_transport_inr": number,

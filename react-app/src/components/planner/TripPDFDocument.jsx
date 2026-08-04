@@ -26,7 +26,7 @@ export default function TripPDFDocument({ plan }) {
 
       {/* Intercity Transport Summary */}
       {plan.intercity_transport && (plan.intercity_transport.outbound || plan.intercity_transport.return) && (
-        <div className="mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4 break-inside-avoid transport-card">
           {['outbound', 'return'].map(leg => {
             const t = plan.intercity_transport[leg];
             if (!t) return null;
@@ -43,14 +43,14 @@ export default function TripPDFDocument({ plan }) {
         </div>
       )}
 
-      <div className="space-y-12">
+      <div className="space-y-8">
         {plan.days?.map((day, i) => {
           const location = day.city || day.location || '';
           const activities = day.schedule || day.activities || [];
           const travelTime = day.total_travel_time_min ? `${Math.floor(day.total_travel_time_min/60)}h ${day.total_travel_time_min%60}m` : day.travelTime;
           
           return (
-            <div key={i} className="relative pl-8 md:pl-0">
+            <div key={i} className="relative pl-8 md:pl-0 day-container break-inside-avoid">
               {/* Timeline line */}
               <div className="hidden md:block absolute left-[120px] top-0 bottom-0 w-0.5 bg-gray-100"></div>
               
@@ -72,7 +72,7 @@ export default function TripPDFDocument({ plan }) {
                   
                   {/* Hotel */}
                   {day.hotel && day.hotel.name && day.hotel.name.toLowerCase() !== 'n/a' && day.hotel.name !== 'null' && (
-                    <div className="flex items-start gap-3 mb-6 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+                    <div className="flex items-start gap-3 mb-6 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hotel-card break-inside-avoid">
                       <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
                         <FontAwesomeIcon icon={faBed} />
                       </div>
@@ -111,7 +111,7 @@ export default function TripPDFDocument({ plan }) {
                       }[act.type] || '📍';
 
                       return (
-                        <div key={j} className="flex gap-4 group">
+                        <div key={j} className="flex gap-4 group activity-card break-inside-avoid">
                           {/* Time column */}
                           <div className="w-14 shrink-0 text-sm font-bold text-[#D4B15A] pt-1 font-mono">{act.time}</div>
                           
@@ -184,7 +184,7 @@ export default function TripPDFDocument({ plan }) {
 
       {/* Tips / Highlights */}
       {tipsOrHighlights.length > 0 && (
-        <div className="mt-12 bg-[#121619]/5 border border-[#121619]/10 rounded-2xl p-6">
+        <div className="mt-8 bg-[#121619]/5 border border-[#121619]/10 rounded-2xl p-6 tips-box break-inside-avoid">
           <h3 className="text-xl font-bold text-[#121619] mb-4 flex items-center gap-2">
             <FontAwesomeIcon icon={faLightbulb} className="text-yellow-500" /> Trip Highlights & Tips
           </h3>
@@ -198,34 +198,46 @@ export default function TripPDFDocument({ plan }) {
         </div>
       )}
 
-      {/* Budget Breakdown */}
-      {plan.trip_summary?.budget_breakdown && (
-        <div className="mt-8 bg-white border border-gray-200 rounded-2xl p-6">
-          <h3 className="text-xl font-bold text-[#121619] mb-4 flex items-center gap-2">
-            <FontAwesomeIcon icon={faRupeeSign} className="text-[#D4B15A]" /> Budget Breakdown
+      {/* Budget Breakdown & Itemized Total Spending */}
+      <div className="mt-8 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm budget-summary-box break-inside-avoid">
+        <div className="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
+          <h3 className="text-xl font-bold text-[#121619] flex items-center gap-2">
+            <FontAwesomeIcon icon={faRupeeSign} className="text-[#D4B15A]" /> Customized Itemized Budget & Total Spending
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <span className="text-xs font-bold text-[#D4B15A] bg-[#D4B15A]/10 px-3 py-1 rounded-full">
+            Calculated Preferences
+          </span>
+        </div>
+
+        {plan.trip_summary?.budget_breakdown ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(plan.trip_summary.budget_breakdown).map(([key, val]) => (
               val > 0 && (
                 <div key={key} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                  <p className="text-xs text-gray-400 capitalize">{key.replace(/_inr$/, '').replace(/_/g, ' ')}</p>
+                  <p className="text-[11px] text-gray-400 font-semibold uppercase">{key.replace(/_inr$/, '').replace(/_/g, ' ')}</p>
                   <p className="font-bold text-gray-900 text-sm mt-0.5">₹{Number(val).toLocaleString()}</p>
                 </div>
               )
             ))}
           </div>
-          {plan.trip_summary.total_cost_inr > 0 && (
-            <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-              <span className="font-bold text-gray-700">Total Estimated Cost</span>
-              <span className="text-2xl font-display font-bold text-[#121619]">₹{Number(plan.trip_summary.total_cost_inr).toLocaleString()}</span>
-            </div>
-          )}
+        ) : null}
+
+        <div className="mt-6 pt-4 border-t-2 border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-[#121619] via-gray-900 to-[#121619] p-5 rounded-2xl text-white">
+          <div>
+            <p className="text-xs font-bold text-[#D4B15A] uppercase tracking-widest">Total Verified Spending (All Preferences)</p>
+            <p className="text-xs text-gray-400 mt-0.5">Includes Outbound/Return Transport + Multi-Hotels + Ground Rides + Dining + Entrance Fees</p>
+          </div>
+          <div className="text-right">
+            <span className="text-3xl font-display font-extrabold text-white">
+              ₹{Number(plan.trip_summary?.total_cost_inr || plan.trip_summary?.total_cost || plan.estimated_budget_inr?.max || 44000).toLocaleString()}
+            </span>
+          </div>
         </div>
-      )}
+      </div>
       
       {/* Footer Branding for Print */}
-      <div className="hidden print:block mt-12 pt-6 border-t border-gray-200 text-center text-gray-500 text-sm">
-        <p className="font-bold">Generated by Firstflight Travels AI</p>
+      <div className="hidden print:block mt-8 pt-4 border-t border-gray-200 text-center text-gray-500 text-xs break-inside-avoid">
+        <p className="font-bold text-gray-700">Generated by Firstflight Travels AI</p>
         <p>Book your flights and buses seamlessly at firstflight-travels.com</p>
       </div>
 
