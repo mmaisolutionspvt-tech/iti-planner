@@ -36,7 +36,7 @@ export default function Step4Rides({ destination, selectedRides = [], onToggleRi
     const fetchRides = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/src/data/rides.json');
+        const res = await fetch('/data/rides.json');
         const data = await res.json();
 
         const targetCity = (destination || '').toLowerCase().trim();

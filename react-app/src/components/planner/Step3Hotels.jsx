@@ -35,7 +35,7 @@ export default function Step3Hotels({
     const fetchHotels = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/src/data/hotels.json');
+        const res = await fetch('/data/hotels.json');
         const data = await res.json();
         
         const targetCity = (destination || '').toLowerCase().trim();

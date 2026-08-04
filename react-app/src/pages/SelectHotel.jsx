@@ -1,21 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faStar, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faStar } from '@fortawesome/free-solid-svg-icons';
 import useAppStore from '../stores/useAppStore';
 import HotelCard from '../components/global/HotelCard';
 
 export default function SelectHotel() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { addToast } = useAppStore();
-
-  const dest = searchParams.get('to')?.toLowerCase() || 'delhi';
-  const type = searchParams.get('type') || 'flight'; // flight | bus | hotels
-  const passengers = parseInt(searchParams.get('passengers')) || 1;
-
+  const addToast = useAppStore(state => state.addToast);
+  
+  const dest = searchParams.get('dest') || 'Goa';
+  const fromDate = searchParams.get('from') || '';
+  const toDate = searchParams.get('to') || '';
+  const travellers = searchParams.get('travellers') || 2;
+  const mode = searchParams.get('mode') || 'flight';
+  
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedHotel, setSelectedHotel] = useState(null);
 
   // Filters
   const [priceRange, setPriceRange] = useState(15000);
@@ -25,7 +28,7 @@ export default function SelectHotel() {
     const fetchHotels = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/src/data/hotels.json');
+        const res = await fetch('/data/hotels.json');
         const data = await res.json();
         
         // Filter by destination city

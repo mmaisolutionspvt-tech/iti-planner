@@ -1,0 +1,470 @@
+[
+  {
+    "package_id": "budget_manali_8999",
+    "tier": "budget",
+    "name": "Manali Budget Getaway",
+    "price_inr": 8999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Manali"
+    ],
+    "nights": 3,
+    "days": 4,
+    "inclusions": [
+      "3 Star Hotel",
+      "Volvo Bus",
+      "Breakfast",
+      "Sightseeing"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 4,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "/files/manali.jpg",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Local Sightseeing",
+        "activities": [
+          "Overnight Volvo journey from Delhi",
+          "Check-in to hotel",
+          "Visit Hadimba Temple",
+          "Explore Mall Road",
+          "Tibetan Monastery",
+          "Dinner and overnight stay"
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Solang Valley Adventure",
+        "activities": [
+          "Breakfast at hotel",
+          "Visit Solang Valley",
+          "Ropeway ride (optional)",
+          "Paragliding, Zipline & ATV (optional)",
+          "Return to hotel for overnight stay"
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Kullu Excursion",
+        "activities": [
+          "Breakfast",
+          "Drive to Kullu",
+          "River rafting (optional)",
+          "Shawl factory visit",
+          "Vaishno Devi Temple",
+          "Evening shopping",
+          "Overnight stay"
+        ]
+      },
+      {
+        "day": 4,
+        "title": "Departure",
+        "activities": [
+          "Breakfast",
+          "Hotel check-out",
+          "Board Volvo back to Delhi"
+        ]
+      }
+    ]
+  },
+  {
+    "package_id": "budget_rishikesh_7999",
+    "tier": "budget",
+    "name": "Rishikesh Camping & Rafting",
+    "price_inr": 7999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Rishikesh"
+    ],
+    "nights": 2,
+    "days": 3,
+    "inclusions": [
+      "Riverside Camp",
+      "Bus Transfer",
+      "Breakfast",
+      "Dinner",
+      "Rafting"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 1.5,
+      "weather_safe": true,
+      "difficulty": "moderate"
+    },
+    "image_url": "/files/rishikesh.jpg",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Camp Check-in",
+        "activities": [
+          "Arrival in Rishikesh",
+          "Riverside camp check-in",
+          "Welcome refreshments",
+          "Evening bonfire",
+          "Music & dinner",
+          "Overnight camping"
+        ]
+      },
+      {
+        "day": 2,
+        "title": "River Rafting & Sightseeing",
+        "activities": [
+          "Breakfast",
+          "White-water rafting",
+          "Cliff jumping (weather permitting)",
+          "Visit Lakshman Jhula",
+          "Ganga Aarti at Triveni Ghat",
+          "Dinner at camp"
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Departure",
+        "activities": [
+          "Breakfast",
+          "Nature walk",
+          "Check-out",
+          "Return journey by bus"
+        ]
+      }
+    ]
+  },
+  {
+    "package_id": "budget_nainital_9999",
+    "tier": "budget",
+    "name": "Nainital Lake Budget Tour",
+    "price_inr": 9999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Nainital"
+    ],
+    "nights": 3,
+    "days": 4,
+    "inclusions": [
+      "3 Star Hotel",
+      "Bus Transfer",
+      "Breakfast",
+      "Boating"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 3,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "/files/nanital.jpg",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Nainital",
+        "activities": [
+          "Arrival in Nainital",
+          "Hotel check-in",
+          "Evening Mall Road walk",
+          "Local market visit",
+          "Overnight stay"
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Nainital Sightseeing",
+        "activities": [
+          "Breakfast",
+          "Naini Lake boating",
+          "Naina Devi Temple",
+          "Snow View Point via ropeway",
+          "Eco Cave Garden",
+          "Overnight stay"
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Nearby Excursion",
+        "activities": [
+          "Breakfast",
+          "Bhimtal lake visit",
+          "Sattal",
+          "Naukuchiatal",
+          "Photography stops",
+          "Return to hotel"
+        ]
+      },
+      {
+        "day": 4,
+        "title": "Departure",
+        "activities": [
+          "Breakfast",
+          "Hotel check-out",
+          "Bus journey back"
+        ]
+      }
+    ]
+  },
+  {
+    "package_id": "budget_varanasi_8999",
+    "tier": "budget",
+    "name": "Varanasi Pilgrimage Budget",
+    "price_inr": 8999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Varanasi"
+    ],
+    "nights": 2,
+    "days": 3,
+    "inclusions": [
+      "3 Star Hotel",
+      "Flight",
+      "Breakfast",
+      "Ganga Aarti Tour"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 2,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "/files/varanasi.jpg",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Evening Aarti",
+        "activities": [
+          "Flight arrival",
+          "Hotel check-in",
+          "Visit Dashashwamedh Ghat",
+          "Witness Ganga Aarti",
+          "Local street food tour",
+          "Overnight stay"
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Temple Tour",
+        "activities": [
+          "Early morning boat ride on River Ganga",
+          "Breakfast",
+          "Kashi Vishwanath Temple",
+          "Sankat Mochan Temple",
+          "Banaras Hindu University",
+          "Sarnath excursion",
+          "Overnight stay"
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Departure",
+        "activities": [
+          "Breakfast",
+          "Shopping for Banarasi silk",
+          "Airport transfer",
+          "Return flight"
+        ]
+      }
+    ]
+  },
+  {
+    "package_id": "balanced_jaipur_14999",
+    "tier": "balanced",
+    "name": "Jaipur Heritage Trail",
+    "price_inr": 14999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Jaipur"
+    ],
+    "nights": 3,
+    "days": 4,
+    "inclusions": [
+      "4 Star Hotel",
+      "AC Bus",
+      "Breakfast",
+      "Dinner",
+      "Fort Tours",
+      "Tour Guide"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 3,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_jaipur_balanced.jpg"
+  },
+  {
+    "package_id": "balanced_goa_19999",
+    "tier": "balanced",
+    "name": "Goa Balanced Escape",
+    "price_inr": 19999,
+    "from_city": "Mumbai",
+    "to_locations": [
+      "Goa"
+    ],
+    "nights": 4,
+    "days": 5,
+    "inclusions": [
+      "3 Star Hotel",
+      "Flight",
+      "Breakfast",
+      "Airport Transfer",
+      "Beach Hopping"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 1.5,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_goa_balanced.jpg"
+  },
+  {
+    "package_id": "balanced_kerala_24999",
+    "tier": "balanced",
+    "name": "Kerala Backwaters Balanced",
+    "price_inr": 24999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Munnar"
+    ],
+    "nights": 5,
+    "days": 6,
+    "inclusions": [
+      "4 Star Hotel",
+      "Flight",
+      "Breakfast",
+      "Dinner",
+      "Houseboat Stay",
+      "Tour Guide"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 3,
+      "weather_safe": false,
+      "difficulty": "easy"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_kerala_balanced.jpg"
+  },
+  {
+    "package_id": "balanced_shimla_manali_22999",
+    "tier": "balanced",
+    "name": "Shimla Manali Combo",
+    "price_inr": 22999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Shimla",
+      "Manali"
+    ],
+    "nights": 5,
+    "days": 6,
+    "inclusions": [
+      "4 Star Hotel",
+      "AC Volvo",
+      "Breakfast",
+      "Dinner",
+      "Sightseeing"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 4.5,
+      "weather_safe": true,
+      "difficulty": "moderate"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_shimla_manali_balanced.jpg"
+  },
+  {
+    "package_id": "gold_goa_29999",
+    "tier": "comfort",
+    "name": "Goa Beach Comfort",
+    "price_inr": 29999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Goa"
+    ],
+    "nights": 4,
+    "days": 5,
+    "inclusions": [
+      "4 Star Hotel",
+      "Flight",
+      "Breakfast",
+      "Airport Transfer",
+      "Tour Guide"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 2.5,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/goa.jpg"
+  },
+  {
+    "package_id": "comfort_kashmir_39999",
+    "tier": "comfort",
+    "name": "Kashmir Paradise Comfort",
+    "price_inr": 39999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Srinagar"
+    ],
+    "nights": 5,
+    "days": 6,
+    "inclusions": [
+      "5 Star Houseboat + Hotel",
+      "Flight",
+      "All Meals",
+      "Shikara Ride",
+      "Tour Guide"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 2,
+      "weather_safe": false,
+      "difficulty": "easy"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_kashmir_comfort.jpg"
+  },
+  {
+    "package_id": "comfort_udaipur_34999",
+    "tier": "comfort",
+    "name": "Udaipur Royal Comfort",
+    "price_inr": 34999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Udaipur"
+    ],
+    "nights": 4,
+    "days": 5,
+    "inclusions": [
+      "5 Star Lake Palace Hotel",
+      "Flight",
+      "Breakfast",
+      "Dinner",
+      "Boat Ride",
+      "Tour Guide"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 2,
+      "weather_safe": true,
+      "difficulty": "easy"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_udaipur_comfort.jpg"
+  },
+  {
+    "package_id": "comfort_ladakh_45999",
+    "tier": "comfort",
+    "name": "Ladakh Adventure Comfort",
+    "price_inr": 45999,
+    "from_city": "Delhi",
+    "to_locations": [
+      "Leh"
+    ],
+    "nights": 6,
+    "days": 7,
+    "inclusions": [
+      "4 Star Hotel",
+      "Flight",
+      "All Meals",
+      "Oxygen Support",
+      "Innova Transfers",
+      "Tour Guide"
+    ],
+    "ai_meta": {
+      "max_travel_per_day_hrs": 5,
+      "weather_safe": false,
+      "difficulty": "hard"
+    },
+    "image_url": "https://res.cloudinary.com/demo/image/upload/v1/pkg_ladakh_comfort.jpg"
+  }
+]

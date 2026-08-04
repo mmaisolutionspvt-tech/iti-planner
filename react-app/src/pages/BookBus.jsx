@@ -17,12 +17,9 @@ export default function BookBus() {
   const [showDriver, setShowDriver] = useState(false);
 
   useEffect(() => {
-    fetch('/src/data/vendors.json')
+    fetch('/data/vendors.json')
       .then(res => res.json())
-      .then(data => {
-        // Assume data is an array of vendors that have a from_city and routes array
-        setAllVendors(data || []);
-      })
+      .then(data => setAllVendors(data || []))
       .catch(err => console.error("Error loading vendors:", err));
   }, []);
 

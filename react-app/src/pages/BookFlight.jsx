@@ -18,11 +18,9 @@ export default function BookFlight() {
   const [showAirline, setShowAirline] = useState(false);
 
   useEffect(() => {
-    fetch('/src/data/flights_demo.json')
+    fetch('/data/flights_demo.json')
       .then(res => res.json())
-      .then(data => {
-        setAllRoutes(data || []);
-      })
+      .then(data => setAllRoutes(data || []))
       .catch(err => console.error("Error loading flights:", err));
   }, []);
 

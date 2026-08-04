@@ -11,9 +11,9 @@ export default function Locations() {
   const selectedCountry = searchParams.get('country') || 'All';
 
   useEffect(() => {
-    fetch('/src/data/locations.json')
+    fetch('/data/locations.json')
       .then(res => res.json())
-      .then(data => setLocations(data))
+      .then(data => setLocations(data || []))
       .catch(err => console.error("Error loading locations:", err));
   }, []);
 

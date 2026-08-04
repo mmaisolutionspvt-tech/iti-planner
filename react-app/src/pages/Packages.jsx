@@ -8,13 +8,9 @@ export default function Packages() {
   const [selectedPkg, setSelectedPkg] = useState(null);
 
   useEffect(() => {
-    fetch('/src/data/packages.json')
+    fetch('/data/packages.json')
       .then(res => res.json())
-      .then(data => {
-        // data is an array in packages.json, take the first 4 or specific ones
-        const selected = Array.isArray(data) ? data.slice(0, 4) : [];
-        setPackages(selected);
-      })
+      .then(data => setPackages(Array.isArray(data) ? data.slice(0, 4) : []))
       .catch(err => console.error("Error loading packages:", err));
   }, []);
 

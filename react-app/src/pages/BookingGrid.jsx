@@ -33,17 +33,17 @@ export default function BookingGrid() {
   useEffect(() => {
     setLoading(true);
     
-    // Simulate fetching based on type
+    // Process static imported data
     const fetchResults = async () => {
       try {
         let data = [];
         if (type === 'hotels') {
-          const res = await fetch('/src/data/hotels.json');
+          const res = await fetch('/data/hotels.json');
           data = await res.json();
           // filter by destination
           if (dest) data = data.filter(h => h.city.toLowerCase() === dest);
         } else if (type === 'flight') {
-          const res = await fetch('/src/data/flights_demo.json');
+          const res = await fetch('/data/flights_demo.json');
           const flightData = await res.json();
           const from = searchParams.get('from')?.toLowerCase() || '';
           
@@ -54,7 +54,7 @@ export default function BookingGrid() {
           );
           data = route ? route.flights : [];
         } else if (type === 'bus') {
-          const res = await fetch('/src/data/vendors.json');
+          const res = await fetch('/data/vendors.json');
           const vendorData = await res.json();
           const from = searchParams.get('from')?.toLowerCase() || '';
           

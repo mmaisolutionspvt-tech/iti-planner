@@ -36,8 +36,7 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
     const loadPlacesAndWeather = async () => {
       setLoading(true);
       try {
-        // 1. Fetch tourist places dataset
-        const res = await fetch('/src/data/tourist_places.json');
+        const res = await fetch('/data/tourist_places.json');
         const data = await res.json();
         
         const targetCity = (destination || '').toLowerCase().trim();

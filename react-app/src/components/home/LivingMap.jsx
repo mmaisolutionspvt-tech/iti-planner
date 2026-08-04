@@ -46,12 +46,12 @@ function HeatmapLayer({ points }) {
 export default function LivingMap() {
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  
+
   useEffect(() => {
-    fetch('/src/data/locations.json')
+    fetch('/data/locations.json')
       .then(res => res.json())
-      .then(data => setLocations(data.slice(0, 20))) // limit to 20 for perf
-      .catch(err => console.error('Error loading locations for map:', err));
+      .then(data => setLocations(data.slice(0, 20)))
+      .catch(err => console.error('Error loading locations:', err));
   }, []);
 
   const heatmapPoints = locations.filter(l => l.lat && l.lng).map(l => ({

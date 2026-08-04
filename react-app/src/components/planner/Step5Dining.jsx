@@ -18,25 +18,23 @@ import {
 
 export default function Step5Dining({ 
   destination, 
-  selectedPlaces = [],
-  selectedCafes = [], 
-  onAddCafeReservation,
-  onRemoveCafeReservation,
-  onUpdateCafeConfig,
-  selectedRestaurants = [], 
-  onAddRestaurantReservation,
-  onRemoveRestaurantReservation,
-  onUpdateRestaurantConfig,
   totalDays = 3,
-  travellers = 2,
+  selectedDining = [], 
+  onToggleDining, 
   onNext, 
-  onBack 
+  onBack,
+  selectedPlaces = []
 }) {
-  const [activeTab, setActiveTab] = useState('cafes'); // 'cafes' | 'restaurants'
+  const [activeTab, setActiveTab] = useState('restaurants'); // 'restaurants' | 'cafes'
   
   const [cafes, setCafes] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Filters
+  const [searchName, setSearchName] = useState('');
+  const [maxCost, setMaxCost] = useState(5000);
+  const [vegOnly, setVegOnly] = useState(false);
 
   // Modal
   const [activeReviewModal, setActiveReviewModal] = useState(null);
@@ -51,17 +49,17 @@ export default function Step5Dining({
         const targetCity = (destination || '').toLowerCase().trim();
 
         // 1. Fetch Cafes
-        const cafeRes = await fetch('/src/data/cafes.json');
+        const cafeRes = await fetch('/data/cafes.json');
         const cafeData = await cafeRes.json();
-        let filteredCafes = cafeData.filter(c => c.city.toLowerCase().includes(targetCity) || targetCity.includes(c.city.toLowerCase()));
-        if (filteredCafes.length === 0) filteredCafes = cafeData.slice(0, 30);
+        let filteredCafes = Array.isArray(cafeData) ? cafeData.filter(c => c.city.toLowerCase().includes(targetCity) || targetCity.includes(c.city.toLowerCase())) : [];
+        if (filteredCafes.length === 0) filteredCafes = (Array.isArray(cafeData) ? cafeData : []).slice(0, 30);
         setCafes(filteredCafes);
 
         // 2. Fetch Restaurants
-        const restRes = await fetch('/src/data/restaurants.json');
+        const restRes = await fetch('/data/restaurants.json');
         const restData = await restRes.json();
-        let filteredRests = restData.filter(r => r.city.toLowerCase().includes(targetCity) || targetCity.includes(r.city.toLowerCase()));
-        if (filteredRests.length === 0) filteredRests = restData.slice(0, 30);
+        let filteredRests = Array.isArray(restData) ? restData.filter(r => r.city.toLowerCase().includes(targetCity) || targetCity.includes(r.city.toLowerCase())) : [];
+        if (filteredRests.length === 0) filteredRests = (Array.isArray(restData) ? restData : []).slice(0, 30);
         setRestaurants(filteredRests);
 
       } catch (err) {
