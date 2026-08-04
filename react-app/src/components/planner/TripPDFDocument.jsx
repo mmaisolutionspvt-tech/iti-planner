@@ -89,7 +89,16 @@ export default function TripPDFDocument({ plan }) {
     }
   };
 
-  const currentTheme = themeConfig[rawTripType] || themeConfig['Family Trip'];
+  const getTheme = (typeStr) => {
+    const s = (typeStr || '').toString().toLowerCase();
+    if (s.includes('couple') || s.includes('romantic') || s.includes('love') || s.includes('pair')) return themeConfig['Couples / Romantic Trip'];
+    if (s.includes('friend') || s.includes('group') || s.includes('squad') || s.includes('fun')) return themeConfig['Friends Trip'];
+    if (s.includes('corporate') || s.includes('business') || s.includes('work') || s.includes('office')) return themeConfig['Corporate / Business Trip'];
+    if (s.includes('solo') || s.includes('single')) return themeConfig['Solo Trip'];
+    return themeConfig['Family Trip'];
+  };
+
+  const currentTheme = getTheme(plan.trip_type || plan.tripType || plan.trip_category || '');
 
   return (
     <div className={`text-gray-900 ${currentTheme.wrapperBg}`}>
