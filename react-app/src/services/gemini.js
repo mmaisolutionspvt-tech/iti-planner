@@ -340,8 +340,8 @@ function generateFallbackTripPlan(config) {
   const restTotal = selectedRestaurants.reduce((sum, r) => sum + (r.price || 400) * Math.ceil((r.seats || 2) / 2), 0);
   const diningTotal = cafesTotal + restTotal;
 
-  const totalCalculated = intercityTotal + spotsTotal + hotelsTotal + ridesTotal + diningTotal;
-  const finalCost = totalCalculated > 0 ? totalCalculated : (budget === 'budget' ? 12000 : (budget === 'comfort' ? 45000 : 25000));
+  const sumDaysTotal = daysArr.reduce((sum, d) => sum + (d.day_total_inr || 0), 0) + intercityTotal;
+  const finalCost = sumDaysTotal > 0 ? sumDaysTotal : (budget === 'budget' ? 12000 : (budget === 'comfort' ? 45000 : 25000));
 
   return {
     trip_name: `${destCity} ${tripType} Experience`,
@@ -351,11 +351,12 @@ function generateFallbackTripPlan(config) {
     travel_mode: mode,
     budget_tier: budget,
     trip_type: tripType,
+    tripType: tripType,
     total_days: totalDays,
     total_nights: Math.max(1, totalDays - 1),
     from_date: fromDate,
     to_date: toDate,
-    estimated_budget_inr: { min: finalCost, max: finalCost },
+    estimated_budget_inr: { min: finalCost, max: Math.round(finalCost * 1.15) },
     currency: { local: 'INR', inr_rate: 1 },
     intercity_transport: {
       outbound: outboundTransport ? {
@@ -494,8 +495,12 @@ export async function generateTripPlan(config) {
   try {
     const text = await callGemini(userMessage, SYSTEM_PROMPT, true);
     parsed = extractJSON(text);
+    if (!parsed || !Array.isArray(parsed.days) || parsed.days.length === 0) {
+      console.warn("AI returned empty or missing days array. Utilizing smart fallback trip plan generator.");
+      parsed = generateFallbackTripPlan(config);
+    }
   } catch (err) {
-    console.warn("AI API request failed or returned 400. Utilizing smart customized offline fallback generator:", err.message);
+    console.warn("AI API request failed. Utilizing smart customized offline fallback generator:", err.message);
     parsed = generateFallbackTripPlan(config);
   }
 
