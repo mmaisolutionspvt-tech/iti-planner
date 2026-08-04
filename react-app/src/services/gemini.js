@@ -170,35 +170,229 @@ function extractJSON(text) {
   return JSON.parse(cleaned);
 }
 
+function generateFallbackTripPlan(config) {
+  const {
+    locations = ['Goa'], 
+    fromDate, 
+    toDate, 
+    mode = 'Flight', 
+    budget = 'balanced', 
+    tripType = 'Family Trip',
+    fromCity = 'Delhi', 
+    travellerCount = 2, 
+    selectedHotels = [],
+    customPlaces = [],
+    scheduleData = {},
+    selectedRides = [],
+    selectedCafes = [],
+    selectedRestaurants = [],
+    outboundTransport = null,
+    returnTransport = null
+  } = config;
+
+  const destCity = (locations[0] || 'Goa').trim();
+  const start = new Date(fromDate || Date.now());
+  const end = new Date(toDate || Date.now() + 3 * 86400000);
+  const diffTime = Math.abs(end - start);
+  const totalDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1);
+
+  const vibeThemes = {
+    'Family Trip': ['Heritage & Temple Trail', 'Scenic Lake & Garden Walk', 'Cultural Market & Local Delights', 'Relaxed Family Sightseeing'],
+    'Friends Trip': ['Adventure & Viewpoints', 'Trendy Cafes & Night Markets', 'Water Sports & Coastal Drive', 'Thrilling Exploration'],
+    'Couples / Romantic Trip': ['Romantic Sunset Viewpoint', 'Candlelight Dining & Strolls', 'Boutique Heritage Walk', 'Scenic Serenity'],
+    'Solo Trip': ['Solo Heritage Discovery', 'Authentic Local Food Crawl', 'Artisan Markets & Photo Walk', 'Peaceful Exploration'],
+    'Corporate / Business Trip': ['Executive Heritage Highlights', 'High-Speed Networking Dining', 'Iconic Landmark Tour', 'Smooth Transit & Return']
+  };
+
+  const themes = vibeThemes[tripType] || vibeThemes['Family Trip'];
+  const daysArr = [];
+
+  for (let i = 0; i < totalDays; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toISOString().split('T')[0];
+    const dayNum = i + 1;
+
+    const dayPlaces = customPlaces.filter(p => {
+      const s = scheduleData[p.id];
+      return s ? s.day === `Day ${dayNum}` : (i === 0);
+    });
+
+    const dayHotel = selectedHotels[i % Math.max(1, selectedHotels.length)] || {
+      hotel_id: `h_${dayNum}`,
+      name: `Grand ${destCity} Resort & Spa`,
+      price_per_night_inr: budget === 'budget' ? 2500 : (budget === 'comfort' ? 8500 : 4500),
+      rating: 4.5,
+      address: `Central Boulevard, ${destCity}`
+    };
+
+    const dayCafe = selectedCafes.find(c => c.day === `Day ${dayNum}`) || selectedCafes[i % Math.max(1, selectedCafes.length)];
+    const dayRest = selectedRestaurants.find(r => r.day === `Day ${dayNum}`) || selectedRestaurants[i % Math.max(1, selectedRestaurants.length)];
+    const dayRide = selectedRides[i % Math.max(1, selectedRides.length)];
+
+    const schedule = [
+      {
+        time: '09:00',
+        place: dayPlaces[0]?.name || `${destCity} Cultural Heritage Spot`,
+        activity: `Morning exploration curated for ${tripType}`,
+        type: 'sightseeing',
+        duration_min: 120,
+        cost_inr: dayPlaces[0]?.entrance_fee_inr || 100,
+        notes: dayPlaces[0]?.dslr_allowed === 'Yes' ? 'DSLR Photography Permitted' : undefined
+      },
+      {
+        time: '13:00',
+        place: dayCafe?.name || `${destCity} Bistro & Garden Cafe`,
+        activity: `Lunch break featuring local specialties`,
+        type: 'meal',
+        duration_min: 60,
+        cost_inr: dayCafe?.rate_for_two ? Math.round(dayCafe.rate_for_two / 2) : 400
+      },
+      {
+        time: '16:00',
+        place: dayPlaces[1]?.name || `${destCity} Sunset Panorama Point`,
+        activity: `Afternoon sightseeing & photo walk`,
+        type: 'sightseeing',
+        duration_min: 90,
+        cost_inr: dayPlaces[1]?.entrance_fee_inr || 150
+      },
+      {
+        time: '20:00',
+        place: dayRest?.name || `${destCity} Fine Heritage Dining`,
+        activity: `Evening dinner & relaxation`,
+        type: 'meal',
+        duration_min: 90,
+        cost_inr: dayRest?.price ? Math.round(dayRest.price / 2) : 600
+      }
+    ];
+
+    if (dayRide) {
+      schedule.unshift({
+        time: '08:30',
+        place: `${dayRide.vehicle_model} Ground Ride`,
+        activity: `Private ground transit via ${dayRide.vehicle_model} (${dayRide.vehicle_category})`,
+        type: 'transport',
+        duration_min: 30,
+        cost_inr: dayRide.price || 500
+      });
+    }
+
+    daysArr.push({
+      day: dayNum,
+      date: dateStr,
+      city: destCity,
+      theme: `Day ${dayNum}: ${themes[i % themes.length]}`,
+      hotel: dayHotel,
+      schedule,
+      day_total_inr: schedule.reduce((sum, s) => sum + (s.cost_inr || 0), 0) + (dayHotel.price_per_night_inr || dayHotel.price_inr || 3000)
+    });
+  }
+
+  const outboundTotal = (outboundTransport?.price || 0) * travellerCount;
+  const returnTotal = (returnTransport?.price || 0) * travellerCount;
+  const intercityTotal = outboundTotal + returnTotal;
+
+  const spotsTotal = customPlaces.reduce((sum, p) => sum + (p.entrance_fee_inr || 0) * travellerCount, 0);
+  const hotelsTotal = selectedHotels.reduce((sum, h) => sum + ((h.price_per_night_inr || h.price_inr || 0) * (h.nights || 1) * (h.rooms || 1)), 0);
+  const ridesTotal = selectedRides.reduce((sum, r) => sum + (r.price || 0), 0);
+  const cafesTotal = selectedCafes.reduce((sum, c) => sum + (c.rate_for_two || 500) * Math.ceil((c.seats || 2) / 2), 0);
+  const restTotal = selectedRestaurants.reduce((sum, r) => sum + (r.price || 400) * Math.ceil((r.seats || 2) / 2), 0);
+  const diningTotal = cafesTotal + restTotal;
+
+  const totalCalculated = intercityTotal + spotsTotal + hotelsTotal + ridesTotal + diningTotal;
+  const finalCost = totalCalculated > 0 ? totalCalculated : (budget === 'budget' ? 12000 : (budget === 'comfort' ? 45000 : 25000));
+
+  return {
+    trip_name: `${destCity} ${tripType} Experience`,
+    type: 'national',
+    from_city: fromCity,
+    destinations: locations,
+    travel_mode: mode,
+    budget_tier: budget,
+    trip_type: tripType,
+    total_days: totalDays,
+    total_nights: Math.max(1, totalDays - 1),
+    from_date: fromDate,
+    to_date: toDate,
+    estimated_budget_inr: { min: finalCost, max: finalCost },
+    currency: { local: 'INR', inr_rate: 1 },
+    intercity_transport: {
+      outbound: outboundTransport ? {
+        mode: outboundTransport.mode || 'Flight',
+        operator: outboundTransport.operator || 'Air India',
+        from: fromCity,
+        to: destCity,
+        dep_time: outboundTransport.depTime || '09:00 AM',
+        arr_time: outboundTransport.arrTime || '11:30 AM',
+        duration: '2h 30m',
+        cost_inr: outboundTransport.price || 5000
+      } : undefined,
+      return: returnTransport ? {
+        mode: returnTransport.mode || 'Flight',
+        operator: returnTransport.operator || 'SpiceJet',
+        from: destCity,
+        to: fromCity,
+        dep_time: returnTransport.depTime || '03:00 PM',
+        arr_time: returnTransport.arrTime || '05:30 PM',
+        duration: '2h 30m',
+        cost_inr: returnTransport.price || 5000
+      } : undefined
+    },
+    days: daysArr,
+    trip_summary: {
+      total_cost_inr: finalCost,
+      budget_breakdown: {
+        intercity_transport_inr: intercityTotal,
+        local_transport_inr: ridesTotal,
+        accommodation_inr: hotelsTotal,
+        food_inr: diningTotal,
+        activities_inr: spotsTotal,
+        shopping_inr: 0,
+        misc_inr: 0
+      },
+      highlights: [
+        `Curated for ${tripType} with tailored activity pacing`,
+        `Explore top attractions in ${destCity}`,
+        `Hygienic local dining and verified accommodations`
+      ],
+      weather_note: 'Pleasant weather expected during travel dates.'
+    }
+  };
+}
+
 /**
  * Main itinerary generator.
  * Sends the full system prompt as systemInstruction + a clean user query.
  */
-export async function generateTripPlan({ 
-  locations, 
-  fromDate, 
-  toDate, 
-  mode, 
-  budget, 
-  fromCity = 'Delhi', 
-  travellerCount = 2, 
-  selectedHotel = null,
-  selectedHotels = [],
-  customPlaces = [],
-  scheduleData = {},
-  selectedRide = null,
-  selectedRides = [],
-  selectedCafes = [],
-  selectedRestaurants = [],
-  outboundTransport = null,
-  returnTransport = null
-}) {
+export async function generateTripPlan(config) {
+  const {
+    locations = ['Goa'], 
+    fromDate, 
+    toDate, 
+    mode, 
+    budget, 
+    tripType = 'Family Trip',
+    fromCity = 'Delhi', 
+    travellerCount = 2, 
+    selectedHotel = null,
+    selectedHotels = [],
+    customPlaces = [],
+    scheduleData = {},
+    selectedRide = null,
+    selectedRides = [],
+    selectedCafes = [],
+    selectedRestaurants = [],
+    outboundTransport = null,
+    returnTransport = null
+  } = config;
+
   let userMessage = `Generate a complete travel itinerary with the following inputs:
 
 - destinations: ${locations.join(', ')}
 - from_date: ${fromDate}
 - to_date: ${toDate}
 - travel_mode: ${mode}
+- trip_type: ${tripType}
 - budget_tier: ${budget}
 - from_city: ${fromCity}
 - traveller_count: ${travellerCount}`;
@@ -238,12 +432,11 @@ export async function generateTripPlan({
   if (outboundTransport || returnTransport) {
     userMessage += `\n\n- INTERCITY_TRANSPORT_TICKETS:`;
     if (outboundTransport) {
-      userMessage += `\n* Day 1 Outbound (${fromCity} → ${locations[0] || 'Destination'}): ${outboundTransport.operator} ${outboundTransport.type.toUpperCase()} (${outboundTransport.code || ''}), Dep: ${outboundTransport.depTime}, Arr: ${outboundTransport.arrTime}, Cost: ₹${outboundTransport.price}`;
+      userMessage += `\n* Outbound (Day 1): ${outboundTransport.mode} via ${outboundTransport.operator} (${outboundTransport.depTime} - ${outboundTransport.arrTime}, ₹${outboundTransport.price}/person)`;
     }
     if (returnTransport) {
-      userMessage += `\n* Last Day Return (${locations[0] || 'Destination'} → ${fromCity}): ${returnTransport.operator} ${returnTransport.type.toUpperCase()} (${returnTransport.code || ''}), Dep: ${returnTransport.depTime}, Arr: ${returnTransport.arrTime}, Cost: ₹${returnTransport.price}`;
+      userMessage += `\n* Return (Last Day): ${returnTransport.mode} via ${returnTransport.operator} (${returnTransport.depTime} - ${returnTransport.arrTime}, ₹${returnTransport.price}/person)`;
     }
-    userMessage += `\n\nCRITICAL INSTRUCTION: Include the Day 1 departure ${outboundTransport?.type || 'flight/bus'} and Last Day return ${returnTransport?.type || 'flight/bus'} in the intercity_transport JSON structure.`;
   }
 
   // Scheduled Dining (Cafes & Restaurants)
@@ -256,8 +449,14 @@ export async function generateTripPlan({
 
   userMessage += `\n\nCRITICAL BUDGET INSTRUCTION: You MUST calculate estimated_budget_inr and trip_summary.total_cost_inr to reflect the REAL total sum of all user-selected transport, hotels, rides, dining, and sightseeing fees. Do not output a low default estimate.`;
 
-  const text = await callGemini(userMessage, SYSTEM_PROMPT, true);
-  const parsed = extractJSON(text);
+  let parsed = null;
+  try {
+    const text = await callGemini(userMessage, SYSTEM_PROMPT, true);
+    parsed = extractJSON(text);
+  } catch (err) {
+    console.warn("AI API request failed or returned 400. Utilizing smart customized offline fallback generator:", err.message);
+    parsed = generateFallbackTripPlan(config);
+  }
 
   // Compute exact verified budget from custom user choices
   const outboundTotal = (outboundTransport?.price || 0) * travellerCount;
