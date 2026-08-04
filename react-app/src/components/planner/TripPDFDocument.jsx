@@ -14,14 +14,94 @@ export default function TripPDFDocument({ plan }) {
   const destinations = plan.destinations?.join(' → ') || '';
   const travelMode = plan.travel_mode || '';
   const budgetTier = plan.budget_tier ? plan.budget_tier.charAt(0).toUpperCase() + plan.budget_tier.slice(1) : '';
+  const rawTripType = plan.trip_type || plan.tripType || 'Family Trip';
+
+  const themeConfig = {
+    'Couples / Romantic Trip': {
+      wrapperBg: 'bg-gradient-to-br from-rose-50/80 via-pink-50/40 to-purple-50/60 p-6 md:p-10 rounded-3xl border-2 border-rose-200/80 shadow-xl shadow-rose-100/50',
+      badge: 'bg-rose-600 text-white font-bold px-4 py-1 rounded-full text-xs uppercase tracking-wider shadow-sm inline-flex items-center gap-1.5',
+      badgeText: '💖 Couples Romantic Getaway 🌹',
+      titleColor: 'text-rose-950 font-serif',
+      subText: 'text-rose-700/80 font-medium',
+      tagColor: 'text-rose-600 font-bold',
+      dayNumberColor: 'text-rose-600 font-serif',
+      dotColor: 'bg-rose-500 border-4 border-rose-100 shadow-rose-200',
+      cardBg: 'bg-white/90 border border-rose-100 shadow-sm hover:shadow-rose-100',
+      accentBorder: 'border-rose-300',
+      hotelIconBg: 'bg-rose-100 text-rose-600',
+      quote: '🌹 "Travel is like love, mostly because it’s a heightened state of awareness in which we are mindful, receptive, and ready to transform."'
+    },
+    'Family Trip': {
+      wrapperBg: 'bg-gradient-to-br from-emerald-50/80 via-amber-50/30 to-teal-50/60 p-6 md:p-10 rounded-3xl border-2 border-emerald-200/80 shadow-xl shadow-emerald-100/40',
+      badge: 'bg-emerald-700 text-white font-bold px-4 py-1 rounded-full text-xs uppercase tracking-wider shadow-sm inline-flex items-center gap-1.5',
+      badgeText: '👨‍👩‍👧‍👦 Family Comfort Itinerary 🏡',
+      titleColor: 'text-emerald-950 font-display',
+      subText: 'text-emerald-800 font-medium',
+      tagColor: 'text-emerald-700 font-bold',
+      dayNumberColor: 'text-emerald-700 font-bold',
+      dotColor: 'bg-emerald-600 border-4 border-emerald-100 shadow-emerald-200',
+      cardBg: 'bg-white/90 border border-emerald-100 shadow-sm',
+      accentBorder: 'border-emerald-300',
+      hotelIconBg: 'bg-emerald-100 text-emerald-700',
+      quote: '👨‍👩‍👧‍👦 "In the end, kids won’t remember that fancy toy you bought them, they will remember the time you spent with them."'
+    },
+    'Friends Trip': {
+      wrapperBg: 'bg-gradient-to-br from-violet-50/80 via-fuchsia-50/30 to-orange-50/60 p-6 md:p-10 rounded-3xl border-2 border-violet-200/80 shadow-xl shadow-violet-100/40',
+      badge: 'bg-gradient-to-r from-violet-600 to-orange-500 text-white font-bold px-4 py-1 rounded-full text-xs uppercase tracking-wider shadow-sm inline-flex items-center gap-1.5',
+      badgeText: '⚡ Friends Squad Adventure 🤙 🔥',
+      titleColor: 'text-violet-950 font-display',
+      subText: 'text-violet-800 font-medium',
+      tagColor: 'text-violet-600 font-bold',
+      dayNumberColor: 'text-violet-600 font-bold',
+      dotColor: 'bg-violet-600 border-4 border-violet-100 shadow-violet-200',
+      cardBg: 'bg-white/90 border border-violet-100 shadow-sm',
+      accentBorder: 'border-violet-300',
+      hotelIconBg: 'bg-violet-100 text-violet-600',
+      quote: '⚡ "Good times and crazy friends make the best memories."'
+    },
+    'Corporate / Business Trip': {
+      wrapperBg: 'bg-slate-50 p-6 md:p-10 rounded-2xl border border-slate-200 shadow-md',
+      badge: 'bg-slate-800 text-slate-100 font-bold px-3 py-1 rounded text-xs uppercase tracking-wider inline-flex items-center gap-1.5',
+      badgeText: '💼 Executive Business Itinerary 👔',
+      titleColor: 'text-slate-900 font-sans',
+      subText: 'text-slate-600 font-medium',
+      tagColor: 'text-slate-700 font-bold',
+      dayNumberColor: 'text-slate-800 font-bold',
+      dotColor: 'bg-slate-800 border-4 border-slate-200',
+      cardBg: 'bg-white border border-slate-200 shadow-sm',
+      accentBorder: 'border-slate-300',
+      hotelIconBg: 'bg-slate-100 text-slate-700',
+      quote: '💼 "Efficiency and comfort for seamless business travel."'
+    },
+    'Solo Trip': {
+      wrapperBg: 'bg-gradient-to-br from-teal-50/80 via-amber-50/30 to-emerald-50/60 p-6 md:p-10 rounded-3xl border-2 border-teal-200/80 shadow-xl shadow-teal-100/40',
+      badge: 'bg-teal-700 text-white font-bold px-4 py-1 rounded-full text-xs uppercase tracking-wider shadow-sm inline-flex items-center gap-1.5',
+      badgeText: '🗺️ Solo Explorer Circuit 🧭',
+      titleColor: 'text-teal-950 font-display',
+      subText: 'text-teal-800 font-medium',
+      tagColor: 'text-teal-700 font-bold',
+      dayNumberColor: 'text-teal-700 font-bold',
+      dotColor: 'bg-teal-600 border-4 border-teal-100 shadow-teal-200',
+      cardBg: 'bg-white/90 border border-teal-100 shadow-sm',
+      accentBorder: 'border-teal-300',
+      hotelIconBg: 'bg-teal-100 text-teal-700',
+      quote: '🧭 "To travel alone is to take a journey into oneself."'
+    }
+  };
+
+  const currentTheme = themeConfig[rawTripType] || themeConfig['Family Trip'];
 
   return (
-    <div className="text-gray-900">
-      <div className="text-center mb-10 pb-6 border-b-2 border-gray-100">
-        <h1 className="text-4xl font-display font-bold text-[#121619] mb-2">{tripName}</h1>
-        <p className="text-lg text-gray-500">{totalDays} Days • Estimated Budget: ₹{budgetMin.toLocaleString()} - ₹{budgetMax.toLocaleString()}</p>
-        {destinations && <p className="text-sm text-[#D4B15A] font-semibold mt-1">📍 {destinations} &nbsp;|&nbsp; {travelMode} &nbsp;|&nbsp; {budgetTier} budget</p>}
-        {weatherNote && <p className="text-sm font-medium text-emerald-600 mt-2">🌤 {weatherNote}</p>}
+    <div className={`text-gray-900 ${currentTheme.wrapperBg}`}>
+      <div className="text-center mb-8 pb-6 border-b-2 border-gray-200/60">
+        <div className="mb-3">
+          <span className={currentTheme.badge}>{currentTheme.badgeText}</span>
+        </div>
+        <h1 className={`text-3xl md:text-4xl font-bold mb-2 ${currentTheme.titleColor}`}>{tripName}</h1>
+        <p className={`text-base md:text-lg ${currentTheme.subText}`}>{totalDays} Days • Estimated Budget: ₹{budgetMin.toLocaleString()} - ₹{budgetMax.toLocaleString()}</p>
+        {destinations && <p className={`text-sm font-semibold mt-1 ${currentTheme.tagColor}`}>📍 {destinations} &nbsp;|&nbsp; {travelMode} &nbsp;|&nbsp; {budgetTier} budget</p>}
+        {weatherNote && <p className="text-sm font-medium text-emerald-700 mt-2">🌤 {weatherNote}</p>}
+        {currentTheme.quote && <p className="text-xs italic text-gray-500 mt-3 max-w-xl mx-auto">{currentTheme.quote}</p>}
       </div>
 
       {/* Intercity Transport Summary */}
@@ -59,16 +139,16 @@ export default function TripPDFDocument({ plan }) {
                 {/* Day Header */}
                 <div className="md:w-[100px] shrink-0 pt-2 relative">
                   {/* Timeline dot */}
-                  <div className="hidden md:block absolute right-[-24px] top-4 w-4 h-4 rounded-full bg-[#FFAA00] border-4 border-white shadow-sm"></div>
+                  <div className={`hidden md:block absolute right-[-24px] top-4 w-4 h-4 rounded-full ${currentTheme.dotColor}`}></div>
                   <div className="md:text-right">
-                    <h3 className="text-2xl font-bold text-[#FFAA00]">Day {day.day}</h3>
-                    <p className="text-sm text-gray-500 font-medium">{day.date}</p>
+                    <h3 className={`text-2xl font-bold ${currentTheme.dayNumberColor}`}>Day {day.day}</h3>
+                    <p className="text-xs text-gray-500 font-semibold">{day.date}</p>
                     <p className="text-xs font-bold text-gray-400 uppercase mt-1 tracking-wider">{location}</p>
                   </div>
                 </div>
 
                 {/* Day Content */}
-                <div className="flex-1 bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                <div className={`flex-1 rounded-2xl p-6 transition-all duration-300 ${currentTheme.cardBg}`}>
                   
                   {/* Hotel */}
                   {day.hotel && day.hotel.name && day.hotel.name.toLowerCase() !== 'n/a' && day.hotel.name !== 'null' && (

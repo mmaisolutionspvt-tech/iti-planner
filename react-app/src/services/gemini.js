@@ -170,6 +170,78 @@ function extractJSON(text) {
   return JSON.parse(cleaned);
 }
 
+const CITY_FALLBACK_DB = {
+  goa: {
+    spots: [
+      { name: "Fort Aguada & Lighthouse", fee: 50, dslr: "Yes", activity: "17th-century Portuguese fortress & lighthouse overlooking Sinquerim beach" },
+      { name: "Chapora Fort", fee: 0, dslr: "Yes", activity: "Panoramic views of Vagator Beach & Chapora River (Dil Chahta Hai spot)" },
+      { name: "Basilica of Bom Jesus", fee: 0, dslr: "No", activity: "UNESCO World Heritage site containing St. Francis Xavier mortal remains" },
+      { name: "Anjuna Flea Market & Beach", fee: 0, dslr: "Yes", activity: "Beachfront artisan crafts, Boho jewelry & sunset beach shacks" },
+      { name: "Dudhsagar Waterfalls Safari", fee: 500, dslr: "Yes", activity: "Jeep safari through Mollem forest to 4-tiered cascading waterfall" },
+      { name: "Fontainhas Latin Quarter", fee: 0, dslr: "Yes", activity: "Heritage photo walk past colorful 19th-century Portuguese villas" },
+      { name: "Calangute & Baga Watersports", fee: 0, dslr: "Yes", activity: "Parasailing, jet ski rides, and beachside dining" },
+      { name: "Se Cathedral", fee: 0, dslr: "Yes", activity: "One of Asia's largest churches featuring the Golden Bell" },
+      { name: "Palolem Beach", fee: 0, dslr: "Yes", activity: "Scenic crescent bay with kayaking and tranquil beach cabanas" },
+      { name: "Reis Magos Fort", fee: 50, dslr: "Yes", activity: "Restored 16th-century river fort overlooking Panaji skyline" }
+    ],
+    hotels: [
+      { name: "Grand Hyatt Goa Resort & Spa", price: 8500, rating: 4.8, address: "Bambolim Bay, Goa" },
+      { name: "Taj Fort Aguada Resort", price: 12500, rating: 4.9, address: "Sinquerim, Candolim, Goa" },
+      { name: "Alila Diwa Goa", price: 7500, rating: 4.7, address: "Majorda, South Goa" },
+      { name: "Lemon Tree Amarante Beach Resort", price: 4200, rating: 4.4, address: "Candolim, North Goa" },
+      { name: "Hotel Residency Tower Goa", price: 2400, rating: 4.1, address: "Panaji, Goa" }
+    ],
+    dining: [
+      { name: "Britto's Bar & Restaurant", rate: 1200, note: "Baga Beach; Goan fish curry & fresh tiger prawns" },
+      { name: "Thalassa Greek Taverna", rate: 2000, cuisine: "Vagator Cliff; Sunset Mediterranean dining & cocktails" },
+      { name: "Fisherman's Wharf", rate: 1400, cuisine: "Cavelossim; Riverside Goan seafood thali & kingfish" },
+      { name: "Artjuna Garden Cafe", rate: 600, cuisine: "Anjuna; Organic smoothie bowls, falafel & fresh bakery" },
+      { name: "Curlies Beach Shack", rate: 800, cuisine: "Anjuna Beachfront; Woodfired pizza & chilled beverage" },
+      { name: "Vinayak Family Restaurant", rate: 500, cuisine: "Assagao; Authentic Goan prawn thali & fried fish" }
+    ]
+  },
+  manali: {
+    spots: [
+      { name: "Hadimba Devi Temple", fee: 50, dslr: "Yes", activity: "1553 CE pagoda wooden shrine inside Dhungri cedar forest" },
+      { name: "Solang Valley Snow Point", fee: 500, dslr: "Yes", activity: "Paragliding, ropeway rides, and snow adventure sports" },
+      { name: "Vashisht Hot Springs", fee: 0, dslr: "Yes", activity: "Natural sulfur thermal baths and stone temple" },
+      { name: "Jogini Waterfall Trek", fee: 0, dslr: "Yes", activity: "3km nature trek along mountain streams to waterfall" },
+      { name: "Old Manali Cafe Circuit", fee: 0, dslr: "Yes", activity: "Apple orchards, bohemian cafes & handmade wooden crafts" },
+      { name: "Atal Tunnel & Sissu", fee: 200, dslr: "Yes", activity: "Drive through world's longest high-altitude tunnel into Lahaul valley" }
+    ],
+    hotels: [
+      { name: "Solang Valley Resort Manali", price: 6500, rating: 4.6, address: "Palchan, Manali" },
+      { name: "Manu Allaya Resort & Spa", price: 8000, rating: 4.7, address: "Chhial, Manali" },
+      { name: "Snow Valley Resorts Manali", price: 3200, rating: 4.3, address: "Log Huts Area, Manali" }
+    ],
+    dining: [
+      { name: "Johnson's Cafe", rate: 900, note: "Model Town; Fresh Himalayan trout & warm apple crumble" },
+      { name: "Cafe 1947", rate: 800, note: "Old Manali; Riverside Italian pasta & acoustic music" },
+      { name: "Chopsticks Restaurant", rate: 600, note: "Mall Road; Authentic Tibetan momos & hot thukpa" }
+    ]
+  },
+  jaipur: {
+    spots: [
+      { name: "Amer Fort & Sheesh Mahal", fee: 500, dslr: "Yes", activity: "16th-century hilltop palace, mirror hall & elephant ramparts" },
+      { name: "Hawa Mahal (Palace of Winds)", fee: 200, dslr: "Yes", activity: "Iconic 953-window pink sandstone facade built for royal court" },
+      { name: "City Palace Jaipur", fee: 700, dslr: "Yes", activity: "Royal courtyards, Peacock Gate, and museum of maharaja textiles" },
+      { name: "Jantar Mantar Observatory", fee: 200, dslr: "Yes", activity: "UNESCO World Heritage site with giant stone astronomical instruments" },
+      { name: "Nahargarh Fort Sunset Point", fee: 200, dslr: "Yes", activity: "Panoramas of Pink City at sunset from fort ramparts" },
+      { name: "Jal Mahal (Water Palace)", fee: 0, dslr: "Yes", activity: "5-story palace floating on Man Sagar Lake" }
+    ],
+    hotels: [
+      { name: "Trident Jaipur", price: 9500, rating: 4.8, address: "Amber Fort Road, Jaipur" },
+      { name: "Hotel Pearl Palace", price: 2800, rating: 4.6, address: "Hathroi Fort, Jaipur" },
+      { name: "Shahpura House Heritage Hotel", price: 6200, rating: 4.7, address: "Bani Park, Jaipur" }
+    ],
+    dining: [
+      { name: "LMB (Laxmi Misthan Bhandar)", rate: 700, note: "Johari Bazaar; Iconic Rajasthani Dal Baati Churma" },
+      { name: "Tapri Central Rooftop Cafe", rate: 500, note: "C-Scheme; Rooftop Kulhad Chai & fusion snacks" },
+      { name: "Chokhi Dhani Ethnic Resort", rate: 1800, note: "Tonk Road; Royal Rajasthani thali & folk dance show" }
+    ]
+  }
+};
+
 function generateFallbackTripPlan(config) {
   const {
     locations = ['Goa'], 
@@ -190,18 +262,21 @@ function generateFallbackTripPlan(config) {
     returnTransport = null
   } = config;
 
-  const destCity = (locations[0] || 'Goa').trim();
+  const destKey = (locations[0] || 'Goa').toLowerCase().trim();
+  const dbKey = Object.keys(CITY_FALLBACK_DB).find(k => destKey.includes(k)) || 'goa';
+  const cityData = CITY_FALLBACK_DB[dbKey];
+
   const start = new Date(fromDate || Date.now());
   const end = new Date(toDate || Date.now() + 3 * 86400000);
   const diffTime = Math.abs(end - start);
   const totalDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1);
 
   const vibeThemes = {
-    'Family Trip': ['Heritage & Temple Trail', 'Scenic Lake & Garden Walk', 'Cultural Market & Local Delights', 'Relaxed Family Sightseeing'],
-    'Friends Trip': ['Adventure & Viewpoints', 'Trendy Cafes & Night Markets', 'Water Sports & Coastal Drive', 'Thrilling Exploration'],
-    'Couples / Romantic Trip': ['Romantic Sunset Viewpoint', 'Candlelight Dining & Strolls', 'Boutique Heritage Walk', 'Scenic Serenity'],
-    'Solo Trip': ['Solo Heritage Discovery', 'Authentic Local Food Crawl', 'Artisan Markets & Photo Walk', 'Peaceful Exploration'],
-    'Corporate / Business Trip': ['Executive Heritage Highlights', 'High-Speed Networking Dining', 'Iconic Landmark Tour', 'Smooth Transit & Return']
+    'Family Trip': ['Heritage & Temple Trail', 'Scenic Promenade & Lake Walk', 'Cultural Market & Local Delights', 'Relaxed Family Exploration', 'Artisans & Gardens'],
+    'Friends Trip': ['Adventure & Viewpoints', 'Trendy Cafes & Night Markets', 'Water Sports & Coastal Drive', 'Thrilling Exploration', 'Sunset Party & Music'],
+    'Couples / Romantic Trip': ['Romantic Sunset Viewpoint', 'Candlelight Dining & Strolls', 'Boutique Heritage Walk', 'Scenic Coastal Serenity', 'Intimate Beach Walk'],
+    'Solo Trip': ['Solo Heritage Discovery', 'Authentic Local Food Crawl', 'Artisan Markets & Photo Walk', 'Peaceful Exploration', 'Cultural Heritage Circuit'],
+    'Corporate / Business Trip': ['Executive Heritage Highlights', 'High-Speed Networking Dining', 'Iconic Landmark Tour', 'Smooth Transit & Return', 'Boutique Lounge Evening']
   };
 
   const themes = vibeThemes[tripType] || vibeThemes['Family Trip'];
@@ -213,56 +288,53 @@ function generateFallbackTripPlan(config) {
     const dateStr = d.toISOString().split('T')[0];
     const dayNum = i + 1;
 
-    const dayPlaces = customPlaces.filter(p => {
+    // Filter user custom places for this day, or pick DISTINCT spots from cityData
+    const userDayPlaces = customPlaces.filter(p => {
       const s = scheduleData[p.id];
-      return s ? s.day === `Day ${dayNum}` : (i === 0);
+      return s ? s.day === `Day ${dayNum}` : false;
     });
 
-    const dayHotel = selectedHotels[i % Math.max(1, selectedHotels.length)] || {
-      hotel_id: `h_${dayNum}`,
-      name: `Grand ${destCity} Resort & Spa`,
-      price_per_night_inr: budget === 'budget' ? 2500 : (budget === 'comfort' ? 8500 : 4500),
-      rating: 4.5,
-      address: `Central Boulevard, ${destCity}`
-    };
+    const spot1 = userDayPlaces[0] || cityData.spots[(i * 2) % cityData.spots.length];
+    const spot2 = userDayPlaces[1] || cityData.spots[(i * 2 + 1) % cityData.spots.length];
 
-    const dayCafe = selectedCafes.find(c => c.day === `Day ${dayNum}`) || selectedCafes[i % Math.max(1, selectedCafes.length)];
-    const dayRest = selectedRestaurants.find(r => r.day === `Day ${dayNum}`) || selectedRestaurants[i % Math.max(1, selectedRestaurants.length)];
+    const dayHotel = selectedHotels[i % Math.max(1, selectedHotels.length)] || cityData.hotels[i % cityData.hotels.length];
+    const dayCafe = selectedCafes.find(c => c.day === `Day ${dayNum}`) || cityData.dining[(i * 2) % cityData.dining.length];
+    const dayRest = selectedRestaurants.find(r => r.day === `Day ${dayNum}`) || cityData.dining[(i * 2 + 1) % cityData.dining.length];
     const dayRide = selectedRides[i % Math.max(1, selectedRides.length)];
 
     const schedule = [
       {
         time: '09:00',
-        place: dayPlaces[0]?.name || `${destCity} Cultural Heritage Spot`,
-        activity: `Morning exploration curated for ${tripType}`,
+        place: spot1.name || spot1.place,
+        activity: spot1.activity || `Morning sightseeing curated for ${tripType}`,
         type: 'sightseeing',
         duration_min: 120,
-        cost_inr: dayPlaces[0]?.entrance_fee_inr || 100,
-        notes: dayPlaces[0]?.dslr_allowed === 'Yes' ? 'DSLR Photography Permitted' : undefined
+        cost_inr: spot1.entrance_fee_inr ?? spot1.fee ?? 100,
+        notes: spot1.dslr_allowed === 'Yes' ? 'DSLR Photography Permitted' : undefined
       },
       {
         time: '13:00',
-        place: dayCafe?.name || `${destCity} Bistro & Garden Cafe`,
-        activity: `Lunch break featuring local specialties`,
+        place: dayCafe.name || dayCafe.place || 'Local Gourmet Cafe',
+        activity: `Lunch break (${dayCafe.cuisine || dayCafe.note || 'local culinary specialties'})`,
         type: 'meal',
         duration_min: 60,
-        cost_inr: dayCafe?.rate_for_two ? Math.round(dayCafe.rate_for_two / 2) : 400
+        cost_inr: dayCafe.rate ? Math.round(dayCafe.rate / 2) : (dayCafe.rate_for_two ? Math.round(dayCafe.rate_for_two / 2) : 400)
       },
       {
         time: '16:00',
-        place: dayPlaces[1]?.name || `${destCity} Sunset Panorama Point`,
-        activity: `Afternoon sightseeing & photo walk`,
+        place: spot2.name || spot2.place,
+        activity: spot2.activity || `Afternoon sightseeing & photo walk`,
         type: 'sightseeing',
         duration_min: 90,
-        cost_inr: dayPlaces[1]?.entrance_fee_inr || 150
+        cost_inr: spot2.entrance_fee_inr ?? spot2.fee ?? 150
       },
       {
         time: '20:00',
-        place: dayRest?.name || `${destCity} Fine Heritage Dining`,
-        activity: `Evening dinner & relaxation`,
+        place: dayRest.name || dayRest.place || 'Heritage Restaurant',
+        activity: `Evening dinner & relaxation (${dayRest.cuisine || dayRest.note || 'signature dishes'})`,
         type: 'meal',
         duration_min: 90,
-        cost_inr: dayRest?.price ? Math.round(dayRest.price / 2) : 600
+        cost_inr: dayRest.rate ? Math.round(dayRest.rate / 2) : (dayRest.price ? Math.round(dayRest.price / 2) : 600)
       }
     ];
 
@@ -277,14 +349,22 @@ function generateFallbackTripPlan(config) {
       });
     }
 
+    const hotelPrice = dayHotel.price_per_night_inr || dayHotel.price_inr || dayHotel.price || 3500;
+
     daysArr.push({
       day: dayNum,
       date: dateStr,
-      city: destCity,
+      city: (locations[0] || 'Goa').trim(),
       theme: `Day ${dayNum}: ${themes[i % themes.length]}`,
-      hotel: dayHotel,
+      hotel: {
+        hotel_id: dayHotel.hotel_id || `h_${dayNum}`,
+        name: dayHotel.name || dayHotel.property_name || `Grand ${locations[0]} Hotel`,
+        price_per_night_inr: hotelPrice,
+        rating: dayHotel.rating || dayHotel.hotel_stars || 4.5,
+        address: dayHotel.address || `Central Promenade, ${locations[0]}`
+      },
       schedule,
-      day_total_inr: schedule.reduce((sum, s) => sum + (s.cost_inr || 0), 0) + (dayHotel.price_per_night_inr || dayHotel.price_inr || 3000)
+      day_total_inr: schedule.reduce((sum, s) => sum + (s.cost_inr || 0), 0) + hotelPrice
     });
   }
 

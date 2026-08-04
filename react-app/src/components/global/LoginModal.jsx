@@ -8,7 +8,13 @@ export default function LoginModal({ isOpen, onClose }) {
   const [isLogin, setIsLogin] = useState(true);
   const [loginMethod, setLoginMethod] = useState('email'); // 'email' or 'phone'
   const [step, setStep] = useState('credentials'); // 'credentials' or 'otp'
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '', otp: '' });
+  const [formData, setFormData] = useState({ 
+    name: 'Kavya Bhardwaj', 
+    email: 'kb@gmail.com', 
+    password: 'hubble123', 
+    phone: '', 
+    otp: '' 
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
