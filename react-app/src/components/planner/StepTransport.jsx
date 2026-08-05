@@ -13,6 +13,51 @@ import {
   faShieldHalved
 } from '@fortawesome/free-solid-svg-icons';
 
+import { haversineDistance, calculateETA } from '../../utils/haversine';
+
+const CITY_COORDS = {
+  'shimla': { lat: 31.1048, lng: 77.1734 },
+  'goa': { lat: 15.2993, lng: 74.1240 },
+  'delhi': { lat: 28.6139, lng: 77.2090 },
+  'mumbai': { lat: 19.0760, lng: 72.8777 },
+  'jaipur': { lat: 26.9124, lng: 75.7873 },
+  'manali': { lat: 32.2432, lng: 77.1892 },
+  'bangalore': { lat: 12.9716, lng: 77.5946 },
+  'bengaluru': { lat: 12.9716, lng: 77.5946 },
+  'kolkata': { lat: 22.5726, lng: 88.3639 },
+  'chennai': { lat: 13.0827, lng: 80.2707 },
+  'hyderabad': { lat: 17.3850, lng: 78.4867 },
+  'pune': { lat: 18.5204, lng: 73.8567 },
+  'chandigarh': { lat: 30.7333, lng: 76.7794 },
+  'rishikesh': { lat: 30.0869, lng: 78.2676 }
+};
+
+function getDriveMetrics(fromCityStr, destCityStr) {
+  const fromK = (fromCityStr || 'Delhi').toLowerCase().trim();
+  const destK = (destCityStr || 'Goa').toLowerCase().trim();
+
+  const k1 = Object.keys(CITY_COORDS).find(k => fromK.includes(k));
+  const k2 = Object.keys(CITY_COORDS).find(k => destK.includes(k));
+
+  const c1 = k1 ? CITY_COORDS[k1] : { lat: 31.1048, lng: 77.1734 };
+  const c2 = k2 ? CITY_COORDS[k2] : { lat: 15.2993, lng: 74.1240 };
+
+  const straightKm = haversineDistance(c1.lat, c1.lng, c2.lat, c2.lng);
+  const roadKm = Math.round(straightKm * 1.25);
+  const eta = calculateETA(roadKm, 50);
+
+  const totalHrs = Math.floor(roadKm / 50);
+  const days = Math.ceil(totalHrs / 24);
+  const daysNote = totalHrs > 24 ? ` (~${days} Days Road Trip)` : '';
+
+  return {
+    roadKm,
+    durationStr: `${totalHrs}h ${eta.minutes}m${daysNote}`,
+    depTime: '06:00 AM',
+    arrTime: totalHrs > 24 ? `06:00 AM (+${days}d)` : `09:00 PM`
+  };
+}
+
 export default function StepTransport({ 
   fromCity = 'Delhi', 
   destination = 'Mumbai', 
@@ -26,14 +71,27 @@ export default function StepTransport({
   onNext, 
   onBack 
 }) {
-  const [outboundMode, setOutboundMode] = useState(outboundTransport?.type || 'flight'); // 'flight' | 'bus'
-  const [returnMode, setReturnMode] = useState(returnTransport?.type || 'flight'); // 'flight' | 'bus'
+  const [outboundMode, setOutboundMode] = useState(outboundTransport?.type || 'flight'); // 'flight' | 'bus' | 'bike'
+  const [returnMode, setReturnMode] = useState(returnTransport?.type || 'flight'); // 'flight' | 'bus' | 'bike'
+
+  const driveMetrics = getDriveMetrics(fromCity, destination);
 
   // Generate dynamic options based on cities
   const generateOutboundOptions = () => {
     if (outboundMode === 'bike') {
       return [
-        { id: 'out-bk1', type: 'bike', operator: 'Personal Vehicle / Bike Ride', code: 'SELF-DRIVE', depTime: '06:00 AM', arrTime: '02:00 PM', duration: '8h 00m', price: 0, seatsLeft: 99, baggage: 'Personal Luggage' },
+        { 
+          id: 'out-bk1', 
+          type: 'bike', 
+          operator: `Personal Vehicle / Bike Ride (${driveMetrics.roadKm} km)`, 
+          code: 'SELF-DRIVE', 
+          depTime: driveMetrics.depTime, 
+          arrTime: driveMetrics.arrTime, 
+          duration: driveMetrics.durationStr, 
+          price: 0, 
+          seatsLeft: 99, 
+          baggage: 'Personal Luggage' 
+        },
       ];
     } else if (outboundMode === 'flight') {
       return [
@@ -53,7 +111,18 @@ export default function StepTransport({
   const generateReturnOptions = () => {
     if (returnMode === 'bike') {
       return [
-        { id: 'ret-bk1', type: 'bike', operator: 'Personal Vehicle / Bike Ride', code: 'SELF-DRIVE', depTime: '02:00 PM', arrTime: '10:00 PM', duration: '8h 00m', price: 0, seatsLeft: 99, baggage: 'Personal Luggage' },
+        { 
+          id: 'ret-bk1', 
+          type: 'bike', 
+          operator: `Personal Vehicle / Bike Ride (${driveMetrics.roadKm} km)`, 
+          code: 'SELF-DRIVE', 
+          depTime: driveMetrics.depTime, 
+          arrTime: driveMetrics.arrTime, 
+          duration: driveMetrics.durationStr, 
+          price: 0, 
+          seatsLeft: 99, 
+          baggage: 'Personal Luggage' 
+        },
       ];
     } else if (returnMode === 'flight') {
       return [
