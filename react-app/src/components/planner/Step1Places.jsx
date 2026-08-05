@@ -21,11 +21,15 @@ import {
   faTemperatureHigh
 } from '@fortawesome/free-solid-svg-icons';
 import { fetchWeather, getPrecautions } from '../../services/weather';
+import { searchPlaces, getPlaceDetails } from '../../services/places';
+import { faSpinner, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 export default function Step1Places({ destination, selectedPlaces, onTogglePlace, onNext, tripType = 'Family Trip' }) {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [googleSuggestions, setGoogleSuggestions] = useState([]);
+  const [searchingGoogle, setSearchingGoogle] = useState(false);
   const [activeModalPlace, setActiveModalPlace] = useState(null);
   
   // Per-hub weather map { [cityName]: weatherData }
@@ -73,6 +77,60 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
     };
     loadPlacesAndWeather();
   }, [destination]);
+
+  // Live Google Places Search Autocomplete
+  useEffect(() => {
+    if (!searchQuery || searchQuery.trim().length < 2) {
+      setGoogleSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setSearchingGoogle(true);
+      try {
+        const results = await searchPlaces(searchQuery);
+        setGoogleSuggestions(results);
+      } catch (e) {
+        console.warn("Live places search failed:", e);
+      } finally {
+        setSearchingGoogle(false);
+      }
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const handleSelectGooglePlace = async (suggestion) => {
+    setSearchingGoogle(true);
+    setGoogleSuggestions([]);
+    try {
+      const details = await getPlaceDetails(suggestion.placeId);
+      if (details) {
+        const newPlaceObj = {
+          id: details.id || details.placeId || `p_${Date.now()}`,
+          name: details.displayName || details.name,
+          city: destination || 'India',
+          type: 'Tourist Hub',
+          entrance_fee_inr: details.entrance_fee_inr || 100,
+          dslr_allowed: details.dslr_allowed || 'Yes',
+          weekly_off: details.weekly_off || 'None',
+          rating: details.rating || 4.5,
+          lat: details.lat,
+          lng: details.lng,
+          image: details.photos?.[0] ? `https://places.googleapis.com/v1/${details.photos[0].name}/media?key=AIzaSyCgdgLi9zo0f4I8U3oKee9agodqkoBy2cI&maxHeightPx=400` : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+          description: details.formattedAddress || 'Popular destination landmark.'
+        };
+
+        setPlaces(prev => [newPlaceObj, ...prev]);
+        onTogglePlace(newPlaceObj);
+        setSearchQuery('');
+      }
+    } catch (e) {
+      console.error("Error adding place from Google suggestion:", e);
+    } finally {
+      setSearchingGoogle(false);
+    }
+  };
 
   // Fetch weather on-the-fly when modal is opened if not available
   const handleOpenModal = async (place) => {
@@ -161,11 +219,35 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
             <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
             <input 
               type="text" 
-              placeholder="Search spots..." 
+              placeholder="Search spots (Google Places)..." 
               value={searchQuery} 
               onChange={e => setSearchQuery(e.target.value)} 
-              className="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-[#D4B15A]"
+              className="w-full pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-[#D4B15A]"
             />
+            {searchingGoogle && (
+              <FontAwesomeIcon icon={faSpinner} spin className="absolute right-3 top-1/2 -translate-y-1/2 text-[#D4B15A] text-xs" />
+            )}
+
+            {/* Google Places Autocomplete Dropdown */}
+            {googleSuggestions.length > 0 && (
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden max-h-56 overflow-y-auto">
+                {googleSuggestions.map((item, i) => (
+                  <button
+                    key={item.placeId || i}
+                    onClick={() => handleSelectGooglePlace(item)}
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-amber-50 border-b border-gray-50 last:border-none flex items-center justify-between transition-colors text-xs"
+                  >
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faLocationDot} className="text-[#D4B15A] shrink-0" />
+                      <span className="font-semibold text-gray-800 truncate">{item.text || item.displayName}</span>
+                    </div>
+                    <span className="text-[9px] uppercase font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
+                      {item.source === 'google' ? 'Google' : 'Offline'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <button

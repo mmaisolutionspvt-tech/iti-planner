@@ -15,6 +15,8 @@ import {
   faListOl
 } from '@fortawesome/free-solid-svg-icons';
 
+import RouteMapPanel from './RouteMapPanel';
+
 export default function Step6Review({ 
   wizardData, 
   scheduleData, 
@@ -87,6 +89,9 @@ export default function Step6Review({
           )}
         </button>
       </div>
+
+      {/* Interactive OpenRouteService Routing & Google Places Search Panel */}
+      <RouteMapPanel initialStops={wizardData.selectedPlaces || []} />
 
       {/* Itemized Calculation Sub-Totals Breakdown Box */}
       <div className="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm mb-8">

@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import WelcomeModal from './components/global/WelcomeModal';
+import { ToastContainer as ReactToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ToastContainer from './components/global/ToastContainer';
 import LoginModal from './components/global/LoginModal';
 import useAppStore from './stores/useAppStore';
@@ -51,6 +53,7 @@ export default function App() {
       <Footer />
       <WelcomeModal />
       <ToastContainer />
+      <ReactToastContainer position="bottom-right" autoClose={4000} />
       <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </div>
   );
