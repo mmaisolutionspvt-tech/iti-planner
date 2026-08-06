@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-const GOOGLE_PLACES_KEY = "AIzaSyCgdgLi9zo0f4I8U3oKee9agodqkoBy2cI";
+const GOOGLE_PLACES_KEY = "AIzaSyDJACf_yTFE5wpZK2hjEjcYa4s43p8NpBE";
 const AUTOCOMPLETE_URL = "https://places.googleapis.com/v1/places:autocomplete";
 
 let cachedLocalData = null;
@@ -168,7 +168,7 @@ export async function searchPlaces(query) {
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': GOOGLE_PLACES_KEY,
-        'X-Goog-FieldMask': 'suggestions.placePrediction.placeId,suggestions.placePrediction.text'
+        'X-Goog-FieldMask': 'suggestions.placePrediction.placeId,suggestions.placePrediction.text,suggestions.placePrediction.structuredFormat'
       },
       body: JSON.stringify({
         input: query.trim(),
@@ -190,10 +190,11 @@ export async function searchPlaces(query) {
     return suggestions.map(s => {
       const pred = s.placePrediction || {};
       const textVal = pred.text?.text || (typeof pred.text === 'string' ? pred.text : 'Unknown Place');
+      const mainText = pred.structuredFormat?.mainText?.text || textVal;
       return {
         placeId: pred.placeId,
-        text: textVal,
-        displayName: textVal,
+        text: textVal, // Full text for display in dropdown
+        displayName: mainText, // Short name for the input field
         source: 'google'
       };
     }).filter(item => item.placeId);
@@ -255,4 +256,50 @@ export async function getPlaceDetails(placeId) {
     toast.warn("Using offline data. Some suggestions may be limited", { toastId: 'google-details-fallback-warn' });
     return getLocalPlaceDetails(placeId);
   }
+}
+
+/**
+ * Helper to geocode a city name into {lat, lng} coordinates
+ */
+export async function geocodeCity(cityName) {
+  if (!cityName) return null;
+  const q = cityName.toLowerCase().trim();
+  
+  // Try local hardcoded first for speed
+  const CITY_COORDS = {
+    'shimla': { lat: 31.1048, lng: 77.1734 },
+    'goa': { lat: 15.2993, lng: 74.1240 },
+    'delhi': { lat: 28.6139, lng: 77.2090 },
+    'mumbai': { lat: 19.0760, lng: 72.8777 },
+    'jaipur': { lat: 26.9124, lng: 75.7873 },
+    'manali': { lat: 32.2432, lng: 77.1892 },
+    'bangalore': { lat: 12.9716, lng: 77.5946 },
+    'bengaluru': { lat: 12.9716, lng: 77.5946 },
+    'kolkata': { lat: 22.5726, lng: 88.3639 },
+    'chennai': { lat: 13.0827, lng: 80.2707 },
+    'hyderabad': { lat: 17.3850, lng: 78.4867 },
+    'pune': { lat: 18.5204, lng: 73.8567 },
+    'chandigarh': { lat: 30.7333, lng: 76.7794 },
+    'rishikesh': { lat: 30.0869, lng: 78.2676 }
+  };
+
+  const localMatch = Object.keys(CITY_COORDS).find(k => q.includes(k));
+  if (localMatch) {
+    return CITY_COORDS[localMatch];
+  }
+
+  // Fallback to Google API
+  try {
+    const suggestions = await searchPlaces(cityName);
+    if (suggestions && suggestions.length > 0) {
+      const details = await getPlaceDetails(suggestions[0].placeId);
+      if (details && details.lat && details.lng) {
+        return { lat: details.lat, lng: details.lng };
+      }
+    }
+  } catch (err) {
+    console.error("Geocoding failed for:", cityName, err);
+  }
+
+  return null;
 }

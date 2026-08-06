@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -10,9 +10,12 @@ import {
   faUsers,
   faSliders,
   faArrowRight,
-  faRotateLeft
+  faRotateLeft,
+  faSpinner,
+  faLocationDot
 } from '@fortawesome/free-solid-svg-icons';
 import { generateTripPlan } from '../services/gemini';
+import { searchPlaces } from '../services/places';
 import useAppStore from '../stores/useAppStore';
 import TripOutput from '../components/planner/TripOutput';
 import DraftHistory from '../components/planner/DraftHistory';
@@ -25,6 +28,7 @@ import Step4Rides from '../components/planner/Step4Rides';
 import Step5Dining from '../components/planner/Step5Dining';
 import StepTransport from '../components/planner/StepTransport';
 import Step6Review from '../components/planner/Step6Review';
+import LiveRouteModal from '../components/planner/LiveRouteModal';
 
 export default function ScheduleTrip() {
   const [params, setParams] = useState({ 
@@ -41,7 +45,51 @@ export default function ScheduleTrip() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState(null);
   const [apiError, setApiError] = useState(null);
+  const [showLiveRoute, setShowLiveRoute] = useState(false);
   const { addToast, addDraft } = useAppStore();
+
+  const [fromSuggestions, setFromSuggestions] = useState([]);
+  const [searchingFrom, setSearchingFrom] = useState(false);
+  const [destSuggestions, setDestSuggestions] = useState([]);
+  const [searchingDest, setSearchingDest] = useState(false);
+
+  useEffect(() => {
+    if (!params.fromCity.trim() || params.fromCity.trim().length < 2) {
+      setFromSuggestions([]);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      setSearchingFrom(true);
+      try {
+        const results = await searchPlaces(params.fromCity);
+        setFromSuggestions(results);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setSearchingFrom(false);
+      }
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [params.fromCity]);
+
+  useEffect(() => {
+    if (!params.locations.trim() || params.locations.trim().length < 2) {
+      setDestSuggestions([]);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      setSearchingDest(true);
+      try {
+        const results = await searchPlaces(params.locations);
+        setDestSuggestions(results);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setSearchingDest(false);
+      }
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [params.locations]);
 
   // Navigation Pages: 'input' | 'modeChoice' | 'wizard' | 'result'
   const [pageState, setPageState] = useState('input');
@@ -324,6 +372,27 @@ export default function ScheduleTrip() {
         />
       )}
 
+      {/* Floating Live Route Button for Car/Bike */}
+      {(pageState === 'wizard' || pageState === 'modeChoice') && 
+       (params.mode.includes('Car') || params.mode.includes('Bike')) && (
+        <button
+          onClick={() => setShowLiveRoute(true)}
+          className="fixed right-4 top-32 z-50 bg-[#121619] hover:bg-[#1e2429] text-[#D4B15A] shadow-[0_8px_30px_rgb(0,0,0,0.3)] rounded-full pl-4 pr-5 py-3 font-bold text-sm flex items-center gap-2 transition-transform hover:scale-105"
+        >
+          <div className="w-8 h-8 rounded-full bg-[#D4B15A] text-[#121619] flex items-center justify-center text-lg">
+            <FontAwesomeIcon icon={faMapLocationDot} />
+          </div>
+          Live Route 🗺️
+        </button>
+      )}
+
+      <LiveRouteModal 
+        isOpen={showLiveRoute} 
+        onClose={() => setShowLiveRoute(false)} 
+        fromCity={params.fromCity} 
+        destinations={params.locations} 
+      />
+
       <div className="max-w-7xl mx-auto px-4 mt-6">
 
         {/* PAGE 1: INPUT FORM */}
@@ -343,7 +412,7 @@ export default function ScheduleTrip() {
 
             <form onSubmit={handleInputSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">From Location (Origin City)</label>
                 <div className="relative">
                   <FontAwesomeIcon icon={faMapLocationDot} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -353,12 +422,35 @@ export default function ScheduleTrip() {
                     placeholder="e.g. Delhi, Mumbai, Bangalore, Jaipur"
                     value={params.fromCity}
                     onChange={e => setParams({...params, fromCity: e.target.value})}
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium"
+                    className="w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 focus:border-[#121619] outline-none text-sm font-medium"
                   />
+                  {searchingFrom && (
+                    <FontAwesomeIcon icon={faSpinner} spin className="absolute right-4 top-1/2 -translate-y-1/2 text-[#D4B15A]" />
+                  )}
                 </div>
+                {fromSuggestions.length > 0 && (
+                  <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden max-h-56 overflow-y-auto">
+                    {fromSuggestions.map((item, i) => (
+                      <button
+                        type="button"
+                        key={item.placeId || i}
+                        onClick={() => {
+                          setParams({...params, fromCity: item.displayName || item.text});
+                          setFromSuggestions([]);
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-amber-50 border-b border-gray-50 last:border-none flex items-center justify-between transition-colors text-sm"
+                      >
+                        <div className="flex items-center gap-2">
+                          <FontAwesomeIcon icon={faLocationDot} className="text-[#D4B15A] shrink-0" />
+                          <span className="font-semibold text-gray-800 truncate">{item.text || item.displayName}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Destination City / Cities</label>
                 <div className="relative">
                   <FontAwesomeIcon icon={faMapLocationDot} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#D4B15A]" />
@@ -368,9 +460,32 @@ export default function ScheduleTrip() {
                     placeholder="e.g. Mumbai, Jaipur, Manali, Goa"
                     value={params.locations}
                     onChange={e => setParams({...params, locations: e.target.value})}
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none transition-all text-sm font-medium"
+                    className="w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 focus:border-[#121619] focus:ring-1 focus:ring-[#121619] outline-none transition-all text-sm font-medium"
                   />
+                  {searchingDest && (
+                    <FontAwesomeIcon icon={faSpinner} spin className="absolute right-4 top-1/2 -translate-y-1/2 text-[#D4B15A]" />
+                  )}
                 </div>
+                {destSuggestions.length > 0 && (
+                  <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden max-h-56 overflow-y-auto">
+                    {destSuggestions.map((item, i) => (
+                      <button
+                        type="button"
+                        key={item.placeId || i}
+                        onClick={() => {
+                          setParams({...params, locations: item.displayName || item.text});
+                          setDestSuggestions([]);
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-amber-50 border-b border-gray-50 last:border-none flex items-center justify-between transition-colors text-sm"
+                      >
+                        <div className="flex items-center gap-2">
+                          <FontAwesomeIcon icon={faLocationDot} className="text-[#D4B15A] shrink-0" />
+                          <span className="font-semibold text-gray-800 truncate">{item.text || item.displayName}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div>
