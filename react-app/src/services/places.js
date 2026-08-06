@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-const GOOGLE_PLACES_KEY = "AIzaSyDJACf_yTFE5wpZK2hjEjcYa4s43p8NpBE";
+const GOOGLE_PLACES_KEY = import.meta.env.VITE_GOOGLE_PLACES_KEY || "";
 const AUTOCOMPLETE_URL = "https://places.googleapis.com/v1/places:autocomplete";
 
 let cachedLocalData = null;

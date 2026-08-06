@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import { haversineDistance, calculateETA } from '../utils/haversine';
 
-const ORS_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImY4ZTE1Njg1ZWQ4MjRlYWI5NDgyNDRhMTJhNjU0YWNlIiwiaCI6Im11cm11cjY0In0=";
-const ORS_URL = "https://api.openrouteservice.org/v2/directions/driving-car";
+const ORS_KEY = import.meta.env.VITE_ORS_KEY || "";
+const ORS_URL = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
 
 /**
  * 2. ROUTING + TIME/DISTANCE
@@ -18,6 +18,7 @@ export async function getRoute(coordinatesArray) {
   // Normalize coordinates to [ [lng, lat], [lng, lat] ]
   const formattedCoords = coordinatesArray.map(c => {
     if (Array.isArray(c)) {
+      // Assuming array input is already [lng, lat] based on RouteMapPanel
       return [Number(c[0]), Number(c[1])];
     }
     if (typeof c === 'object' && c.lat !== undefined && c.lng !== undefined) {
@@ -27,16 +28,19 @@ export async function getRoute(coordinatesArray) {
   });
 
   try {
+    const requestBody = {
+      coordinates: formattedCoords,
+      instructions: false
+    };
+    console.log("ORS Request:", JSON.stringify(requestBody));
+
     const res = await fetch(ORS_URL, {
       method: 'POST',
       headers: {
         'Authorization': ORS_KEY,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        coordinates: formattedCoords,
-        instructions: false
-      })
+      body: JSON.stringify(requestBody)
     });
 
     if (!res.ok) {
@@ -44,6 +48,7 @@ export async function getRoute(coordinatesArray) {
     }
 
     const data = await res.json();
+    console.log("ORS Response:", data);
     const routeFeature = data.features?.[0];
 
     if (!routeFeature) {
@@ -52,7 +57,15 @@ export async function getRoute(coordinatesArray) {
 
     const summary = routeFeature.properties?.summary || {};
     const distanceKm = Math.round((summary.distance || 0) / 1000 * 10) / 10;
-    const durationSec = summary.duration || 0;
+    
+    let durationSec = summary.duration || 0;
+    // ORS calculates theoretical duration assuming free-flowing traffic at max speed limits.
+    // For Indian road conditions (tolls, traffic, terrain), we cap the average speed to 60 km/h.
+    const avgSpeedKmH = distanceKm / (durationSec / 3600);
+    if (avgSpeedKmH > 60) {
+      durationSec = (distanceKm / 60) * 3600;
+    }
+
     const hours = Math.floor(durationSec / 3600);
     const minutes = Math.round((durationSec % 3600) / 60);
 
