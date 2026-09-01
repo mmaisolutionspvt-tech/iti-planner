@@ -1,0 +1,270 @@
+{
+  "name": "FirstFlight AI Itinerary",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-itinerary",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "622a77c0-e77e-4e3c-a0c3-fc32f91c7ca2",
+      "name": "Webhook",
+      "webhookId": "f38606c6-fc8b-4733-bab8-4f45b06f4cc5"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT itinerary_json\nFROM ai_itineraries\nWHERE destination = '{{ $json.body.destination }}'\nAND days = {{ $json.body.days }}\nAND budget_range = '{{ $json.body.budget_range }}'\nAND season = '{{ $json.body.season }}'\nAND people = {{ $json.body.people }}\nAND expires_at > NOW();",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0bfc05a6-52c3-4ec6-aacb-6dfa8b827689",
+      "name": "Execute a SQL query",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "pb693YBYLcKr82Xy",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "75864a68-82e1-4926-b4de-0367a967a06a",
+              "leftValue": "={{ $json.itinerary_json !== undefined }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "=true",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "1b209c94-1c17-4a22-9626-26e5dadab63e",
+      "name": "If",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT hotel_json\nFROM hotels_cache\nWHERE city = '{{ $(\"Webhook\").item.json.body.destination }}';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        624,
+        176
+      ],
+      "id": "1292bd4b-dd42-4f92-8d26-6296168a01aa",
+      "name": "Execute a SQL query1",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "pb693YBYLcKr82Xy",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-goog-api-key",
+              "value": "{{ $env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY_HERE' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"You are an expert travel planner.\\n\\nTrip Details:\\nDestination: {{ $('Webhook').item.json.body.destination }}\\nDays: {{ $('Webhook').item.json.body.days }}\\nBudget: {{ $('Webhook').item.json.body.budget_range }}\\nSeason: {{ $('Webhook').item.json.body.season }}\\nPeople: {{ $('Webhook').item.json.body.people }}\\n\\nAvailable Cached Hotels:\\n{{ JSON.stringify($input.all().map(i => ({name:i.json.hotel_json.name,rating:i.json.hotel_json.rating,price:i.json.hotel_json.price_per_night_inr,address:i.json.hotel_json.address}))).replace(/\"/g,'\\\\\"') }}\\n\\nInstructions:\\n- Prefer selecting a hotel from the cached list.\\n- If none are suitable, recommend a better hotel using your own knowledge.\\n- Clearly mention whether the hotel came from cache or Gemini.\\n- Generate a realistic day-wise itinerary.\\n- Recommend local food.\\n- Estimate the total trip cost.\\n- Return ONLY valid JSON.\"\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"temperature\": 0.4,\n    \"responseMimeType\": \"application/json\",\n    \"maxOutputTokens\": 2500\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        608,
+        -96
+      ],
+      "id": "855410cd-e401-44b0-9887-d321aee704c4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const text = $json.candidates[0].content.parts[0].text;\n\n// Remove markdown fences if Gemini returned them\nconst cleaned = text\n  .replace(/^```json\\s*/i, \"\")\n  .replace(/^```\\s*/i, \"\")\n  .replace(/\\s*```$/i, \"\")\n  .trim();\n\nreturn {\n  json: JSON.parse(cleaned)\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        -16
+      ],
+      "id": "b81b156f-344c-4987-a559-7bc45068fb9d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $('Webhook').first().json.body;\n\n// Collect all hotels returned by PostgreSQL\nconst hotels = $input.all().map(item => ({\n  name: item.json.hotel_json.name,\n  rating: item.json.hotel_json.rating,\n  price_per_night_inr: item.json.hotel_json.price_per_night_inr,\n  address: item.json.hotel_json.address\n}));\n\n// Choose model\nlet model = \"gemini-3.5-flash\";\n\nconst destination = body.destination || \"\";\nconst days = Number(body.days || 1);\nconst budget = (body.budget_range || \"\").toLowerCase();\nconst constraints = body.constraints || [];\n\nconst isComplex =\n  days >= 8 ||\n  destination.includes(\",\") ||\n  constraints.length >= 5 ||\n  budget === \"luxury\";\n\nif (isComplex) {\n  model = \"gemini-2.5-pro\";\n}\n\n// Build prompt\nconst prompt = `\nYou are an expert travel planner.\n\nTrip Details\nDestination: ${body.destination}\nDays: ${body.days}\nBudget: ${body.budget_range}\nSeason: ${body.season}\nPeople: ${body.people}\n\nAvailable Cached Hotels:\n${JSON.stringify(hotels, null, 2)}\n\nInstructions:\n\n1. Prefer selecting a hotel from the cached list.\n2. If none of the cached hotels are suitable, recommend a better hotel using your own knowledge.\n3. Mention whether the hotel source is \"cache\" or \"gemini\".\n4. Generate a practical day-wise itinerary.\n5. Keep travel times realistic.\n6. Recommend famous local food.\n7. Estimate daily and total cost.\n8. Return ONLY valid JSON.\n9. No markdown.\n10. No explanation.\n\nReturn JSON ONLY in this format:\n\n{\n  \"trip_details\":{\n    \"destination\":\"\",\n    \"days\":0,\n    \"budget\":\"\",\n    \"season\":\"\",\n    \"people\":0\n  },\n  \"hotel\":{\n    \"name\":\"\",\n    \"rating\":0,\n    \"price_per_night_inr\":0,\n    \"address\":\"\",\n    \"source\":\"cache\"\n  },\n  \"estimated_total_cost_inr\":0,\n  \"itinerary\":[\n    {\n      \"day\":1,\n      \"theme\":\"\",\n      \"activities\":[\n        {\n          \"time\":\"\",\n          \"activity\":\"\",\n          \"description\":\"\"\n        }\n      ],\n      \"food\":{\n        \"breakfast\":\"\",\n        \"lunch\":\"\",\n        \"dinner\":\"\"\n      },\n      \"transport\":\"\",\n      \"estimated_day_cost_inr\":0\n    }\n  ],\n  \"travel_tips\":[],\n  \"packing_tips\":[]\n}\n`;\n\nreturn [\n  {\n    json: {\n      model,\n      prompt\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        176
+      ],
+      "id": "8c308c42-27da-4548-b5ef-76a501909255",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1216,
+        -16
+      ],
+      "id": "cde266f6-9abd-44ff-b569-874963e4d8ab",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "68a97cbb-1614-467a-9946-666c63174fda",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f891cf6a9ca6c0d560c02aec55dbe899700f9d08787e6ee683a4537826690fd"
+  },
+  "nodeGroups": [],
+  "id": "CXFJoC63qcX5ihRD",
+  "tags": []
+}

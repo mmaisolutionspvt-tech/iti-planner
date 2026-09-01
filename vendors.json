@@ -1,0 +1,231 @@
+[
+  {
+    "vendor_id": "v_101",
+    "name": "Sharma Travels",
+    "rating": 4.5,
+    "total_trips": 412,
+    "bus_types": ["AC Sleeper 45", "AC Semi-Sleeper 35", "Non-AC Seater 55"],
+    "price_per_km": 42,
+    "from_city": "Delhi",
+    "routes": ["Delhi-Manali", "Delhi-Jaipur", "Delhi-Nainital"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus1.jpg", "https://res.cloudinary.com/demo/image/upload/v1/bus1_interior.jpg"],
+    "drivers": [
+      {"name": "Ramesh Kumar", "license": "DL1C 20150034521", "exp_yrs": 8, "contact": "+91-98xxxxxx", "lang": "Hindi, English"},
+      {"name": "Suresh Yadav", "license": "DL3C 20170012398", "exp_yrs": 6, "contact": "+91-97xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2027-03-01", "puc_valid": "2026-12-31"}
+  },
+  {
+    "vendor_id": "v_102",
+    "name": "Rajdhani Yatra",
+    "rating": 4.2,
+    "total_trips": 287,
+    "bus_types": ["Volvo AC Multi-Axle 41", "AC Sleeper 36"],
+    "price_per_km": 48,
+    "from_city": "Delhi",
+    "routes": ["Delhi-Shimla", "Delhi-Dehradun", "Delhi-Haridwar"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus2.jpg"],
+    "drivers": [
+      {"name": "Mahendra Singh", "license": "DL8C 20160056781", "exp_yrs": 10, "contact": "+91-99xxxxxx", "lang": "Hindi, English, Punjabi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-11-15", "puc_valid": "2026-09-30"}
+  },
+  {
+    "vendor_id": "v_103",
+    "name": "Hans Travels",
+    "rating": 4.0,
+    "total_trips": 198,
+    "bus_types": ["Non-AC Seater 55", "Non-AC Sleeper 50"],
+    "price_per_km": 36,
+    "from_city": "Delhi",
+    "routes": ["Delhi-Agra", "Delhi-Jaipur"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus3.jpg"],
+    "drivers": [
+      {"name": "Vijay Pal", "license": "DL12C 20140098123", "exp_yrs": 12, "contact": "+91-96xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-08-20", "puc_valid": "2026-07-15"}
+  },
+  {
+    "vendor_id": "v_104",
+    "name": "Neeta Travels",
+    "rating": 4.6,
+    "total_trips": 501,
+    "bus_types": ["Mercedes AC Sleeper 41", "AC Semi-Sleeper 35"],
+    "price_per_km": 55,
+    "from_city": "Delhi",
+    "routes": ["Delhi-Mussoorie", "Delhi-Manali", "Delhi-Amritsar"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus4.jpg", "https://res.cloudinary.com/demo/image/upload/v1/bus4_interior.jpg"],
+    "drivers": [
+      {"name": "Anil Chaudhary", "license": "DL1PC 20180067432", "exp_yrs": 7, "contact": "+91-98xxxxxx", "lang": "Hindi, English"},
+      {"name": "Rajesh Tomar", "license": "DL3C 20190011567", "exp_yrs": 5, "contact": "+91-95xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2027-01-10", "puc_valid": "2026-12-01"}
+  },
+  {
+    "vendor_id": "v_105",
+    "name": "Capital Road Lines",
+    "rating": 3.9,
+    "total_trips": 156,
+    "bus_types": ["AC Seater 2x2 49", "Non-AC Seater 55"],
+    "price_per_km": 38,
+    "from_city": "Delhi",
+    "routes": ["Delhi-Nainital", "Delhi-Rishikesh"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus5.jpg"],
+    "drivers": [
+      {"name": "Sunil Sharma", "license": "DL8C 20170045890", "exp_yrs": 9, "contact": "+91-94xxxxxx", "lang": "Hindi, English"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-10-05", "puc_valid": "2026-08-22"}
+  },
+  {
+    "vendor_id": "v_106",
+    "name": "Rohilkhand Travels",
+    "rating": 4.1,
+    "total_trips": 233,
+    "bus_types": ["AC Sleeper 45", "Non-AC Seater 55"],
+    "price_per_km": 40,
+    "from_city": "Moradabad",
+    "routes": ["Moradabad-Delhi", "Moradabad-Nainital", "Moradabad-Lucknow"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus6.jpg"],
+    "drivers": [
+      {"name": "Devendra Rawat", "license": "UP21 20150078234", "exp_yrs": 11, "contact": "+91-93xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-09-12", "puc_valid": "2026-10-01"}
+  },
+  {
+    "vendor_id": "v_107",
+    "name": "Kumaon Express",
+    "rating": 4.3,
+    "total_trips": 310,
+    "bus_types": ["AC Semi-Sleeper 35", "AC Sleeper 36"],
+    "price_per_km": 45,
+    "from_city": "Moradabad",
+    "routes": ["Moradabad-Nainital", "Moradabad-Haridwar", "Moradabad-Dehradun"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus7.jpg", "https://res.cloudinary.com/demo/image/upload/v1/bus7_interior.jpg"],
+    "drivers": [
+      {"name": "Pradeep Negi", "license": "UP21 20160023445", "exp_yrs": 8, "contact": "+91-92xxxxxx", "lang": "Hindi, Kumaoni"},
+      {"name": "Harish Thakur", "license": "UP21 20180067123", "exp_yrs": 4, "contact": "+91-91xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2027-02-18", "puc_valid": "2026-11-30"}
+  },
+  {
+    "vendor_id": "v_108",
+    "name": "Moradabad Roadways Pvt",
+    "rating": 3.8,
+    "total_trips": 145,
+    "bus_types": ["Non-AC Sleeper 50", "Non-AC Seater 55"],
+    "price_per_km": 35,
+    "from_city": "Moradabad",
+    "routes": ["Moradabad-Delhi", "Moradabad-Bareilly"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus8.jpg"],
+    "drivers": [
+      {"name": "Yogendra Singh", "license": "UP21 20140012987", "exp_yrs": 13, "contact": "+91-90xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-07-25", "puc_valid": "2026-06-30"}
+  },
+  {
+    "vendor_id": "v_109",
+    "name": "Awadh Travels",
+    "rating": 4.4,
+    "total_trips": 367,
+    "bus_types": ["AC Sleeper 45", "Volvo AC Multi-Axle 41"],
+    "price_per_km": 47,
+    "from_city": "Lucknow",
+    "routes": ["Lucknow-Delhi", "Lucknow-Varanasi", "Lucknow-Ayodhya"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus9.jpg"],
+    "drivers": [
+      {"name": "Naveen Kashyap", "license": "UP32 20160089234", "exp_yrs": 9, "contact": "+91-89xxxxxx", "lang": "Hindi, English"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2027-04-05", "puc_valid": "2026-12-15"}
+  },
+  {
+    "vendor_id": "v_110",
+    "name": "Ganga Yamuna Travels",
+    "rating": 4.0,
+    "total_trips": 201,
+    "bus_types": ["AC Semi-Sleeper 35", "Non-AC Seater 55"],
+    "price_per_km": 39,
+    "from_city": "Lucknow",
+    "routes": ["Lucknow-Prayagraj", "Lucknow-Kanpur", "Lucknow-Varanasi"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus10.jpg"],
+    "drivers": [
+      {"name": "Sanjay Bisht", "license": "UP32 20170034521", "exp_yrs": 6, "contact": "+91-88xxxxxx", "lang": "Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-12-22", "puc_valid": "2026-10-18"}
+  },
+  {
+    "vendor_id": "v_111",
+    "name": "Lucknow Superfast",
+    "rating": 4.2,
+    "total_trips": 278,
+    "bus_types": ["AC Sleeper 36", "Mercedes AC Sleeper 41"],
+    "price_per_km": 50,
+    "from_city": "Lucknow",
+    "routes": ["Lucknow-Delhi", "Lucknow-Gorakhpur"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus11.jpg", "https://res.cloudinary.com/demo/image/upload/v1/bus11_interior.jpg"],
+    "drivers": [
+      {"name": "Manoj Pandey", "license": "UP32 20150067890", "exp_yrs": 10, "contact": "+91-87xxxxxx", "lang": "Hindi, English"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2027-01-30", "puc_valid": "2026-11-05"}
+  },
+  {
+    "vendor_id": "v_112",
+    "name": "Punjab Mail Travels",
+    "rating": 4.3,
+    "total_trips": 295,
+    "bus_types": ["Volvo AC Multi-Axle 41", "AC Sleeper 45"],
+    "price_per_km": 46,
+    "from_city": "Chandigarh",
+    "routes": ["Chandigarh-Manali", "Chandigarh-Shimla", "Chandigarh-Delhi"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus12.jpg"],
+    "drivers": [
+      {"name": "Balwinder Singh", "license": "CH01 20160045123", "exp_yrs": 9, "contact": "+91-86xxxxxx", "lang": "Hindi, Punjabi, English"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-09-28", "puc_valid": "2026-08-10"}
+  },
+  {
+    "vendor_id": "v_113",
+    "name": "Himalayan Queen Travels",
+    "rating": 4.7,
+    "total_trips": 389,
+    "bus_types": ["Mercedes AC Sleeper 41", "AC Semi-Sleeper 35"],
+    "price_per_km": 58,
+    "from_city": "Chandigarh",
+    "routes": ["Chandigarh-Manali", "Chandigarh-Dharamshala", "Chandigarh-Dalhousie"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus13.jpg", "https://res.cloudinary.com/demo/image/upload/v1/bus13_interior.jpg"],
+    "drivers": [
+      {"name": "Gurpreet Singh", "license": "PB10 20140078945", "exp_yrs": 14, "contact": "+91-85xxxxxx", "lang": "Punjabi, Hindi, English"},
+      {"name": "Jasbir Singh", "license": "CH01 20180023671", "exp_yrs": 5, "contact": "+91-84xxxxxx", "lang": "Punjabi, Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2027-05-12", "puc_valid": "2026-12-28"}
+  },
+  {
+    "vendor_id": "v_114",
+    "name": "Chandigarh Tourism Co",
+    "rating": 4.1,
+    "total_trips": 224,
+    "bus_types": ["AC Sleeper 36", "Non-AC Seater 55"],
+    "price_per_km": 41,
+    "from_city": "Chandigarh",
+    "routes": ["Chandigarh-Amritsar", "Chandigarh-Delhi"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus14.jpg"],
+    "drivers": [
+      {"name": "Harpreet Sandhu", "license": "CH01 20170056234", "exp_yrs": 7, "contact": "+91-83xxxxxx", "lang": "Punjabi, Hindi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-11-08", "puc_valid": "2026-09-19"}
+  },
+  {
+    "vendor_id": "v_115",
+    "name": "Tricity Travels",
+    "rating": 3.9,
+    "total_trips": 167,
+    "bus_types": ["Non-AC Sleeper 50", "AC Seater 2x2 49"],
+    "price_per_km": 37,
+    "from_city": "Chandigarh",
+    "routes": ["Chandigarh-Shimla", "Chandigarh-Manali"],
+    "photos": ["https://res.cloudinary.com/demo/image/upload/v1/bus15.jpg"],
+    "drivers": [
+      {"name": "Dharmendra Saini", "license": "PB65 20150089012", "exp_yrs": 10, "contact": "+91-82xxxxxx", "lang": "Hindi, Punjabi"}
+    ],
+    "docs": {"interstate_permit": true, "insurance_valid": "2026-10-30", "puc_valid": "2026-09-05"}
+  }
+]

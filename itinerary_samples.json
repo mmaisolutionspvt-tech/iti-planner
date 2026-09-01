@@ -1,0 +1,738 @@
+[
+  {
+    "sample_id": "IT_001",
+    "trip_name": "Manali Snow & Culture Trail",
+    "type": "national",
+    "from_city": "Delhi",
+    "destinations": ["Manali"],
+    "travel_mode": "Bus / Coach",
+    "budget_tier": "balanced",
+    "total_days": 5,
+    "total_nights": 4,
+    "from_date": "2026-07-10",
+    "to_date": "2026-07-14",
+    "estimated_budget_inr": { "min": 15000, "max": 22000 },
+    "intercity_transport": {
+      "outbound": {
+        "mode": "Volvo AC Bus",
+        "operator": "Punjab Mail Travels",
+        "from": "Delhi ISBT Kashmere Gate",
+        "to": "Manali Bus Stand",
+        "dep_time": "17:30",
+        "arr_time": "08:30+1",
+        "duration": "15h 00m",
+        "cost_inr": 1200
+      },
+      "return": {
+        "mode": "Volvo AC Bus",
+        "operator": "Punjab Mail Travels",
+        "from": "Manali Bus Stand",
+        "to": "Delhi ISBT Kashmere Gate",
+        "dep_time": "16:00",
+        "arr_time": "07:30+1",
+        "duration": "15h 30m",
+        "cost_inr": 1200
+      }
+    },
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-07-10",
+        "city": "Delhi",
+        "theme": "Overnight Departure",
+        "hotel": null,
+        "schedule": [
+          { "time": "15:30", "place": "Delhi ISBT Kashmere Gate, Ring Road", "activity": "Reach ISBT via Yellow Line Metro (Kashmere Gate station)", "type": "transport", "duration_min": 30, "cost_inr": 80 },
+          { "time": "17:30", "place": "Platform 14, Kashmere Gate ISBT", "activity": "Board Punjab Mail Travels Volvo AC overnight bus to Manali", "type": "transport", "duration_min": 900, "cost_inr": 1200, "notes": "Dinner stop at Haveli Murthal dhabas (~9 PM, budget ₹350)" }
+        ],
+        "day_total_inr": 1630,
+        "total_travel_time_min": 930
+      },
+      {
+        "day": 2,
+        "date": "2026-07-11",
+        "city": "Manali",
+        "theme": "Arrival + Old Manali Exploration",
+        "hotel": {
+          "hotel_id": "h_man_802",
+          "name": "Snow Valley Old Manali",
+          "price_per_night_inr": 1999,
+          "rating": 4.1,
+          "address": "Old Manali Road, Near Manu Temple, Manali - 175131"
+        },
+        "schedule": [
+          { "time": "08:30", "place": "Manali Bus Stand → Snow Valley Old Manali", "activity": "Arrive Manali; auto-rickshaw to hotel (3 km, 15 min)", "type": "transport", "duration_min": 30, "cost_inr": 150 },
+          { "time": "09:30", "place": "Snow Valley Old Manali", "activity": "Check-in and freshen up after overnight journey", "type": "rest", "duration_min": 60, "cost_inr": 0 },
+          { "time": "11:00", "place": "Lazy Dog Lounge & Cafe, Old Manali Road", "activity": "Brunch: Israeli breakfast, apple pancakes, apple cider", "type": "meal", "duration_min": 60, "cost_inr": 480 },
+          { "time": "12:30", "place": "Manu Rishi Temple, Old Manali (0.3 km from cafe)", "activity": "Visit India's only temple dedicated to sage Manu; 18th-century pagoda architecture amid deodar trees", "type": "sightseeing", "duration_min": 45, "cost_inr": 0, "dist_km": 0.3, "travel_min": 6 },
+          { "time": "14:00", "place": "Old Manali Bazaar Market Street", "activity": "Browse Kullu shawls, Tibetan jewellery, local apple wine, dried apricots", "type": "shopping", "duration_min": 90, "cost_inr": 700 },
+          { "time": "16:30", "place": "Manalsu River Bank, Old Manali", "activity": "Riverside walk along Manalsu Nallah; stone-hopping, scenic mountain views", "type": "leisure", "duration_min": 60, "cost_inr": 0 },
+          { "time": "18:00", "place": "Cafe 1947, Old Manali Road", "activity": "Rooftop sunset chai with Beas Valley mountain panorama", "type": "leisure", "duration_min": 75, "cost_inr": 220 },
+          { "time": "20:00", "place": "Johnson's Cafe, Model Town Road, Manali", "activity": "Dinner: Manali institution since 1985; try grilled river trout, apple crumble", "type": "meal", "duration_min": 75, "cost_inr": 850 }
+        ],
+        "day_total_inr": 4399,
+        "total_travel_time_min": 36
+      },
+      {
+        "day": 3,
+        "date": "2026-07-12",
+        "city": "Manali",
+        "theme": "Solang Valley Adventure",
+        "hotel": {
+          "hotel_id": "h_man_802",
+          "name": "Snow Valley Old Manali",
+          "price_per_night_inr": 1999,
+          "rating": 4.1,
+          "address": "Old Manali Road, Near Manu Temple, Manali - 175131"
+        },
+        "schedule": [
+          { "time": "07:30", "place": "Snow Valley Hotel Restaurant", "activity": "Breakfast: aloo paratha and chai before adventure day", "type": "meal", "duration_min": 30, "cost_inr": 180 },
+          { "time": "08:30", "place": "Solang Valley Activity Zone (14 km from hotel)", "activity": "Shared taxi to Solang Valley; 40-minute drive through apple orchards", "type": "transport", "duration_min": 40, "cost_inr": 200 },
+          { "time": "09:30", "place": "Solang Ski Slopes & Activity Zone", "activity": "Zorbing (₹300), ATV quad biking (₹600), Rope Course (₹200)", "type": "adventure", "duration_min": 150, "cost_inr": 1100 },
+          { "time": "12:30", "place": "Mountain Dhaba near Solang Gate", "activity": "Lunch: dal rice, rajma, Maggi; carry cash (no UPI coverage)", "type": "meal", "duration_min": 45, "cost_inr": 300 },
+          { "time": "14:00", "place": "Beas Kund Trail, Solang Valley", "activity": "Easy 2.5 km trek to Beas Kund glacial lake; crystal-clear glacial stream en route", "type": "trekking", "duration_min": 150, "cost_inr": 0 },
+          { "time": "17:00", "place": "Solang → Mall Road, Manali", "activity": "Return taxi; stop at roadside vendors for Himalayan honey and local herbs", "type": "transport", "duration_min": 40, "cost_inr": 250 },
+          { "time": "18:30", "place": "Mall Road, Manali", "activity": "Evening walk, souvenir shopping: pashminas, dry fruits, Spiti Valley rock salt", "type": "shopping", "duration_min": 60, "cost_inr": 400 },
+          { "time": "20:30", "place": "Drifters' Inn & Kitchen, Old Manali", "activity": "Dinner: shakshuka, veg momos, wood-fired garlic bread", "type": "meal", "duration_min": 60, "cost_inr": 620 }
+        ],
+        "day_total_inr": 5048,
+        "total_travel_time_min": 120
+      },
+      {
+        "day": 4,
+        "date": "2026-07-13",
+        "city": "Manali",
+        "theme": "Hadimba Temple + Vashisht Hot Springs",
+        "hotel": {
+          "hotel_id": "h_man_802",
+          "name": "Snow Valley Old Manali",
+          "price_per_night_inr": 1999,
+          "rating": 4.1,
+          "address": "Old Manali Road, Near Manu Temple, Manali - 175131"
+        },
+        "schedule": [
+          { "time": "08:30", "place": "Hadimba Devi Temple, Dhungri Forest, Manali", "activity": "Visit 1553 CE pagoda-style temple inside cedar forest; no footwear inside; peaceful early morning", "type": "sightseeing", "duration_min": 75, "cost_inr": 50, "dist_km": 2.8, "travel_min": 15 },
+          { "time": "10:15", "place": "Himalayan Nyingmapa Buddhist Monastery, Circuit House Road", "activity": "Serene Tibetan monastery with 4m gilded Buddha; monks in morning prayer", "type": "sightseeing", "duration_min": 45, "cost_inr": 0, "dist_km": 1.2, "travel_min": 10 },
+          { "time": "11:30", "place": "Chopsticks Restaurant, The Mall Road", "activity": "Lunch: thukpa noodle soup, steamed momos, Tibetan bread", "type": "meal", "duration_min": 60, "cost_inr": 580 },
+          { "time": "13:30", "place": "Vashisht Kund Hot Sulphur Springs, Vashisht Village", "activity": "Soak in natural sulphur hot springs (₹20 entry); adjacent Ram & Krishna temples; 2000-year-old site", "type": "sightseeing", "duration_min": 90, "cost_inr": 20, "dist_km": 3.5, "travel_min": 15 },
+          { "time": "16:00", "place": "Manali Club House, Left Bank of Beas River", "activity": "Beas river boating (₹50), mini-train ride, pleasant riverside park walk", "type": "leisure", "duration_min": 75, "cost_inr": 150, "dist_km": 2.0, "travel_min": 12 },
+          { "time": "20:00", "place": "Il Forno, Old Manali Road", "activity": "Farewell dinner: wood-fire Italian in the Himalayas; calzone, pasta, tiramisu", "type": "meal", "duration_min": 75, "cost_inr": 820 }
+        ],
+        "day_total_inr": 3719,
+        "total_travel_time_min": 52
+      },
+      {
+        "day": 5,
+        "date": "2026-07-14",
+        "city": "Manali → Delhi",
+        "theme": "Check-out & Return",
+        "hotel": null,
+        "schedule": [
+          { "time": "07:00", "place": "Hotel / Sharma Dhaba, Old Manali", "activity": "Breakfast and final packing; pack local apple jam, kullu shawls as gifts", "type": "meal", "duration_min": 45, "cost_inr": 200 },
+          { "time": "09:00", "place": "Mall Road, Manali", "activity": "Last-minute shopping; Himachal Pradesh government emporium for fixed-price crafts", "type": "shopping", "duration_min": 90, "cost_inr": 500 },
+          { "time": "16:00", "place": "Manali Bus Stand", "activity": "Board overnight Volvo bus back to Delhi (arr. Delhi 07:30+1)", "type": "transport", "duration_min": 930, "cost_inr": 1200 }
+        ],
+        "day_total_inr": 1900,
+        "total_travel_time_min": 930
+      }
+    ],
+    "trip_summary": {
+      "total_cost_inr": 17692,
+      "budget_breakdown": {
+        "intercity_transport_inr": 2400,
+        "local_transport_inr": 1830,
+        "accommodation_inr": 7996,
+        "food_inr": 4030,
+        "activities_inr": 1450,
+        "shopping_inr": 1600,
+        "misc_inr": 386
+      },
+      "highlights": ["Solang Valley adventure sports", "Hadimba Devi Temple cedar forest", "Vashisht sulphur hot springs", "Lazy Dog and Johnson's Cafe"],
+      "weather_note": "July: cool 10–18°C; carry light woolens; Rohtang Pass may be partially closed; carry rain jacket"
+    }
+  },
+
+  {
+    "sample_id": "IT_002",
+    "trip_name": "Golden Triangle Heritage Circuit",
+    "type": "national",
+    "from_city": "Delhi",
+    "destinations": ["Jaipur", "Agra"],
+    "travel_mode": "Bus / Coach",
+    "budget_tier": "budget",
+    "total_days": 4,
+    "total_nights": 3,
+    "from_date": "2026-10-15",
+    "to_date": "2026-10-18",
+    "estimated_budget_inr": { "min": 8000, "max": 13000 },
+    "intercity_transport": {
+      "leg_1": { "from": "Delhi Sarai Kale Khan ISBT", "to": "Jaipur Sindhi Camp", "mode": "AC Volvo Bus", "dep_time": "06:00", "arr_time": "11:30", "duration": "5h 30m", "cost_inr": 450 },
+      "leg_2": { "from": "Jaipur Sindhi Camp", "to": "Agra ISBT", "mode": "AC Bus", "dep_time": "08:30", "arr_time": "13:30", "duration": "5h 00m", "cost_inr": 350 },
+      "leg_3": { "from": "Agra Fort Railway Station", "to": "Delhi Hazrat Nizamuddin", "mode": "Intercity Express Train", "dep_time": "18:30", "arr_time": "21:15", "duration": "2h 45m", "cost_inr": 180 }
+    },
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-10-15",
+        "city": "Jaipur",
+        "theme": "Arrival + Pink City First Impressions",
+        "hotel": {
+          "hotel_id": "h_jai_902",
+          "name": "Hotel Pearl Palace",
+          "price_per_night_inr": 1699,
+          "rating": 4.2,
+          "address": "Hathroi Fort, Near Ajmer Road, Jaipur - 302001"
+        },
+        "schedule": [
+          { "time": "06:00", "place": "Delhi Sarai Kale Khan ISBT", "activity": "Board AC Volvo bus to Jaipur Sindhi Camp", "type": "transport", "duration_min": 330, "cost_inr": 450 },
+          { "time": "11:30", "place": "Jaipur Sindhi Camp Bus Stand → Hotel Pearl Palace", "activity": "Auto to hotel (6 km); check-in, freshen up", "type": "transport", "duration_min": 60, "cost_inr": 120 },
+          { "time": "13:00", "place": "LMB (Laxmi Misthan Bhandar), Johari Bazaar", "activity": "Lunch: iconic 1950s Jaipur restaurant; dal baati churma, ghevar, pyaaz kachori", "type": "meal", "duration_min": 60, "cost_inr": 420 },
+          { "time": "15:00", "place": "Hawa Mahal, Badi Chaupar, Old City", "activity": "Visit 1799 CE palace of winds; 953 small windows; photography from street and terrace (₹50 entry)", "type": "sightseeing", "duration_min": 60, "cost_inr": 50, "dist_km": 1.8, "travel_min": 12 },
+          { "time": "16:30", "place": "Johari Bazaar, Old City", "activity": "Rajasthani shopping: lac bangles, blue pottery, Sanganeri block-print fabrics", "type": "shopping", "duration_min": 90, "cost_inr": 800 },
+          { "time": "19:00", "place": "Tapri Central, C-Scheme", "activity": "Evening chai at Jaipur's iconic rooftop chai spot; chaat, samosa", "type": "leisure", "duration_min": 60, "cost_inr": 280 },
+          { "time": "20:30", "place": "Spice Court Restaurant, Achrol House", "activity": "Dinner: Rajasthani thali with laal maas, ker sangri, bajra roti (₹400–550)", "type": "meal", "duration_min": 75, "cost_inr": 480 }
+        ],
+        "day_total_inr": 3899,
+        "total_travel_time_min": 342
+      },
+      {
+        "day": 2,
+        "date": "2026-10-16",
+        "city": "Jaipur",
+        "theme": "Forts & Palaces Day",
+        "hotel": {
+          "hotel_id": "h_jai_902",
+          "name": "Hotel Pearl Palace",
+          "price_per_night_inr": 1699,
+          "rating": 4.2,
+          "address": "Hathroi Fort, Near Ajmer Road, Jaipur - 302001"
+        },
+        "schedule": [
+          { "time": "07:30", "place": "Hotel Pearl Palace Rooftop Cafe", "activity": "Breakfast: poha, masala chai, fresh fruit; hotel is known for rooftop views", "type": "meal", "duration_min": 30, "cost_inr": 0, "notes": "Complimentary at Pearl Palace" },
+          { "time": "08:30", "place": "Amer Fort, Devisinghpura (11 km from hotel)", "activity": "Explore 16th-century Rajput fort-palace: Sheesh Mahal, Ganesh Pol, Zenana; jeep ride up (₹100)", "type": "sightseeing", "duration_min": 150, "cost_inr": 150, "dist_km": 11.0, "travel_min": 30 },
+          { "time": "11:30", "place": "Jaigarh Fort, Cheel ka Teela Hill (2 km from Amer)", "activity": "Connected to Amer by tunnel; world's largest wheeled cannon Jaivana; panoramic valley views", "type": "sightseeing", "duration_min": 75, "cost_inr": 35, "dist_km": 2.0, "travel_min": 10 },
+          { "time": "13:30", "place": "Anokhi Cafe, KK Square, C-Scheme", "activity": "Lunch: organic salads, sandwiches, Rajasthani thali (popular with locals and tourists)", "type": "meal", "duration_min": 60, "cost_inr": 400 },
+          { "time": "15:00", "place": "City Palace Museum, Tripolia Bazaar", "activity": "Royal Jaipur palace complex: Mubarak Mahal, Diwan-i-Khas, royal armoury; ₹130 entry", "type": "sightseeing", "duration_min": 90, "cost_inr": 130, "dist_km": 7.5, "travel_min": 22 },
+          { "time": "17:00", "place": "Jantar Mantar, near City Palace", "activity": "UNESCO World Heritage site: 18th-century astronomical instruments; world's largest stone sundial", "type": "sightseeing", "duration_min": 60, "cost_inr": 50, "dist_km": 0.3, "travel_min": 5 },
+          { "time": "20:00", "place": "Niro's Restaurant, Mirza Ismail Road", "activity": "Dinner: Jaipur institution since 1949; Mughlai and Continental; must-try butter chicken, dal makhani", "type": "meal", "duration_min": 75, "cost_inr": 550 }
+        ],
+        "day_total_inr": 4113,
+        "total_travel_time_min": 67
+      },
+      {
+        "day": 3,
+        "date": "2026-10-17",
+        "city": "Agra",
+        "theme": "Jaipur → Agra + Taj Mahal Golden Hour",
+        "hotel": {
+          "hotel_id": "h_agr_ext_001",
+          "name": "Hotel Sidhartha, Taj Nagri",
+          "price_per_night_inr": 1800,
+          "rating": 3.9,
+          "address": "Fatehabad Road, Taj Nagri, Agra - 282001",
+          "notes": "Budget hotel 800m from Taj East Gate; standard room"
+        },
+        "schedule": [
+          { "time": "08:00", "place": "Jaipur Sindhi Camp Bus Stand", "activity": "Check out hotel; board AC bus to Agra ISBT (5 hrs)", "type": "transport", "duration_min": 300, "cost_inr": 350 },
+          { "time": "13:30", "place": "Agra ISBT → Hotel Sidhartha, Taj Nagri", "activity": "Auto-rickshaw to hotel near Taj East Gate (3 km, 15 min)", "type": "transport", "duration_min": 30, "cost_inr": 100 },
+          { "time": "14:30", "place": "Shankara Vegis Restaurant, Taj Ganj", "activity": "Lunch: veg thali, petha sweet, lassi at local Taj Ganj eatery", "type": "meal", "duration_min": 45, "cost_inr": 280 },
+          { "time": "16:00", "place": "Taj Mahal, East Gate, Taj Ganj", "activity": "Visit 1632–1648 CE Mughal mausoleum; golden hour light on marble; book tickets online (₹1100 + ₹200 platform)", "type": "sightseeing", "duration_min": 150, "cost_inr": 1300, "dist_km": 0.8, "travel_min": 12 },
+          { "time": "19:00", "place": "Pinch of Spice, Fatehabad Road", "activity": "Dinner: popular Agra restaurant; butter chicken, dal makhani, fresh naan", "type": "meal", "duration_min": 75, "cost_inr": 620 }
+        ],
+        "day_total_inr": 4449,
+        "total_travel_time_min": 342
+      },
+      {
+        "day": 4,
+        "date": "2026-10-18",
+        "city": "Agra → Delhi",
+        "theme": "Agra Fort + Return to Delhi",
+        "hotel": null,
+        "schedule": [
+          { "time": "07:00", "place": "Sunrise Point, Mehtab Bagh, Yamuna Bank", "activity": "Taj Mahal sunrise view from across Yamuna River; no entry fee; best photography angle", "type": "sightseeing", "duration_min": 60, "cost_inr": 25, "dist_km": 3.5, "travel_min": 15 },
+          { "time": "08:30", "place": "Hotel / Mama Chicken Restaurant, Sadar Bazaar", "activity": "Breakfast: aloo puri, chai, freshly squeezed juice", "type": "meal", "duration_min": 30, "cost_inr": 150 },
+          { "time": "09:30", "place": "Agra Fort, Rakabganj", "activity": "UNESCO World Heritage red sandstone Mughal fort; Diwan-i-Am, Musamman Burj with Taj view; ₹650 entry", "type": "sightseeing", "duration_min": 120, "cost_inr": 650, "dist_km": 2.8, "travel_min": 15 },
+          { "time": "12:30", "place": "Dasaprakash Restaurant, Gwalior Road", "activity": "Lunch: Agra's iconic South Indian restaurant since 1956; masala dosa, idli, filter coffee", "type": "meal", "duration_min": 60, "cost_inr": 320 },
+          { "time": "14:00", "place": "Kinari Bazaar, Agra Old City", "activity": "Buy Agra petha sweets (over 100 varieties), marble inlay showpieces, leather goods", "type": "shopping", "duration_min": 90, "cost_inr": 600 },
+          { "time": "18:30", "place": "Agra Fort Railway Station → Delhi Hazrat Nizamuddin", "activity": "Intercity Express train to Delhi (2h 45m)", "type": "transport", "duration_min": 165, "cost_inr": 180 }
+        ],
+        "day_total_inr": 2025,
+        "total_travel_time_min": 195
+      }
+    ],
+    "trip_summary": {
+      "total_cost_inr": 11886,
+      "budget_breakdown": {
+        "intercity_transport_inr": 1130,
+        "local_transport_inr": 820,
+        "accommodation_inr": 5197,
+        "food_inr": 3300,
+        "activities_inr": 2215,
+        "shopping_inr": 1400,
+        "misc_inr": 500
+      },
+      "highlights": ["Amer Fort at sunrise", "Taj Mahal golden hour", "LMB for authentic Rajasthani cuisine", "Jantar Mantar UNESCO site"],
+      "weather_note": "October: pleasant 18–30°C, ideal sightseeing weather; carry sunscreen"
+    }
+  },
+
+  {
+    "sample_id": "IT_003",
+    "trip_name": "Goa Beach & Heritage Break",
+    "type": "national",
+    "from_city": "Delhi",
+    "destinations": ["Goa"],
+    "travel_mode": "Flight",
+    "budget_tier": "budget",
+    "total_days": 5,
+    "total_nights": 4,
+    "from_date": "2026-12-20",
+    "to_date": "2026-12-24",
+    "estimated_budget_inr": { "min": 18000, "max": 26000 },
+    "intercity_transport": {
+      "outbound": {
+        "flight_id": "6E-6783", "airline": "IndiGo", "from": "Delhi IGI T1", "to": "Goa Manohar Airport",
+        "dep_time": "07:00", "arr_time": "09:35", "duration": "2h 35m", "cost_inr": 5299
+      },
+      "return": {
+        "flight_id": "6E-6784", "airline": "IndiGo", "from": "Goa Manohar Airport", "to": "Delhi IGI T1",
+        "dep_time": "19:45", "arr_time": "22:30", "duration": "2h 45m", "cost_inr": 5599
+      }
+    },
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-12-20",
+        "city": "Goa",
+        "theme": "Arrival + Calangute-Baga Beaches",
+        "hotel": {
+          "hotel_id": "h_goa_701",
+          "name": "Sea Shell Beach Resort",
+          "price_per_night_inr": 2999,
+          "rating": 4.2,
+          "address": "1/50A Calangute-Candolim Road, Calangute, North Goa - 403516"
+        },
+        "schedule": [
+          { "time": "07:00", "place": "Delhi IGI Terminal 1", "activity": "Board IndiGo 6E-6783 to Goa Manohar Airport", "type": "transport", "duration_min": 155, "cost_inr": 5299 },
+          { "time": "09:35", "place": "Goa Manohar Airport → Sea Shell Beach Resort, Calangute", "activity": "Pre-booked taxi from airport to Calangute (45 min, ₹900)", "type": "transport", "duration_min": 45, "cost_inr": 900 },
+          { "time": "11:00", "place": "Sea Shell Beach Resort", "activity": "Check-in; hotel is 300m from Calangute Beach", "type": "rest", "duration_min": 45, "cost_inr": 0 },
+          { "time": "12:30", "place": "Calangute Beach, North Goa", "activity": "Afternoon at Calangute: swimming, sunbathing; rent sunbed (₹100), try water scooter (₹500)", "type": "leisure", "duration_min": 120, "cost_inr": 700 },
+          { "time": "16:00", "place": "Baga Beach (2.1 km from hotel)", "activity": "Baga Beach sunset; parasailing (₹1000) or just watch the sunset over Arabian Sea", "type": "leisure", "duration_min": 90, "cost_inr": 200 },
+          { "time": "19:30", "place": "Britto's Bar & Restaurant, Baga Beach", "activity": "Dinner: Goa institution since 1965; king prawns, Goan fish curry, kingfisher by the beach", "type": "meal", "duration_min": 90, "cost_inr": 950 }
+        ],
+        "day_total_inr": 9049,
+        "total_travel_time_min": 200
+      },
+      {
+        "day": 2,
+        "date": "2026-12-21",
+        "city": "Goa",
+        "theme": "North Goa Heritage — Fort Aguada & Candolim",
+        "hotel": {
+          "hotel_id": "h_goa_701",
+          "name": "Sea Shell Beach Resort",
+          "price_per_night_inr": 2999,
+          "rating": 4.2,
+          "address": "1/50A Calangute-Candolim Road, Calangute, North Goa - 403516"
+        },
+        "schedule": [
+          { "time": "08:30", "place": "Hotel Restaurant, Sea Shell Beach Resort", "activity": "Breakfast: Goan poee bread with butter, masala omelette, local Goa coffee", "type": "meal", "duration_min": 45, "cost_inr": 0, "notes": "Complimentary breakfast at Sea Shell" },
+          { "time": "09:30", "place": "Fort Aguada, Sinquerim (6.5 km from hotel)", "activity": "17th-century Portuguese sea fort with intact 13m lighthouse; panoramic Arabian Sea views; ₹25 entry", "type": "sightseeing", "duration_min": 90, "cost_inr": 25, "dist_km": 6.5, "travel_min": 20 },
+          { "time": "11:30", "place": "Sinquerim Beach (below Fort Aguada)", "activity": "Quieter beach below the fort; swimming, beach volleyball", "type": "leisure", "duration_min": 60, "cost_inr": 0 },
+          { "time": "13:30", "place": "Black Sheep Bistro, Swami Vivekananda Road, Panjim", "activity": "Lunch: Goan-fusion; pulled pork sanna, prawn balchao pasta, bebinca dessert", "type": "meal", "duration_min": 75, "cost_inr": 750 },
+          { "time": "16:00", "place": "Fontainhas (Latin Quarter), Panjim", "activity": "Goa's heritage neighbourhood: Portuguese-era tiled houses, narrow lanes, Sao Sebastiao Chapel", "type": "sightseeing", "duration_min": 90, "cost_inr": 0, "dist_km": 14.0, "travel_min": 30 },
+          { "time": "18:30", "place": "Miramar Beach, Panjim", "activity": "Goa's town beach; watch sunset over Mandovi River mouth; evening stroll with locals", "type": "leisure", "duration_min": 60, "cost_inr": 0 },
+          { "time": "20:30", "place": "Ritz Classic Restaurant, Dr Dada Vaidya Road, Panjim", "activity": "Dinner: legendary Goan seafood; fish recheado, pork vindaloo, Goa prawn curry + rice", "type": "meal", "duration_min": 75, "cost_inr": 780 }
+        ],
+        "day_total_inr": 4603,
+        "total_travel_time_min": 50
+      },
+      {
+        "day": 3,
+        "date": "2026-12-22",
+        "city": "Goa",
+        "theme": "Anjuna, Vagator & Chapora Fort",
+        "hotel": {
+          "hotel_id": "h_goa_701",
+          "name": "Sea Shell Beach Resort",
+          "price_per_night_inr": 2999,
+          "rating": 4.2,
+          "address": "1/50A Calangute-Candolim Road, Calangute, North Goa - 403516"
+        },
+        "schedule": [
+          { "time": "09:00", "place": "The German Bakery, Anjuna Road, Anjuna (9 km)", "activity": "Breakfast: full German-style spread, Goa's backpacker institution; banana pancakes, granola bowls", "type": "meal", "duration_min": 60, "cost_inr": 450 },
+          { "time": "10:30", "place": "Anjuna Flea Market, Anjuna Beach Road", "activity": "Famous Wednesday/Saturday flea market: handicrafts, clothing, spices, Rajasthani jewellery, antiques", "type": "shopping", "duration_min": 120, "cost_inr": 1000 },
+          { "time": "13:00", "place": "Curlies Beach Shack, Anjuna Beach", "activity": "Lunch: beachfront shack; grilled fish, pav bhaji, fresh lime soda by the waves", "type": "meal", "duration_min": 60, "cost_inr": 550 },
+          { "time": "14:30", "place": "Chapora Fort, Vagator Hillock (5 km from Anjuna)", "activity": "1617 CE fort overlooking Chapora River; Dil Chahta Hai movie location; 360° panoramic views", "type": "sightseeing", "duration_min": 75, "cost_inr": 0, "dist_km": 5.0, "travel_min": 18 },
+          { "time": "16:30", "place": "Little Vagator Beach (Ozran Beach)", "activity": "Goa's most scenic cove; red cliffs, turquoise water; cliff-jumping spot (₹0, optional)", "type": "leisure", "duration_min": 90, "cost_inr": 0, "dist_km": 1.5, "travel_min": 8 },
+          { "time": "20:00", "place": "Thalassa, Small Vagator Beach", "activity": "Dinner: acclaimed Greek-Goan restaurant perched on cliff; moussaka, mezze platter, Goan sea bass", "type": "meal", "duration_min": 90, "cost_inr": 1200 }
+        ],
+        "day_total_inr": 5298,
+        "total_travel_time_min": 26
+      },
+      {
+        "day": 4,
+        "date": "2026-12-23",
+        "city": "Goa",
+        "theme": "South Goa — Old Goa Churches & Colva",
+        "hotel": {
+          "hotel_id": "h_goa_701",
+          "name": "Sea Shell Beach Resort",
+          "price_per_night_inr": 2999,
+          "rating": 4.2,
+          "address": "1/50A Calangute-Candolim Road, Calangute, North Goa - 403516"
+        },
+        "schedule": [
+          { "time": "09:00", "place": "Basilica of Bom Jesus, Old Goa (28 km south)", "activity": "UNESCO World Heritage 1605 CE Baroque church; tomb of St. Francis Xavier; ₹0 entry", "type": "sightseeing", "duration_min": 60, "cost_inr": 0, "dist_km": 28.0, "travel_min": 55 },
+          { "time": "10:30", "place": "Se Cathedral, Old Goa (0.3 km from Basilica)", "activity": "Asia's largest church (1619 CE); Golden Bell, Portuguese baroque architecture", "type": "sightseeing", "duration_min": 45, "cost_inr": 0, "dist_km": 0.3, "travel_min": 5 },
+          { "time": "12:30", "place": "Fernando's Nostalgia, Raia, South Goa", "activity": "Lunch: rustic Goan home-style; sorpotel, cafreal chicken, bibinca, feni", "type": "meal", "duration_min": 75, "cost_inr": 700 },
+          { "time": "15:00", "place": "Colva Beach, South Goa", "activity": "South Goa's longest beach (25 km); calm waves, fewer crowds vs North Goa", "type": "leisure", "duration_min": 120, "cost_inr": 0, "dist_km": 12.0, "travel_min": 25 },
+          { "time": "19:00", "place": "Return to hotel, North Goa", "activity": "Return drive/taxi (1 hr); refresh at hotel", "type": "transport", "duration_min": 60, "cost_inr": 700 },
+          { "time": "21:00", "place": "Saturday Night Market, Arpora (1.5 km from hotel)", "activity": "Night market dinner: global food stalls, live music, local artists; budget ₹600 for food + shopping", "type": "leisure", "duration_min": 120, "cost_inr": 700 }
+        ],
+        "day_total_inr": 4199,
+        "total_travel_time_min": 85
+      },
+      {
+        "day": 5,
+        "date": "2026-12-24",
+        "city": "Goa → Delhi",
+        "theme": "Check-out & Departure",
+        "hotel": null,
+        "schedule": [
+          { "time": "08:00", "place": "Infantaria Cafe & Bakery, Calangute-Baga Road", "activity": "Final Goa breakfast: croissants, bebinca cake, Goan sausage roll, filter coffee", "type": "meal", "duration_min": 60, "cost_inr": 380 },
+          { "time": "10:00", "place": "Sea Shell Beach Resort", "activity": "Check-out; store luggage if needed", "type": "admin", "duration_min": 20, "cost_inr": 0 },
+          { "time": "11:00", "place": "Calangute Beach, last walk", "activity": "Final barefoot walk on Calangute beach; collect shells, take last photos", "type": "leisure", "duration_min": 60, "cost_inr": 0 },
+          { "time": "17:00", "place": "Goa Manohar Airport", "activity": "Pre-booked cab to airport (45 min); pick up cashew nuts, feni, kokum at duty-free", "type": "transport", "duration_min": 45, "cost_inr": 900 },
+          { "time": "19:45", "place": "Goa Manohar Airport", "activity": "Board IndiGo 6E-6784 back to Delhi IGI", "type": "transport", "duration_min": 165, "cost_inr": 5599 }
+        ],
+        "day_total_inr": 7879,
+        "total_travel_time_min": 210
+      }
+    ],
+    "trip_summary": {
+      "total_cost_inr": 24028,
+      "budget_breakdown": {
+        "flights_inr": 10898,
+        "airport_taxi_inr": 1800,
+        "accommodation_inr": 11996,
+        "food_inr": 5560,
+        "activities_inr": 1900,
+        "shopping_inr": 1000,
+        "misc_inr": 500
+      },
+      "highlights": ["Taj Mahal at golden hour is next stop", "Britto's beachfront seafood dinner", "Chapora Fort (Dil Chahta Hai spot)", "Saturday Night Market experience"],
+      "weather_note": "December: perfect 22–32°C; peak tourist season; book flights and hotel 3+ weeks ahead"
+    }
+  },
+
+  {
+    "sample_id": "IT_004",
+    "trip_name": "Dubai City of Gold Luxury Break",
+    "type": "international",
+    "from_city": "Mumbai",
+    "destinations": ["Dubai, UAE"],
+    "travel_mode": "Flight",
+    "budget_tier": "comfort",
+    "total_days": 5,
+    "total_nights": 4,
+    "from_date": "2026-11-05",
+    "to_date": "2026-11-09",
+    "currency": { "local": "AED", "inr_rate": 22.8 },
+    "estimated_budget_inr": { "min": 85000, "max": 130000 },
+    "intercity_transport": {
+      "outbound": { "flight_id": "EK-501", "airline": "Emirates A380", "from": "Mumbai CSIA T2", "to": "Dubai DXB T3", "dep_time": "02:10", "arr_time": "04:10", "duration": "3h 30m", "cost_inr": 23499, "class": "Economy" },
+      "return": { "flight_id": "EK-500", "airline": "Emirates A380", "from": "Dubai DXB T3", "to": "Mumbai CSIA T2", "dep_time": "21:45", "arr_time": "02:45+1", "duration": "3h 30m", "cost_inr": 21999 }
+    },
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-11-05",
+        "city": "Dubai",
+        "theme": "Arrival + Downtown Dubai — Burj Khalifa & Dubai Mall",
+        "hotel": {
+          "hotel_id": "ext_dxb_001",
+          "name": "Sofitel Dubai Downtown",
+          "price_per_night_inr": 14500,
+          "rating": 4.7,
+          "address": "Sheikh Mohammed bin Rashid Blvd, Downtown Dubai, UAE",
+          "notes": "Walking distance from Burj Khalifa; 5-star comfort tier"
+        },
+        "schedule": [
+          { "time": "04:10", "place": "Dubai International Airport Terminal 3", "activity": "Arrive Dubai; immigration (30 min); Metro Red Line to Union station then Green to hotel area (55 min, AED 5)", "type": "transport", "duration_min": 90, "cost_inr": 1120 },
+          { "time": "07:00", "place": "Sofitel Dubai Downtown", "activity": "Check-in; freshen up; hotel has spectacular Burj Khalifa view", "type": "rest", "duration_min": 120, "cost_inr": 0 },
+          { "time": "10:00", "place": "The Dubai Mall, Mohammed bin Rashid Blvd", "activity": "World's largest mall by total area; 1200+ stores; Dubai Aquarium (AED 140), VR Park, ice rink", "type": "leisure", "duration_min": 120, "cost_inr": 3200 },
+          { "time": "13:00", "place": "Zafran Indian Bistro, Dubai Mall", "activity": "Lunch: upscale Indian cuisine; dal makhani, seekh kebab, malabar prawn curry; familiar for Indian travellers", "type": "meal", "duration_min": 75, "cost_inr": 2800 },
+          { "time": "15:30", "place": "Burj Khalifa 'At the Top' Observation Deck, Level 124", "activity": "World's tallest building 828m; pre-book Level 124 (AED 185, ~₹4200); best in late afternoon light", "type": "sightseeing", "duration_min": 120, "cost_inr": 4200, "dist_km": 0.2, "travel_min": 5 },
+          { "time": "18:00", "place": "Dubai Fountain, Burj Khalifa Lake", "activity": "World's largest choreographed fountain show; free to watch from boardwalk; shows at 6PM, 6:30PM, then every 30 min", "type": "sightseeing", "duration_min": 60, "cost_inr": 0 },
+          { "time": "20:30", "place": "Zuma Dubai, Gate Village, DIFC", "activity": "Dinner: celebrated Japanese izakaya restaurant; robata-grilled black cod, miso salmon, sushi; pre-book essential", "type": "meal", "duration_min": 120, "cost_inr": 8500 }
+        ],
+        "day_total_inr": 43319,
+        "total_travel_time_min": 95
+      },
+      {
+        "day": 2,
+        "date": "2026-11-06",
+        "city": "Dubai",
+        "theme": "Old Dubai Heritage + Desert Safari Evening",
+        "hotel": {
+          "hotel_id": "ext_dxb_001",
+          "name": "Sofitel Dubai Downtown",
+          "price_per_night_inr": 14500,
+          "rating": 4.7,
+          "address": "Sheikh Mohammed bin Rashid Blvd, Downtown Dubai, UAE"
+        },
+        "schedule": [
+          { "time": "09:00", "place": "Gold Souk, Deira (Metro: Union → Al Ras)", "activity": "18th-century souq with 380+ gold shops; largest gold market in the world; great for jewellery shopping", "type": "shopping", "duration_min": 90, "cost_inr": 2000 },
+          { "time": "10:45", "place": "Dubai Spice Souk, Al Ras, Deira", "activity": "Aromatic open-air market; saffron, frankincense, rose water, dried limes, exotic spices", "type": "shopping", "duration_min": 45, "cost_inr": 800 },
+          { "time": "11:45", "place": "Dubai Creek Abra (water taxi)", "activity": "AED 1 heritage wooden boat ride across Dubai Creek (Deira to Bur Dubai); 10-minute river crossing", "type": "transport", "duration_min": 15, "cost_inr": 23 },
+          { "time": "12:30", "place": "Arabian Tea House Restaurant, Al Fahidi, Bur Dubai", "activity": "Lunch: shaded courtyard with 1900s architecture; mezze platter, karak chai, luqaimat dumplings", "type": "meal", "duration_min": 75, "cost_inr": 2200 },
+          { "time": "14:30", "place": "Al Fahidi Historical Neighbourhood (Bastakiya)", "activity": "Pre-1900 wind-tower district; Dubai Museum (AED 3); Heritage & Diving Village; art galleries", "type": "sightseeing", "duration_min": 90, "cost_inr": 70 },
+          { "time": "16:30", "place": "Hotel pickup for Desert Safari", "activity": "Shared desert safari (4WD pickup from hotel): dune bashing, camel ride, sandboarding, henna, BBQ dinner under stars", "type": "adventure", "duration_min": 360, "cost_inr": 3500 }
+        ],
+        "day_total_inr": 23093,
+        "total_travel_time_min": 60
+      },
+      {
+        "day": 3,
+        "date": "2026-11-07",
+        "city": "Dubai",
+        "theme": "Dubai Marina + Palm Jumeirah",
+        "hotel": {
+          "hotel_id": "ext_dxb_001",
+          "name": "Sofitel Dubai Downtown",
+          "price_per_night_inr": 14500,
+          "rating": 4.7,
+          "address": "Sheikh Mohammed bin Rashid Blvd, Downtown Dubai, UAE"
+        },
+        "schedule": [
+          { "time": "10:00", "place": "Dubai Marina Walk (Metro: DAMAC Metro)", "activity": "Iconic 3.5 km promenade along marina; 200 yachts, cafes, boutiques; brunch at Pier 7 (AED 299)", "type": "leisure", "duration_min": 150, "cost_inr": 6850 },
+          { "time": "13:30", "place": "JBR The Walk & The Beach Mall", "activity": "Al Mamzar Jumeirah Beach Residence walk; open-air beach mall, splash park, views of Ain Dubai", "type": "leisure", "duration_min": 90, "cost_inr": 0 },
+          { "time": "16:00", "place": "Palm Monorail → Atlantis The Palm", "activity": "Palm Jumeirah monorail (AED 25 return); Atlantis Aquaventure Waterpark (AED 650 day pass)", "type": "adventure", "duration_min": 210, "cost_inr": 15400, "dist_km": 14.0, "travel_min": 30 },
+          { "time": "21:00", "place": "Nobu Restaurant, Atlantis The Palm", "activity": "Dinner: world-famous Japanese-Peruvian; black cod miso, yellowtail jalapeño, wagyu anticuchos", "type": "meal", "duration_min": 120, "cost_inr": 9500 }
+        ],
+        "day_total_inr": 31750,
+        "total_travel_time_min": 30
+      },
+      {
+        "day": 4,
+        "date": "2026-11-08",
+        "city": "Dubai",
+        "theme": "Museum of the Future + Mall of Emirates",
+        "hotel": {
+          "hotel_id": "ext_dxb_001",
+          "name": "Sofitel Dubai Downtown",
+          "price_per_night_inr": 14500,
+          "rating": 4.7,
+          "address": "Sheikh Mohammed bin Rashid Blvd, Downtown Dubai, UAE"
+        },
+        "schedule": [
+          { "time": "10:00", "place": "Museum of the Future, Sheikh Zayed Road", "activity": "Dubai's most iconic recent building; immersive future-tech experience; AED 149 entry; book in advance", "type": "sightseeing", "duration_min": 150, "cost_inr": 3400 },
+          { "time": "13:30", "place": "Social by Heinz Beck, Waldorf Astoria DIFC", "activity": "Lunch: Michelin-starred Mediterranean; tasting menu; splurge meal for comfort tier", "type": "meal", "duration_min": 120, "cost_inr": 7500 },
+          { "time": "16:30", "place": "Dubai Frame, Zabeel Park", "activity": "150m golden frame structure; left side = old Dubai, right side = modern Dubai; AED 50 entry", "type": "sightseeing", "duration_min": 90, "cost_inr": 1150, "dist_km": 3.5, "travel_min": 15 },
+          { "time": "19:00", "place": "Mall of the Emirates, Al Barsha", "activity": "Shopping, cinema; Ski Dubai (indoor ski slope, AED 380 for 2 hrs)", "type": "leisure", "duration_min": 150, "cost_inr": 8700 },
+          { "time": "22:30", "place": "Hotel", "activity": "Return to hotel; last night in Dubai", "type": "transport", "duration_min": 25, "cost_inr": 600 }
+        ],
+        "day_total_inr": 21350,
+        "total_travel_time_min": 40
+      },
+      {
+        "day": 5,
+        "date": "2026-11-09",
+        "city": "Dubai → Mumbai",
+        "theme": "Check-out & Departure",
+        "hotel": null,
+        "schedule": [
+          { "time": "09:00", "place": "Jumeirah Mosque, Jumeirah Road", "activity": "Dubai's most photographed mosque; guided 'Open Doors' tour at 10 AM (AED 35); non-Muslims welcome", "type": "sightseeing", "duration_min": 75, "cost_inr": 800 },
+          { "time": "11:30", "place": "Sofitel Dubai Downtown", "activity": "Check-out; left luggage at hotel", "type": "admin", "duration_min": 20, "cost_inr": 0 },
+          { "time": "13:00", "place": "Mall of Emirates / City Walk", "activity": "Final afternoon shopping; Dubai Duty Free branded goods, dates, oud perfumes", "type": "shopping", "duration_min": 120, "cost_inr": 3000 },
+          { "time": "18:00", "place": "Dubai International Airport Terminal 3", "activity": "Taxi to airport (45 min, AED 80); pick up duty-free chocolates, perfumes, gold jewellery", "type": "transport", "duration_min": 45, "cost_inr": 2000 },
+          { "time": "21:45", "place": "Dubai DXB Terminal 3", "activity": "Board Emirates EK-500 back to Mumbai CSIA", "type": "transport", "duration_min": 210, "cost_inr": 21999 }
+        ],
+        "day_total_inr": 27799,
+        "total_travel_time_min": 255
+      }
+    ],
+    "trip_summary": {
+      "total_cost_inr": 147311,
+      "budget_breakdown": {
+        "flights_inr": 45498,
+        "accommodation_inr": 58000,
+        "food_inr": 28500,
+        "activities_inr": 36000,
+        "shopping_inr": 5800,
+        "transport_local_inr": 3800,
+        "misc_inr": 500
+      },
+      "highlights": ["Burj Khalifa 124th floor sunset", "Desert safari with BBQ dinner", "Atlantis Aquaventure", "Museum of the Future"],
+      "weather_note": "November: perfect 22–30°C; best season to visit Dubai; outdoor activities comfortable"
+    }
+  },
+
+  {
+    "sample_id": "IT_005",
+    "trip_name": "Singapore City & Sentosa Escape",
+    "type": "international",
+    "from_city": "Delhi",
+    "destinations": ["Singapore"],
+    "travel_mode": "Flight",
+    "budget_tier": "balanced",
+    "total_days": 6,
+    "total_nights": 5,
+    "from_date": "2026-09-12",
+    "to_date": "2026-09-17",
+    "currency": { "local": "SGD", "inr_rate": 63.5 },
+    "estimated_budget_inr": { "min": 65000, "max": 95000 },
+    "intercity_transport": {
+      "outbound": { "flight_id": "SQ-401", "airline": "Singapore Airlines", "from": "Delhi IGI T3", "to": "Singapore Changi T3", "dep_time": "00:50", "arr_time": "11:30", "duration": "5h 40m", "cost_inr": 34999 },
+      "return": { "flight_id": "SQ-402", "airline": "Singapore Airlines", "from": "Singapore Changi T3", "to": "Delhi IGI T3", "dep_time": "23:55", "arr_time": "04:25+1", "duration": "5h 30m", "cost_inr": 32999 }
+    },
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-09-12",
+        "city": "Singapore",
+        "theme": "Arrival + Orchard Road & Newton Food Centre",
+        "hotel": {
+          "hotel_id": "ext_sgp_001",
+          "name": "Mercure Singapore on Stevens",
+          "price_per_night_inr": 9800,
+          "rating": 4.3,
+          "address": "28 Stevens Road, Orchard, Singapore 257878",
+          "notes": "Balanced tier; walking to Orchard MRT; central location"
+        },
+        "schedule": [
+          { "time": "11:30", "place": "Singapore Changi Airport Terminal 3", "activity": "Arrive; clear immigration; visit Jewel Changi waterfall indoors (free); MRT to hotel (City Hall then Stevens, 40 min, SGD 2.1)", "type": "transport", "duration_min": 90, "cost_inr": 650 },
+          { "time": "14:00", "place": "Mercure Singapore on Stevens", "activity": "Check-in; rest after overnight flight from Delhi", "type": "rest", "duration_min": 90, "cost_inr": 0 },
+          { "time": "16:30", "place": "Orchard Road (Orchard MRT)", "activity": "Singapore's famous shopping belt; ION Orchard (55 floors), Ngee Ann City, Paragon; window shopping", "type": "leisure", "duration_min": 120, "cost_inr": 0 },
+          { "time": "20:00", "place": "Newton Food Centre, Clemenceau Ave", "activity": "Dinner: iconic hawker centre; must-try carrot cake, satay, hokkien mee, chilli crab, teh tarik (SGD 8–15/dish)", "type": "meal", "duration_min": 90, "cost_inr": 1100 }
+        ],
+        "day_total_inr": 36749,
+        "total_travel_time_min": 90
+      },
+      {
+        "day": 2,
+        "date": "2026-09-13",
+        "city": "Singapore",
+        "theme": "Marina Bay + Gardens by the Bay",
+        "hotel": {
+          "hotel_id": "ext_sgp_001",
+          "name": "Mercure Singapore on Stevens",
+          "price_per_night_inr": 9800,
+          "rating": 4.3,
+          "address": "28 Stevens Road, Orchard, Singapore 257878"
+        },
+        "schedule": [
+          { "time": "09:00", "place": "Marina Bay Sands Skypark Observation Deck (Bayfront MRT)", "activity": "Iconic infinity pool building; Skypark observation deck (SGD 32, ~₹2032); panoramic city view", "type": "sightseeing", "duration_min": 90, "cost_inr": 2032 },
+          { "time": "11:00", "place": "Gardens by the Bay, 18 Marina Gardens Drive", "activity": "Supertree Grove (outdoor, free); Cloud Forest + Flower Dome tickets (SGD 53 combo, ~₹3365)", "type": "sightseeing", "duration_min": 180, "cost_inr": 3365, "dist_km": 0.4, "travel_min": 8 },
+          { "time": "14:30", "place": "Satay by the Bay, Gardens by the Bay", "activity": "Lunch: hawker-style satay stalls inside the gardens; chicken and mutton satay, nasi lemak", "type": "meal", "duration_min": 60, "cost_inr": 1000 },
+          { "time": "16:30", "place": "Merlion Park, 1 Fullerton Road", "activity": "Singapore's iconic Merlion statue; Marina Bay views, Esplanade theatre architecture", "type": "sightseeing", "duration_min": 45, "cost_inr": 0, "dist_km": 1.8, "travel_min": 10 },
+          { "time": "17:30", "place": "ArtScience Museum, 6 Bayfront Ave", "activity": "Lotus-shaped museum at MBS; Future World exhibition (immersive digital art, SGD 20, ~₹1270)", "type": "sightseeing", "duration_min": 90, "cost_inr": 1270 },
+          { "time": "19:45", "place": "Gardens by the Bay Supertree Grove", "activity": "Garden Rhapsody light show (7:45 PM & 8:45 PM); free; Supertrees illuminated in sync with music", "type": "sightseeing", "duration_min": 30, "cost_inr": 0 },
+          { "time": "21:00", "place": "Lau Pa Sat Festival Market, Boon Tat Street", "activity": "Dinner: 1894 Victorian cast-iron hawker market; satay street closes Boon Tat St to traffic at night; char kway teow, oyster omelette", "type": "meal", "duration_min": 75, "cost_inr": 1200 }
+        ],
+        "day_total_inr": 19667,
+        "total_travel_time_min": 18
+      },
+      {
+        "day": 3,
+        "date": "2026-09-14",
+        "city": "Singapore",
+        "theme": "Sentosa Island & Universal Studios",
+        "hotel": {
+          "hotel_id": "ext_sgp_001",
+          "name": "Mercure Singapore on Stevens",
+          "price_per_night_inr": 9800,
+          "rating": 4.3,
+          "address": "28 Stevens Road, Orchard, Singapore 257878"
+        },
+        "schedule": [
+          { "time": "08:30", "place": "VivoCity → Sentosa Express (SGD 4)", "activity": "MRT to HarbourFront; Sentosa Express to Waterfront Station", "type": "transport", "duration_min": 30, "cost_inr": 500 },
+          { "time": "09:30", "place": "Universal Studios Singapore, Resorts World Sentosa", "activity": "Full theme park day: Jurassic World, Transformers, Battlestar Galactica coaster, Minion Park; adult SGD 83 (~₹5270)", "type": "adventure", "duration_min": 360, "cost_inr": 5270 },
+          { "time": "13:00", "place": "KT's Grill, Universal Studios Singapore", "activity": "Lunch inside park: grilled chicken set, fish & chips, butterbeer-style drinks", "type": "meal", "duration_min": 45, "cost_inr": 1900 },
+          { "time": "17:30", "place": "Siloso Beach, Sentosa", "activity": "Beach time after the park; tranquil sunset; Ola Beach Club beachfront drinks (SGD 15–20)", "type": "leisure", "duration_min": 90, "cost_inr": 1270 },
+          { "time": "20:00", "place": "Clarke Quay, River Valley Road", "activity": "Dinner & nightlife hub on Singapore River; try Jumbo Seafood for chilli crab (SGD 80+, ~₹5100) or Timbre Music Bistro (live music, SGD 30)", "type": "meal", "duration_min": 120, "cost_inr": 4100 }
+        ],
+        "day_total_inr": 13040,
+        "total_travel_time_min": 30
+      },
+      {
+        "day": 4,
+        "date": "2026-09-15",
+        "city": "Singapore",
+        "theme": "Cultural Districts — Chinatown, Little India, Kampong Glam",
+        "hotel": {
+          "hotel_id": "ext_sgp_001",
+          "name": "Mercure Singapore on Stevens",
+          "price_per_night_inr": 9800,
+          "rating": 4.3,
+          "address": "28 Stevens Road, Orchard, Singapore 257878"
+        },
+        "schedule": [
+          { "time": "09:00", "place": "Buddha Tooth Relic Temple, South Bridge Road, Chinatown", "activity": "2007 Tang-dynasty-style temple; 4-story relic stupa; Buddhist artefacts museum; free entry", "type": "sightseeing", "duration_min": 60, "cost_inr": 0, "dist_km": 6.5, "travel_min": 20 },
+          { "time": "10:30", "place": "Sri Mariamman Temple, South Bridge Road", "activity": "Singapore's oldest Hindu temple (1827); gopuram with 27 deities; free entry; colourful Dravidian architecture", "type": "sightseeing", "duration_min": 45, "cost_inr": 0, "dist_km": 0.1, "travel_min": 3 },
+          { "time": "11:30", "place": "Chinatown Food Street, Smith Street", "activity": "Lunch: Hainanese chicken rice (SGD 5), laksa (SGD 6), kaya toast, teh tarik; perfect local meal", "type": "meal", "duration_min": 75, "cost_inr": 760 },
+          { "time": "13:30", "place": "Little India, Serangoon Road (MRT: Little India)", "activity": "Mustafa Centre (24hr shopping, electronics, sarees), Sri Veeramakaliamman Temple (1835 CE); spice shops", "type": "sightseeing", "duration_min": 120, "cost_inr": 1500 },
+          { "time": "16:30", "place": "Sultan Mosque, North Bridge Road, Kampong Glam", "activity": "1824 golden-domed mosque in Malay quarter; stunning architecture; respectful dress required; free entry", "type": "sightseeing", "duration_min": 45, "cost_inr": 0, "dist_km": 3.0, "travel_min": 15 },
+          { "time": "18:00", "place": "Haji Lane, Arab Street, Kampong Glam", "activity": "Singapore's trendiest street: indie boutiques, murals, rooftop bars; instagrammable alley", "type": "leisure", "duration_min": 90, "cost_inr": 800 },
+          { "time": "20:30", "place": "Zam Zam Restaurant, North Bridge Road", "activity": "Dinner: legendary 1908 Muslim eatery; murtabak stuffed pancake, nasi biryani, tandoori chicken", "type": "meal", "duration_min": 75, "cost_inr": 900 }
+        ],
+        "day_total_inr": 13760,
+        "total_travel_time_min": 38
+      },
+      {
+        "day": 5,
+        "date": "2026-09-16",
+        "city": "Singapore",
+        "theme": "Singapore Zoo + Night Safari",
+        "hotel": {
+          "hotel_id": "ext_sgp_001",
+          "name": "Mercure Singapore on Stevens",
+          "price_per_night_inr": 9800,
+          "rating": 4.3,
+          "address": "28 Stevens Road, Orchard, Singapore 257878"
+        },
+        "schedule": [
+          { "time": "08:30", "place": "Singapore Zoo, 80 Mandai Lake Road", "activity": "Open-concept zoo (no cages); Rainforest Wild Asia, Children's World, Great Rift Valley; adult SGD 52 (~₹3302)", "type": "sightseeing", "duration_min": 240, "cost_inr": 3302, "dist_km": 18.0, "travel_min": 35 },
+          { "time": "13:00", "place": "Jungle Flavours, Inside Singapore Zoo", "activity": "Lunch inside zoo: Asian set meals, freshly made tropical drinks, cold desserts", "type": "meal", "duration_min": 60, "cost_inr": 1600 },
+          { "time": "14:30", "place": "River Wonders (formerly River Safari), Mandai", "activity": "Panda Forest, Amazon River Quest boat ride, Giant River Otter; adult SGD 46 (~₹2920); adjacent to zoo", "type": "sightseeing", "duration_min": 150, "cost_inr": 2920, "dist_km": 0.2, "travel_min": 5 },
+          { "time": "18:00", "place": "Hotel, Orchard Area", "activity": "Return to hotel; refresh and rest before Night Safari", "type": "rest", "duration_min": 90, "cost_inr": 0 },
+          { "time": "19:30", "place": "Night Safari, 80 Mandai Lake Road", "activity": "World's first nocturnal wildlife park; Creatures of the Night show (8PM, free with entry); tram ride (SGD 65, ~₹4127)", "type": "sightseeing", "duration_min": 180, "cost_inr": 4127 },
+          { "time": "22:30", "place": "Return to Hotel via Mandai Shuttle + MRT", "activity": "Shuttle bus + MRT back to Orchard; grab supper at 7-Eleven (curry puff, otah bun)", "type": "transport", "duration_min": 50, "cost_inr": 600 }
+        ],
+        "day_total_inr": 22549,
+        "total_travel_time_min": 90
+      },
+      {
+        "day": 6,
+        "date": "2026-09-17",
+        "city": "Singapore → Delhi",
+        "theme": "Jewel Changi + Departure",
+        "hotel": null,
+        "schedule": [
+          { "time": "09:00", "place": "Tiong Bahru Bakery, Mohamed Sultan Road (near hotel)", "activity": "Final breakfast: celebrated Singapore bakery; kouign-amann, croissants, flat white", "type": "meal", "duration_min": 60, "cost_inr": 750 },
+          { "time": "11:00", "place": "Hotel Check-out", "activity": "Check out; store luggage at hotel concierge; last afternoon free", "type": "admin", "duration_min": 20, "cost_inr": 0 },
+          { "time": "12:00", "place": "Bugis Street Market, Queen Street", "activity": "Singapore's best budget shopping: electronics, fashion, souvenirs, street food; haggle for good deals", "type": "shopping", "duration_min": 120, "cost_inr": 2500 },
+          { "time": "17:00", "place": "Jewel Changi Airport, Airport Boulevard", "activity": "World's tallest indoor waterfall (40m HSBC Rain Vortex); Canopy Park on roof (SGD 10); final duty-free: Bak Kwa, Pandan cake, Tiger Balm, Merlion gifts", "type": "leisure", "duration_min": 150, "cost_inr": 3135 },
+          { "time": "22:00", "place": "Singapore Changi Airport Terminal 3", "activity": "Depart for gate; board SQ-402 back to Delhi IGI (arr. 04:25 IST)", "type": "transport", "duration_min": 330, "cost_inr": 32999 }
+        ],
+        "day_total_inr": 39384,
+        "total_travel_time_min": 330
+      }
+    ],
+    "trip_summary": {
+      "total_cost_inr": 145149,
+      "budget_breakdown": {
+        "flights_inr": 67998,
+        "accommodation_inr": 49000,
+        "food_inr": 11310,
+        "activities_inr": 22416,
+        "shopping_inr": 6135,
+        "local_transport_inr": 1750,
+        "misc_inr": 500
+      },
+      "highlights": ["Universal Studios Transformers & Jurassic World", "Gardens by the Bay Garden Rhapsody light show", "Night Safari nocturnal wildlife", "Newton Food Centre hawker experience"],
+      "weather_note": "September: warm 25–32°C, occasional afternoon showers; carry a compact umbrella; Singapore is walkable but humid"
+    }
+  }
+]

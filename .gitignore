@@ -1,0 +1,16 @@
+.env
+.env.*
+node_modules/
+dist/
+__pycache__/
+*.db
+myenv/
+
+# Scratch & test scripts
+temp_hotels.json
+recover_edits.js
+recovered.txt
+scan_secrets.py
+backend/test_*.js
+backend/find_*.js
+backend/temp_hotels.json

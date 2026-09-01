@@ -1,0 +1,167 @@
+{
+  "name": "Firstflight Booking Automation Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "firstflight-booking",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        240
+      ],
+      "id": "webhook-booking",
+      "name": "Booking Webhook Receiver"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headersUi": {
+          "parameter": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"from\": \"Firstflight Travels <onboarding@resend.dev>\",\n  \"to\": [\"{{ $json.email }}\"],\n  \"subject\": \"✈️ Your Booking Confirmation - {{ $json.itemData?.name || 'Booking' }}\",\n  \"html\": \"<div style='font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;'><h2 style='color: #121619; border-bottom: 2px solid #D4B15A; padding-bottom: 10px;'>Firstflight Booking Confirmation</h2><p>Hi <strong>{{ $json.name }}</strong>,</p><p>Your booking for <strong>{{ $json.itemData?.name || 'your trip' }}</strong> ({{ $json.itemType }}) has been successfully confirmed!</p><table style='width: 100%; border-collapse: collapse; margin: 20px 0;'><tr style='background: #f9f9f9;'><td style='padding: 10px; border: 1px solid #eee;'><strong>From</strong></td><td style='padding: 10px; border: 1px solid #eee;'>{{ $json.itemData?.from || $json.itemData?.city || 'N/A' }}</td></tr><tr><td style='padding: 10px; border: 1px solid #eee;'><strong>To</strong></td><td style='padding: 10px; border: 1px solid #eee;'>{{ $json.itemData?.to || 'N/A' }}</td></tr><tr style='background: #f9f9f9;'><td style='padding: 10px; border: 1px solid #eee;'><strong>Dates</strong></td><td style='padding: 10px; border: 1px solid #eee;'>{{ $json.itemData?.fromDate || 'N/A' }} to {{ $json.itemData?.toDate || 'N/A' }}</td></tr><tr><td style='padding: 10px; border: 1px solid #eee;'><strong>Total Paid</strong></td><td style='padding: 10px; border: 1px solid #eee;'>INR {{ $json.itemData?.price_inr || 0 }}</td></tr></table><p>Download your official PDF ticket directly here: <a href='{{ $json.pdf_url }}' style='color: #D4B15A; font-weight: bold;'>Get Ticket PDF</a></p><p>Have a wonderful journey!</p><hr style='border: 0; border-top: 1px solid #eee; margin-top: 30px;'><p style='font-size: 11px; color: #888; text-align: center;'>Firstflight Travels Private Ltd. 1800-FF-TRAVELS</p></div>\",\n  \"attachments\": [\n    {\n      \"filename\": \"Firstflight_Ticket_{{ $json.userId }}.pdf\",\n      \"path\": \"{{ $json.pdf_url }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        480,
+        60
+      ],
+      "id": "resend-email",
+      "name": "Send Email (Resend)",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "resend-api-key",
+          "name": "Authorization"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://wasenderapi.com/api/send-message",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headersUi": {
+          "parameter": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"to\": \"{{ $json.phone }}\",\n  \"text\": \"Hi {{ $json.name }},\n\nYour Firstflight Booking is CONFIRMED!\n\nItem: {{ $json.itemData?.name || 'Booking' }}\nPrice: INR {{ $json.itemData?.price_inr || '0' }}\nPDF Ticket URL: {{ $json.pdf_url }}\n\nWish you a safe journey!\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        480,
+        200
+      ],
+      "id": "whatsapp-wasender",
+      "name": "WhatsApp (WasenderAPI)",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "wasender-api-auth",
+          "name": "Authorization"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Firstflight Bookings"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Bookings",
+          "mode": "list",
+          "cachedResultName": "Bookings"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ new Date().toISOString() }}",
+            "Name": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Phone": "={{ $json.phone }}",
+            "Item Type": "={{ $json.itemType }}",
+            "Provider": "={{ $json.itemData?.name || 'Booking' }}",
+            "Amount": "={{ $json.itemData?.price_inr || 0 }}",
+            "PDF URL": "={{ $json.pdf_url }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        480,
+        480
+      ],
+      "id": "google-sheets-log",
+      "name": "Log to Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-oauth",
+          "name": "Google Sheets OAuth"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Booking Webhook Receiver": {
+      "main": [
+        [
+          {
+            "node": "Send Email (Resend)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp (WasenderAPI)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

@@ -1,0 +1,679 @@
+[
+  {
+    "route_id": "DEL-BOM",
+    "from": "Delhi", "to": "Mumbai",
+    "flights": [
+      {
+        "flight_id": "6E-2031", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 85,
+        "dep_time": "06:00", "arr_time": "08:10", "duration": "2h 10m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 8200,
+        "price_inr": 4799, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-630", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.1, "on_time_pct": 82,
+        "dep_time": "07:30", "arr_time": "09:35", "duration": "2h 05m", "stops": 0,
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 9500,
+        "price_inr": 6299, "refundable": true, "tag": "Fastest"
+      },
+      {
+        "flight_id": "QP-1107", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.2, "on_time_pct": 88,
+        "dep_time": "11:15", "arr_time": "13:25", "duration": "2h 10m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 7400,
+        "price_inr": 5499, "refundable": false, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-BLR",
+    "from": "Delhi", "to": "Bengaluru",
+    "flights": [
+      {
+        "flight_id": "6E-5412", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 84,
+        "dep_time": "05:45", "arr_time": "08:35", "duration": "2h 50m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7800,
+        "price_inr": 5599, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-803", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 80,
+        "dep_time": "09:00", "arr_time": "11:45", "duration": "2h 45m", "stops": 0,
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 10200,
+        "price_inr": 7899, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "SG-8157", "airline": "SpiceJet", "logo": "https://logo.clearbit.com/spicejet.com",
+        "rating": 3.7, "on_time_pct": 76,
+        "dep_time": "13:20", "arr_time": "16:05", "duration": "2h 45m", "stops": 0,
+        "aircraft": "B737-800", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6500,
+        "price_inr": 6299, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-GOA",
+    "from": "Delhi", "to": "Goa",
+    "flights": [
+      {
+        "flight_id": "6E-6783", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.1, "on_time_pct": 86,
+        "dep_time": "07:00", "arr_time": "09:35", "duration": "2h 35m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 8000,
+        "price_inr": 5299, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "QP-1456", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.3, "on_time_pct": 89,
+        "dep_time": "10:20", "arr_time": "12:50", "duration": "2h 30m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 7100,
+        "price_inr": 6899, "refundable": false, "tag": "Fastest"
+      },
+      {
+        "flight_id": "AI-2516", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 79,
+        "dep_time": "16:45", "arr_time": "19:25", "duration": "2h 40m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 8800,
+        "price_inr": 8499, "refundable": true, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-CCU",
+    "from": "Delhi", "to": "Kolkata",
+    "flights": [
+      {
+        "flight_id": "SG-3045", "airline": "SpiceJet", "logo": "https://logo.clearbit.com/spicejet.com",
+        "rating": 3.6, "on_time_pct": 74,
+        "dep_time": "06:30", "arr_time": "08:50", "duration": "2h 20m", "stops": 0,
+        "aircraft": "B737-800", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6200,
+        "price_inr": 5099, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-440", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 81,
+        "dep_time": "08:15", "arr_time": "10:30", "duration": "2h 15m", "stops": 0,
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 9100,
+        "price_inr": 7299, "refundable": true, "tag": "Fastest"
+      },
+      {
+        "flight_id": "6E-7741", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.1, "on_time_pct": 87,
+        "dep_time": "14:00", "arr_time": "16:20", "duration": "2h 20m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7600,
+        "price_inr": 6199, "refundable": false, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "BOM-BLR",
+    "from": "Mumbai", "to": "Bengaluru",
+    "flights": [
+      {
+        "flight_id": "6E-1023", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 85,
+        "dep_time": "06:15", "arr_time": "07:50", "duration": "1h 35m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7300,
+        "price_inr": 3799, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "QP-1789", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.2, "on_time_pct": 90,
+        "dep_time": "09:30", "arr_time": "11:00", "duration": "1h 30m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6900,
+        "price_inr": 4599, "refundable": false, "tag": "Fastest"
+      },
+      {
+        "flight_id": "AI-505", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 78,
+        "dep_time": "18:10", "arr_time": "19:45", "duration": "1h 35m", "stops": 0,
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 9700,
+        "price_inr": 5499, "refundable": true, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-HYD",
+    "from": "Delhi", "to": "Hyderabad",
+    "flights": [
+      {
+        "flight_id": "6E-3320", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 84,
+        "dep_time": "05:30", "arr_time": "07:45", "duration": "2h 15m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7900,
+        "price_inr": 4999, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-2724", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 81,
+        "dep_time": "08:40", "arr_time": "10:50", "duration": "2h 10m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 8600,
+        "price_inr": 6799, "refundable": true, "tag": "Fastest"
+      },
+      {
+        "flight_id": "SG-4490", "airline": "SpiceJet", "logo": "https://logo.clearbit.com/spicejet.com",
+        "rating": 3.7, "on_time_pct": 75,
+        "dep_time": "15:30", "arr_time": "17:50", "duration": "2h 20m", "stops": 0,
+        "aircraft": "B737-800", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6100,
+        "price_inr": 5699, "refundable": false, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-MAA",
+    "from": "Delhi", "to": "Chennai",
+    "flights": [
+      {
+        "flight_id": "6E-4456", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 83,
+        "dep_time": "06:50", "arr_time": "09:35", "duration": "2h 45m", "stops": 0,
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 8300,
+        "price_inr": 5899, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-409", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.1, "on_time_pct": 82,
+        "dep_time": "10:10", "arr_time": "12:50", "duration": "2h 40m", "stops": 0,
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 11000,
+        "price_inr": 8299, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "QP-2210", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.2, "on_time_pct": 87,
+        "dep_time": "19:00", "arr_time": "21:35", "duration": "2h 35m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 7000,
+        "price_inr": 7199, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "BOM-GOA",
+    "from": "Mumbai", "to": "Goa",
+    "flights": [
+      {
+        "flight_id": "6E-2890", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.1, "on_time_pct": 86,
+        "dep_time": "07:25", "arr_time": "08:35", "duration": "1h 10m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7500,
+        "price_inr": 2899, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "QP-3301", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.2, "on_time_pct": 88,
+        "dep_time": "12:00", "arr_time": "13:05", "duration": "1h 05m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6800,
+        "price_inr": 3599, "refundable": false, "tag": "Fastest"
+      },
+      {
+        "flight_id": "AI-2933", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 77,
+        "dep_time": "17:40", "arr_time": "18:50", "duration": "1h 10m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Snack", "pilot_exp_hrs": 8400,
+        "price_inr": 4299, "refundable": true, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-PNQ",
+    "from": "Delhi", "to": "Pune",
+    "flights": [
+      {
+        "flight_id": "6E-5567", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 85,
+        "dep_time": "05:55", "arr_time": "08:05", "duration": "2h 10m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7700,
+        "price_inr": 4699, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-665", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 79,
+        "dep_time": "09:50", "arr_time": "12:05", "duration": "2h 15m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 9000,
+        "price_inr": 6299, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "QP-1890", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.3, "on_time_pct": 89,
+        "dep_time": "14:25", "arr_time": "16:30", "duration": "2h 05m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 7200,
+        "price_inr": 5499, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "BLR-MAA",
+    "from": "Bengaluru", "to": "Chennai",
+    "flights": [
+      {
+        "flight_id": "6E-6190", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 86,
+        "dep_time": "07:10", "arr_time": "08:15", "duration": "1h 05m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7100,
+        "price_inr": 2799, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "QP-2655", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.2, "on_time_pct": 90,
+        "dep_time": "11:45", "arr_time": "12:45", "duration": "1h 00m", "stops": 0,
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6700,
+        "price_inr": 3399, "refundable": false, "tag": "Fastest"
+      },
+      {
+        "flight_id": "AI-2851", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.8, "on_time_pct": 76,
+        "dep_time": "18:30", "arr_time": "19:35", "duration": "1h 05m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Snack", "pilot_exp_hrs": 8900,
+        "price_inr": 4099, "refundable": true, "tag": "Recommended"
+      }
+    ]
+  }
+,
+  {
+    "route_id": "DEL-SXR",
+    "from": "Delhi", "to": "Srinagar",
+    "flights": [
+      {
+        "flight_id": "6E-4701", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.1, "on_time_pct": 82,
+        "dep_time": "06:20", "arr_time": "08:00", "duration": "1h 40m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7400,
+        "price_inr": 5299, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-812", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 79,
+        "dep_time": "09:45", "arr_time": "12:30", "duration": "2h 45m", "stops": 1,
+        "layover_cities": ["Amritsar"], "layover_durations": ["1h 05m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 9200,
+        "price_inr": 6899, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "SG-9021", "airline": "SpiceJet", "logo": "https://logo.clearbit.com/spicejet.com",
+        "rating": 3.6, "on_time_pct": 73,
+        "dep_time": "13:00", "arr_time": "18:10", "duration": "5h 10m", "stops": 2,
+        "layover_cities": ["Amritsar", "Jammu"], "layover_durations": ["1h 20m", "1h 50m"],
+        "aircraft": "B737-800", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 5900,
+        "price_inr": 4699, "refundable": false, "tag": "Cheapest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-IXL",
+    "from": "Delhi", "to": "Leh",
+    "flights": [
+      {
+        "flight_id": "AI-446", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.3, "on_time_pct": 78,
+        "dep_time": "05:30", "arr_time": "07:10", "duration": "1h 40m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 10500,
+        "price_inr": 7499, "refundable": true, "tag": "Fastest"
+      },
+      {
+        "flight_id": "6E-5102", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 3.9, "on_time_pct": 75,
+        "dep_time": "11:30", "arr_time": "14:40", "duration": "3h 10m", "stops": 1,
+        "layover_cities": ["Chandigarh"], "layover_durations": ["1h 30m"],
+        "aircraft": "ATR 72-600", "layout": "2-2", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 6800,
+        "price_inr": 6299, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "SG-7440", "airline": "SpiceJet", "logo": "https://logo.clearbit.com/spicejet.com",
+        "rating": 3.7, "on_time_pct": 71,
+        "dep_time": "07:50", "arr_time": "13:45", "duration": "5h 55m", "stops": 2,
+        "layover_cities": ["Jammu", "Srinagar"], "layover_durations": ["1h 15m", "2h 40m"],
+        "aircraft": "B737-800", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6100,
+        "price_inr": 5499, "refundable": false, "tag": "Recommended"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-IXZ",
+    "from": "Delhi", "to": "Port Blair",
+    "flights": [
+      {
+        "flight_id": "6E-3822", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 81,
+        "dep_time": "05:00", "arr_time": "10:05", "duration": "5h 05m", "stops": 1,
+        "layover_cities": ["Kolkata"], "layover_durations": ["1h 25m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7600,
+        "price_inr": 8499, "refundable": false, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AI-770", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.1, "on_time_pct": 83,
+        "dep_time": "08:30", "arr_time": "13:25", "duration": "4h 55m", "stops": 1,
+        "layover_cities": ["Chennai"], "layover_durations": ["1h 10m"],
+        "aircraft": "A321neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 9400,
+        "price_inr": 11299, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "SG-8830", "airline": "SpiceJet", "logo": "https://logo.clearbit.com/spicejet.com",
+        "rating": 3.5, "on_time_pct": 70,
+        "dep_time": "10:15", "arr_time": "19:50", "duration": "9h 35m", "stops": 2,
+        "layover_cities": ["Kolkata", "Chennai"], "layover_durations": ["2h 10m", "2h 20m"],
+        "aircraft": "B737-800", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 5800,
+        "price_inr": 7299, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-IXB",
+    "from": "Delhi", "to": "Bagdogra",
+    "flights": [
+      {
+        "flight_id": "6E-5988", "airline": "IndiGo", "logo": "https://logo.clearbit.com/goindigo.in",
+        "rating": 4.0, "on_time_pct": 84,
+        "dep_time": "06:10", "arr_time": "08:30", "duration": "2h 20m", "stops": 0,
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7200,
+        "price_inr": 5199, "refundable": false, "tag": "Fastest"
+      },
+      {
+        "flight_id": "AI-2016", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 78,
+        "dep_time": "10:20", "arr_time": "14:10", "duration": "3h 50m", "stops": 1,
+        "layover_cities": ["Kolkata"], "layover_durations": ["1h 30m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "31\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": true, "meal": "Complimentary Meal", "pilot_exp_hrs": 8800,
+        "price_inr": 6899, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "QP-4411", "airline": "Akasa Air", "logo": "https://logo.clearbit.com/akasaair.com",
+        "rating": 4.2, "on_time_pct": 88,
+        "dep_time": "14:45", "arr_time": "22:05", "duration": "7h 20m", "stops": 2,
+        "layover_cities": ["Mumbai", "Patna"], "layover_durations": ["2h 30m", "2h 00m"],
+        "aircraft": "B737 MAX", "layout": "3-3", "legroom": "30\"",
+        "baggage": "7kg cabin + 15kg check-in",
+        "wifi": false, "meal": "Snack", "pilot_exp_hrs": 6500,
+        "price_inr": 4799, "refundable": false, "tag": "Cheapest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-DXB",
+    "from": "Delhi", "to": "Dubai",
+    "flights": [
+      {
+        "flight_id": "EK-511", "airline": "Emirates", "logo": "https://logo.clearbit.com/emirates.com",
+        "rating": 4.8, "on_time_pct": 91,
+        "dep_time": "03:35", "arr_time": "05:45", "duration": "3h 40m", "stops": 0,
+        "aircraft": "Boeing 777-300ER", "layout": "3-4-3", "legroom": "32\"",
+        "baggage": "7kg cabin + 30kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 14000,
+        "price_inr": 21999, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "AI-995", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 80,
+        "dep_time": "13:55", "arr_time": "16:10", "duration": "3h 45m", "stops": 0,
+        "aircraft": "B787 Dreamliner", "layout": "2-4-2", "legroom": "31\"",
+        "baggage": "7kg cabin + 25kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 11200,
+        "price_inr": 18499, "refundable": true, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "G8-6301", "airline": "Air Arabia", "logo": "https://logo.clearbit.com/airarabia.com",
+        "rating": 3.8, "on_time_pct": 75,
+        "dep_time": "07:15", "arr_time": "14:20", "duration": "7h 35m", "stops": 2,
+        "layover_cities": ["Sharjah", "Abu Dhabi"], "layover_durations": ["2h 10m", "2h 30m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 20kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7800,
+        "price_inr": 13999, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "BOM-DXB",
+    "from": "Mumbai", "to": "Dubai",
+    "flights": [
+      {
+        "flight_id": "EK-501", "airline": "Emirates", "logo": "https://logo.clearbit.com/emirates.com",
+        "rating": 4.8, "on_time_pct": 92,
+        "dep_time": "02:10", "arr_time": "04:10", "duration": "3h 30m", "stops": 0,
+        "aircraft": "A380-800", "layout": "3-4-3", "legroom": "33\"",
+        "baggage": "7kg cabin + 30kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 16000,
+        "price_inr": 23499, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "AI-121", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 79,
+        "dep_time": "09:00", "arr_time": "11:05", "duration": "3h 35m", "stops": 0,
+        "aircraft": "B787 Dreamliner", "layout": "2-4-2", "legroom": "31\"",
+        "baggage": "7kg cabin + 25kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 10800,
+        "price_inr": 19799, "refundable": true, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "G8-7041", "airline": "Air Arabia", "logo": "https://logo.clearbit.com/airarabia.com",
+        "rating": 3.7, "on_time_pct": 74,
+        "dep_time": "11:30", "arr_time": "19:10", "duration": "7h 10m", "stops": 2,
+        "layover_cities": ["Goa", "Muscat"], "layover_durations": ["1h 45m", "2h 30m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "29\"",
+        "baggage": "7kg cabin + 20kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 7100,
+        "price_inr": 15299, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-SIN",
+    "from": "Delhi", "to": "Singapore",
+    "flights": [
+      {
+        "flight_id": "SQ-401", "airline": "Singapore Airlines", "logo": "https://logo.clearbit.com/singaporeair.com",
+        "rating": 4.9, "on_time_pct": 94,
+        "dep_time": "00:50", "arr_time": "11:30", "duration": "5h 40m", "stops": 0,
+        "aircraft": "B787-10", "layout": "3-3-3", "legroom": "32\"",
+        "baggage": "7kg cabin + 30kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 15000,
+        "price_inr": 34999, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "AI-381", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 80,
+        "dep_time": "16:20", "arr_time": "05:20+1", "duration": "5h 50m", "stops": 0,
+        "aircraft": "B787 Dreamliner", "layout": "2-4-2", "legroom": "31\"",
+        "baggage": "7kg cabin + 25kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 12100,
+        "price_inr": 28499, "refundable": true, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AK-5050", "airline": "AirAsia", "logo": "https://logo.clearbit.com/airasia.com",
+        "rating": 3.8, "on_time_pct": 76,
+        "dep_time": "08:00", "arr_time": "22:45", "duration": "14h 45m", "stops": 2,
+        "layover_cities": ["Kuala Lumpur", "Penang"], "layover_durations": ["4h 20m", "4h 25m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 20kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 6900,
+        "price_inr": 19999, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-BKK",
+    "from": "Delhi", "to": "Bangkok",
+    "flights": [
+      {
+        "flight_id": "TG-316", "airline": "Thai Airways", "logo": "https://logo.clearbit.com/thaiairways.com",
+        "rating": 4.5, "on_time_pct": 87,
+        "dep_time": "01:55", "arr_time": "09:15", "duration": "4h 50m", "stops": 0,
+        "aircraft": "A350-900", "layout": "3-3-3", "legroom": "32\"",
+        "baggage": "7kg cabin + 30kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 13500,
+        "price_inr": 26999, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "AI-2302", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 3.9, "on_time_pct": 78,
+        "dep_time": "12:35", "arr_time": "21:45", "duration": "6h 40m", "stops": 1,
+        "layover_cities": ["Kolkata"], "layover_durations": ["2h 00m"],
+        "aircraft": "B787 Dreamliner", "layout": "2-4-2", "legroom": "31\"",
+        "baggage": "7kg cabin + 25kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 11600,
+        "price_inr": 22499, "refundable": true, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AK-5700", "airline": "AirAsia", "logo": "https://logo.clearbit.com/airasia.com",
+        "rating": 3.7, "on_time_pct": 74,
+        "dep_time": "07:40", "arr_time": "22:55", "duration": "15h 15m", "stops": 2,
+        "layover_cities": ["Kuala Lumpur", "Hat Yai"], "layover_durations": ["5h 10m", "4h 25m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 20kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 6400,
+        "price_inr": 17499, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  },
+  {
+    "route_id": "DEL-LHR",
+    "from": "Delhi", "to": "London",
+    "flights": [
+      {
+        "flight_id": "AI-111", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.2, "on_time_pct": 83,
+        "dep_time": "14:00", "arr_time": "18:30", "duration": "9h 00m", "stops": 0,
+        "aircraft": "B787-8 Dreamliner", "layout": "2-4-2", "legroom": "31\"",
+        "baggage": "8kg cabin + 25kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 13200,
+        "price_inr": 54999, "refundable": true, "tag": "Fastest"
+      },
+      {
+        "flight_id": "BA-258", "airline": "British Airways", "logo": "https://logo.clearbit.com/britishairways.com",
+        "rating": 4.6, "on_time_pct": 88,
+        "dep_time": "03:25", "arr_time": "07:55", "duration": "9h 00m", "stops": 0,
+        "aircraft": "Boeing 777-200", "layout": "3-4-3", "legroom": "31\"",
+        "baggage": "23kg cabin + 23kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 15800,
+        "price_inr": 72999, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "EK-7-BA-258", "airline": "Emirates (via Dubai)", "logo": "https://logo.clearbit.com/emirates.com",
+        "rating": 4.7, "on_time_pct": 86,
+        "dep_time": "22:00", "arr_time": "15:30+1", "duration": "12h 00m", "stops": 1,
+        "layover_cities": ["Dubai"], "layover_durations": ["2h 20m"],
+        "aircraft": "A380-800", "layout": "3-4-3", "legroom": "34\"",
+        "baggage": "7kg cabin + 35kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 16500,
+        "price_inr": 61499, "refundable": true, "tag": "Cheapest"
+      }
+    ]
+  },
+  {
+    "route_id": "BOM-SIN",
+    "from": "Mumbai", "to": "Singapore",
+    "flights": [
+      {
+        "flight_id": "SQ-422", "airline": "Singapore Airlines", "logo": "https://logo.clearbit.com/singaporeair.com",
+        "rating": 4.9, "on_time_pct": 93,
+        "dep_time": "03:30", "arr_time": "13:20", "duration": "5h 20m", "stops": 0,
+        "aircraft": "A350-900", "layout": "3-3-3", "legroom": "32\"",
+        "baggage": "7kg cabin + 30kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 15200,
+        "price_inr": 31999, "refundable": true, "tag": "Recommended"
+      },
+      {
+        "flight_id": "AI-345", "airline": "Air India", "logo": "https://logo.clearbit.com/airindia.in",
+        "rating": 4.0, "on_time_pct": 80,
+        "dep_time": "10:50", "arr_time": "21:00", "duration": "5h 40m", "stops": 0,
+        "aircraft": "B787 Dreamliner", "layout": "2-4-2", "legroom": "31\"",
+        "baggage": "7kg cabin + 25kg check-in",
+        "wifi": true, "meal": "Full Meal", "pilot_exp_hrs": 11900,
+        "price_inr": 26499, "refundable": true, "tag": "Cheapest"
+      },
+      {
+        "flight_id": "AK-5201", "airline": "AirAsia", "logo": "https://logo.clearbit.com/airasia.com",
+        "rating": 3.7, "on_time_pct": 73,
+        "dep_time": "06:05", "arr_time": "23:30", "duration": "17h 25m", "stops": 2,
+        "layover_cities": ["Kuala Lumpur", "Johor Bahru"], "layover_durations": ["6h 00m", "5h 20m"],
+        "aircraft": "A320neo", "layout": "3-3", "legroom": "28\"",
+        "baggage": "7kg cabin + 20kg check-in",
+        "wifi": false, "meal": "Buy on Board", "pilot_exp_hrs": 6700,
+        "price_inr": 18799, "refundable": false, "tag": "Fastest"
+      }
+    ]
+  }
+]
