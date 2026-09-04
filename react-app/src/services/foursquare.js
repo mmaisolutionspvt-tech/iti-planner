@@ -1,41 +1,51 @@
-// Free image fetcher — NO API key required
-// Uses Wikipedia's public page-images API (CORS-enabled with origin=*)
-// Falls back gracefully to null so callers can skip the image block.
+// Free image fetcher using Wikipedia search API (no key required, CORS-enabled)
+// Uses full-text search so "Chowpatty Beach" finds "Girgaon Chowpatty" etc.
 
 const imageCache = new Map();
 
 /**
- * Fetches a thumbnail image URL for a place/attraction via Wikipedia.
+ * Fetches a thumbnail image URL for a place via Wikipedia search.
+ * Tries "PlaceName CityName" first, then just "PlaceName".
  * Returns a URL string or null.
  */
 export async function fetchFoursquareImage(placeName, cityName) {
   const cacheKey = `${placeName}::${cityName}`;
   if (imageCache.has(cacheKey)) return imageCache.get(cacheKey);
 
-  // Try exact place name first, then "PlaceName CityName" as fallback
-  const queries = [placeName, `${placeName} ${cityName}`];
+  const queries = [
+    `${placeName} ${cityName}`,
+    placeName,
+  ];
 
-  for (const query of queries) {
+  for (const q of queries) {
     try {
-      const url =
-        `https://en.wikipedia.org/w/api.php?action=query` +
-        `&titles=${encodeURIComponent(query)}` +
-        `&prop=pageimages&format=json&pithumbsize=400&origin=*`;
+      // Step 1: Search Wikipedia for the best matching article
+      const searchUrl =
+        `https://en.wikipedia.org/w/api.php?action=query&list=search` +
+        `&srsearch=${encodeURIComponent(q)}&srlimit=1&format=json&origin=*`;
 
-      const res = await fetch(url);
-      if (!res.ok) continue;
+      const searchRes = await fetch(searchUrl);
+      if (!searchRes.ok) continue;
+      const searchData = await searchRes.json();
+      const pageId = searchData?.query?.search?.[0]?.pageid;
+      if (!pageId) continue;
 
-      const data = await res.json();
-      const pages = data?.query?.pages || {};
-      const page  = Object.values(pages)[0];
-      const src   = page?.thumbnail?.source;
+      // Step 2: Get the thumbnail for that page
+      const imgUrl =
+        `https://en.wikipedia.org/w/api.php?action=query&pageids=${pageId}` +
+        `&prop=pageimages&pithumbsize=500&format=json&origin=*`;
+
+      const imgRes = await fetch(imgUrl);
+      if (!imgRes.ok) continue;
+      const imgData = await imgRes.json();
+      const src = imgData?.query?.pages?.[pageId]?.thumbnail?.source;
 
       if (src) {
         imageCache.set(cacheKey, src);
         return src;
       }
     } catch (err) {
-      console.warn('[PlaceImage] Wikipedia fetch failed for', query, err.message);
+      console.warn('[PlaceImage] Wikipedia search failed for', q, err.message);
     }
   }
 

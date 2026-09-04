@@ -139,10 +139,12 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
     try {
       const details = await getPlaceDetails(suggestion.placeId);
       if (details) {
+        const placeName = details.displayName || details.name;
+        const placeCity = destination || 'India';
         const newPlaceObj = {
           id: details.id || details.placeId || `p_${Date.now()}`,
-          name: details.displayName || details.name,
-          city: destination || 'India',
+          name: placeName,
+          city: placeCity,
           type: 'Tourist Hub',
           entrance_fee_inr: details.entrance_fee_inr ?? 0,
           dslr_allowed: details.dslr_allowed || 'Yes',
@@ -150,13 +152,19 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
           rating: details.rating || 4.5,
           lat: details.lat,
           lng: details.lng,
-          image: details.photos?.[0] ? `https://places.googleapis.com/v1/${details.photos[0].name}/media?key=${import.meta.env.VITE_GOOGLE_PLACES_KEY || ""}&maxHeightPx=400` : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+          image: null, // will be set below
           description: details.formattedAddress || 'Popular destination landmark.'
         };
 
         setPlaces(prev => [newPlaceObj, ...prev]);
         onTogglePlace(newPlaceObj);
         setSearchQuery('');
+
+        // Fetch Wikipedia image for the newly added place
+        const wikiImg = await fetchFoursquareImage(placeName, placeCity);
+        if (wikiImg) {
+          setPlaceImages(prev => ({ ...prev, [`${placeName}::${placeCity}`]: wikiImg }));
+        }
       }
     } catch (e) {
       console.error("Error adding place from Google suggestion:", e);
@@ -164,6 +172,7 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
       setSearchingGoogle(false);
     }
   };
+
 
   // Fetch weather on-the-fly when modal is opened if not available
   const handleOpenModal = async (place) => {
@@ -336,11 +345,11 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
                 }`}
               >
                 <div>
-                  {/* Foursquare Place Image */}
-                  {placeImages[`${place.name}::${place.city}`] && (
+                  {/* Place Image — Google photo (for searched places) or Wikipedia fallback */}
+                  {(place.image || placeImages[`${place.name}::${place.city}`]) && (
                     <div className="mb-3 rounded-xl overflow-hidden h-40 w-full">
                       <img
-                        src={placeImages[`${place.name}::${place.city}`]}
+                        src={place.image || placeImages[`${place.name}::${place.city}`]}
                         alt={place.name}
                         className="w-full h-full object-cover"
                         onError={(e) => { e.target.style.display = 'none'; }}
