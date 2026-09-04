@@ -85,7 +85,7 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
         // Fetch Foursquare images in background
         filtered.forEach(async (place) => {
           const img = await fetchFoursquareImage(place.name, place.city);
-          if (img) setPlaceImages(prev => ({ ...prev, [place.id]: img }));
+          if (img) setPlaceImages(prev => ({ ...prev, [`${place.name}::${place.city}`]: img }));
         });
 
         // 2. Fetch live XWeather data for each unique city represented in the hubs
@@ -337,10 +337,10 @@ export default function Step1Places({ destination, selectedPlaces, onTogglePlace
               >
                 <div>
                   {/* Foursquare Place Image */}
-                  {placeImages[place.id] && (
+                  {placeImages[`${place.name}::${place.city}`] && (
                     <div className="mb-3 rounded-xl overflow-hidden h-40 w-full">
                       <img
-                        src={placeImages[place.id]}
+                        src={placeImages[`${place.name}::${place.city}`]}
                         alt={place.name}
                         className="w-full h-full object-cover"
                         onError={(e) => { e.target.style.display = 'none'; }}

@@ -60,6 +60,11 @@ export default function Step5Dining({
       if (googleResults && googleResults.length > 0) {
         setRestaurants(googleResults);
         toast.success("Loaded Top 10 Restaurants from Google Places!");
+        // Fetch Foursquare images immediately after results load
+        googleResults.forEach(async (rest) => {
+          const img = await fetchFoursquareImage(rest.name, rest.city || finalCity);
+          if (img) setRestaurantImages(prev => ({ ...prev, [`${rest.name}::${rest.city || finalCity}`]: img }));
+        });
       } else {
         toast.info("No highly-rated restaurants found via Google. Using dataset.");
       }
@@ -115,11 +120,13 @@ export default function Step5Dining({
     fetchDiningData();
   }, [destination]);
 
+  // Fetch Foursquare images whenever restaurants list changes (dataset load or Google search)
   useEffect(() => {
     if (!restaurants || restaurants.length === 0) return;
     restaurants.forEach(async (rest) => {
-      const img = await fetchFoursquareImage(rest.name, rest.city);
-      if (img) setRestaurantImages(prev => ({ ...prev, [rest.id]: img }));
+      const city = rest.city || '';
+      const img = await fetchFoursquareImage(rest.name, city);
+      if (img) setRestaurantImages(prev => ({ ...prev, [`${rest.name}::${city}`]: img }));
     });
   }, [restaurants]);
 
@@ -216,10 +223,10 @@ export default function Step5Dining({
                   </div>
 
                   {/* Foursquare Restaurant Image */}
-                  {restaurantImages[rest.id] && (
+                  {restaurantImages[`${rest.name}::${rest.city || ''}`] && (
                     <div className="mb-3 rounded-xl overflow-hidden h-36 w-full">
                       <img
-                        src={restaurantImages[rest.id]}
+                        src={restaurantImages[`${rest.name}::${rest.city || ''}`]}
                         alt={rest.name}
                         className="w-full h-full object-cover"
                         onError={(e) => { e.target.style.display = 'none'; }}
