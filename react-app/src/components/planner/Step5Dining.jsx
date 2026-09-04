@@ -222,11 +222,11 @@ export default function Step5Dining({
                     </div>
                   </div>
 
-                  {/* Foursquare Restaurant Image */}
-                  {restaurantImages[`${rest.name}::${rest.city || ''}`] && (
+                  {/* Restaurant Image — uses existing Unsplash URL or Wikipedia fallback */}
+                  {(rest.image || restaurantImages[`${rest.name}::${rest.city || ''}`]) && (
                     <div className="mb-3 rounded-xl overflow-hidden h-36 w-full">
                       <img
-                        src={restaurantImages[`${rest.name}::${rest.city || ''}`]}
+                        src={rest.image || restaurantImages[`${rest.name}::${rest.city || ''}`]}
                         alt={rest.name}
                         className="w-full h-full object-cover"
                         onError={(e) => { e.target.style.display = 'none'; }}
